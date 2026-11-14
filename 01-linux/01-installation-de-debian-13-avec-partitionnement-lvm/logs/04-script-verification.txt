@@ -1,0 +1,33 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/verifier-partitionnement.sh; echo "code de sortie: $?"
+[2026-11-15 00:55:35 · 0.3s · code 0]
+== Disque et partitions ==
+NAME                 SIZE FSTYPE      MOUNTPOINTS
+fd0                    4K             
+sr0                 1024M             
+vda                   20G             
+├─vda1               487M ext4        /boot
+├─vda2                 1K             
+└─vda5              19.5G LVM2_member 
+  ├─debian--vg-swap  1.9G swap        [SWAP]
+  ├─debian--vg-root  5.7G ext4        /
+  ├─debian--vg-var   2.9G ext4        /var
+  ├─debian--vg-home  1.9G ext4        /home
+  └─debian--vg-tmp   7.1G ext4        /tmp
+
+== Points de contrôle ==
+  [ OK ] /boot monté en ext4
+  [ OK ] / = volume logique ext4
+  [ OK ] /var séparé
+  [ OK ] /home séparé
+  [ OK ] /tmp séparé
+  [ OK ] swap actif sur volume logique
+  [ OK ] groupe de volumes debian-vg présent
+  [ OK ] 5 volumes logiques
+  [ OK ] rotation des logs active sur /var
+
+Résultat : 9/9 points de contrôle validés.
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

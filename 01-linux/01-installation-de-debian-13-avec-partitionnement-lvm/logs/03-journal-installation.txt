@@ -1,0 +1,21 @@
+# Extrait de /var/log/installer/syslog — VM srv-debian13 (Debian 13.2, installation du 14/11/2026)
+# Lignes de création du PV, du VG et des volumes logiques, puis montage des systèmes de fichiers.
+
+Nov 14 23:44:23 partman:   No matching physical volumes found
+Nov 14 23:44:25 partman-lvm:   Physical volume "/dev/vda5" successfully created.
+Nov 14 23:44:25 partman-lvm:   Volume group "debian-vg" successfully created
+Nov 14 23:44:25 partman-lvm:   Logical volume "swap" created.
+Nov 14 23:44:26 partman-lvm:   Logical volume "root" created.
+Nov 14 23:44:26 partman-lvm:   Logical volume "var" created.
+Nov 14 23:44:26 partman-lvm:   Logical volume "home" created.
+Nov 14 23:44:26 partman-lvm:   Logical volume "tmp" created.
+Nov 14 23:44:29 partman: mke2fs 1.47.2 (1-Jan-2025)
+Nov 14 23:44:29 partman: mke2fs 1.47.2 (1-Jan-2025)
+Nov 14 23:44:29 partman: mke2fs 1.47.2 (1-Jan-2025)
+Nov 14 23:44:30 partman: mke2fs 1.47.2 (1-Jan-2025)
+Nov 14 23:44:30 partman: mke2fs 1.47.2 (1-Jan-2025)
+Nov 14 23:44:30 kernel: [ 1105.292213] EXT4-fs (dm-1): mounted filesystem 11a4c5b3-f682-4faa-b881-db51ad175c2b r/w with ordered data mode. Quota mode: none.
+Nov 14 23:44:30 kernel: [ 1105.301258] EXT4-fs (vda1): mounted filesystem cccf24c4-a7cd-4b74-9474-acc91ca43f73 r/w with ordered data mode. Quota mode: none.
+Nov 14 23:44:30 kernel: [ 1105.311088] EXT4-fs (dm-3): mounted filesystem 5e85ff8d-41d9-4790-a9f7-3619f4d9c5d9 r/w with ordered data mode. Quota mode: none.
+Nov 14 23:44:30 kernel: [ 1105.332699] EXT4-fs (dm-4): mounted filesystem e2fc5a0c-52c2-466f-848c-a429506ef8b9 r/w with ordered data mode. Quota mode: none.
+Nov 14 23:44:30 kernel: [ 1105.343973] EXT4-fs (dm-2): mounted filesystem d4bdfec5-bb38-45f0-9de5-cc09cad6efd5 r/w with ordered data mode. Quota mode: none.

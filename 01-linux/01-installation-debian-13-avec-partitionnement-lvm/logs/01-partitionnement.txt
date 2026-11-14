@@ -1,0 +1,60 @@
+# Transcript — VM srv-debian13
+
+$ bash -lc 'uname -a; echo; lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINTS; echo; pvs; echo; vgs; echo; lvs -o lv_name,vg_name,lv_size,seg_count; echo; df -hT -x tmpfs -x devtmpfs; echo; cat /etc/fstab'
+[2026-11-15 00:51:34 · 0.4s · code 0]
+Linux debian 6.12.57+deb13-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.12.57-1 (2025-11-05) x86_64 GNU/Linux
+
+NAME                 SIZE FSTYPE      MOUNTPOINTS
+fd0                    4K             
+sr0                 1024M             
+vda                   20G             
+├─vda1               487M ext4        /boot
+├─vda2                 1K             
+└─vda5              19.5G LVM2_member 
+  ├─debian--vg-swap  1.9G swap        [SWAP]
+  ├─debian--vg-root  5.7G ext4        /
+  ├─debian--vg-var   2.9G ext4        /var
+  ├─debian--vg-home  1.9G ext4        /home
+  └─debian--vg-tmp   7.1G ext4        /tmp
+
+  PV         VG        Fmt  Attr PSize   PFree
+  /dev/vda5  debian-vg lvm2 a--  <19.52g    0 
+
+  VG        #PV #LV #SN Attr   VSize   VFree
+  debian-vg   1   5   0 wz--n- <19.52g    0 
+
+  LV   VG        LSize  #Seg
+  home debian-vg <1.91g    1
+  root debian-vg <5.72g    1
+  swap debian-vg <1.91g    1
+  tmp  debian-vg <7.13g    1
+  var  debian-vg <2.86g    1
+
+Filesystem                  Type  Size  Used Avail Use% Mounted on
+/dev/mapper/debian--vg-root ext4  5.6G  709M  4.6G  14% /
+/dev/vda1                   ext4  447M   75M  344M  18% /boot
+/dev/mapper/debian--vg-home ext4  1.9G  512K  1.8G   1% /home
+/dev/mapper/debian--vg-var  ext4  2.8G  295M  2.3G  12% /var
+/dev/mapper/debian--vg-tmp  ext4  7.0G  1.9M  6.6G   1% /tmp
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# systemd generates mount units based on this file, see systemd.mount(5).
+# Please run 'systemctl daemon-reload' after making changes here.
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+/dev/mapper/debian--vg-root /               ext4    errors=remount-ro 0       1
+# /boot was on /dev/vda1 during installation
+UUID=cccf24c4-a7cd-4b74-9474-acc91ca43f73 /boot           ext4    defaults        0       2
+/dev/mapper/debian--vg-home /home           ext4    defaults        0       2
+/dev/mapper/debian--vg-tmp /tmp            ext4    defaults        0       2
+/dev/mapper/debian--vg-var /var            ext4    defaults        0       2
+/dev/mapper/debian--vg-swap none            swap    sw              0       0
+/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
+/dev/sr1        /media/cdrom1   udf,iso9660 user,noauto     0       0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

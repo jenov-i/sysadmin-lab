@@ -1,7 +1,12 @@
 # sysadmin-lab
 
-Mes projets en administration systèmes, réseaux et cybersécurité, réalisés dans un laboratoire virtuel (Debian, VMware, PNetLab, Packet Tracer, Docker).
+Projets d'administration systèmes, réseaux et cybersécurité réalisés en laboratoire virtuel, documentés jusqu'à la preuve.
 
-Chaque projet a son propre dossier avec un README, les configurations et les schémas.
+**Jenovi Dandou** · [LinkedIn](https://www.linkedin.com/in/jenovi-dandou)
 
-**Auteur :** Jenovi Dandou · [GitHub](https://github.com/jenov-i)
+<!-- PROJETS:START -->
+| Projet | Catégorie | Date |
+|---|---|---|
+| [Installation de Debian 13 avec partitionnement LVM](01-linux/01-installation-de-debian-13-avec-partitionnement-lvm) | Linux | 2026-11-15 |
+
+<!-- PROJETS:END -->
