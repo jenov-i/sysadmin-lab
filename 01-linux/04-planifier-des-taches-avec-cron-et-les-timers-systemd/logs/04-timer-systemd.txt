@@ -1,0 +1,35 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/03-installer-timer.sh; echo "code de sortie: $?"
+[2026-11-15 14:06:36 · 75.8s · code 0]
+== 1. Dépôt des unités ==
+-rw-r--r-- 1 root root 177 Nov 15 14:06 /etc/systemd/system/lab-nettoyage.service
+-rw-r--r-- 1 root root 259 Nov 15 14:06 /etc/systemd/system/lab-nettoyage.timer
+
+== 2. Activation demandée avant daemon-reload ==
+-> activé du premier coup : systemd 257 recharge les unités à la demande
+
+== 3. daemon-reload explicite, puis vérification ==
+NEXT                        LEFT LAST                         PASSED UNIT                ACTIVATES
+Sun 2026-11-15 14:07:00 WAT  22s Sun 2026-11-15 14:06:00 WAT 36s ago lab-nettoyage.timer lab-nettoyage.service
+
+1 timers listed.
+Pass --all to see loaded but inactive timers, too.
+
+== 4. Attente d'un déclenchement (75 s) ==
+NEXT                        LEFT LAST                         PASSED UNIT                ACTIVATES
+Sun 2026-11-15 14:08:00 WAT   7s Sun 2026-11-15 14:07:00 WAT 51s ago lab-nettoyage.timer lab-nettoyage.service
+
+1 timers listed.
+Pass --all to see loaded but inactive timers, too.
+
+== 5. Ce que le service a écrit dans le journal ==
+Nov 15 14:06:00 srv-debian13 systemd[1]: lab-nettoyage.service: Deactivated successfully.
+Nov 15 14:06:00 srv-debian13 systemd[1]: Finished lab-nettoyage.service - Nettoyage du lab : compte les archives et l'espace libre.
+Nov 15 14:07:00 srv-debian13 systemd[1]: Starting lab-nettoyage.service - Nettoyage du lab : compte les archives et l'espace libre...
+Nov 15 14:07:00 srv-debian13 lab-nettoyage.sh[1345]: [2026-11-15 14:07:00] nettoyage : 3 archives, 2.2G libres sur /var
+Nov 15 14:07:00 srv-debian13 systemd[1]: lab-nettoyage.service: Deactivated successfully.
+Nov 15 14:07:00 srv-debian13 systemd[1]: Finished lab-nettoyage.service - Nettoyage du lab : compte les archives et l'espace libre.
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

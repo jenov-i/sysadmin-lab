@@ -1,0 +1,27 @@
+# Transcript — VM srv-debian13
+
+$ bash -lc 'hostname; . /etc/os-release; echo $PRETTY_NAME; systemctl --version | head -1; echo; dpkg-query -W -f=${Status}\\n cron 2>/dev/null || echo cron absent; systemctl is-active cron 2>/dev/null; echo; ls -l /etc/cron.d/ 2>/dev/null; echo; crontab -l 2>&1 | head -3; echo; systemctl list-timers --all --no-pager | head -8'
+[2026-11-15 14:01:01 · 0.4s · code 0]
+srv-debian13
+Debian GNU/Linux 13 (trixie)
+systemd 257 (257.13-1~deb13u1)
+
+
+active
+
+total 8
+-rw-r--r-- 1 root root 188 Jul 30  2025 e2scrub_all
+-rw-r--r-- 1 root root 400 Jan 15  2024 sysstat
+
+no crontab for root
+
+NEXT                          LEFT LAST                         PASSED UNIT                         ACTIVATES
+Sun 2026-11-15 14:10:36 WAT   9min Sun 2026-11-15 00:51:10 WAT       - apt-daily-upgrade.timer      apt-daily-upgrade.service
+Sun 2026-11-15 14:15:40 WAT  14min -                                 - systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+Sun 2026-11-15 23:00:47 WAT     8h Sun 2026-11-15 00:51:10 WAT       - apt-daily.timer              apt-daily.service
+Mon 2026-11-16 00:00:00 WAT     9h Sun 2026-11-15 00:51:10 WAT       - dpkg-db-backup.timer         dpkg-db-backup.service
+Mon 2026-11-16 00:34:23 WAT    10h Sun 2026-11-15 00:51:10 WAT       - logrotate.timer              logrotate.service
+Mon 2026-11-16 00:43:49 WAT    10h Sun 2026-11-15 00:51:10 WAT       - man-db.timer                 man-db.service
+Mon 2026-11-16 00:50:53 WAT    10h Sun 2026-11-15 00:51:10 WAT       - fstrim.timer                 fstrim.service
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

@@ -1,0 +1,31 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/01-installer-cron.sh; echo "code de sortie: $?"
+[2026-11-15 14:01:37 · 75.2s · code 0]
+== 1. Script de sauvegarde et tâche cron ==
+-rwxr-xr-x 1 root root 808 Nov 15 14:01 /usr/local/bin/sauvegarde-etc.sh
+
+--- fichier déposé (les 40 derniers octets, en clair) ---
+0000000       *       r   o   o   t       /   u   s   r   /   l   o   c
+0000020   a   l   /   b   i   n   /   s   a   u   v   e   g   a   r   d
+0000040   e   -   e   t   c   .   s   h
+0000050
+active
+
+== 2. Attente d'une exécution (75 s) ==
+
+== 3. Journal de la sauvegarde ==
+aucune ligne : la tâche n'a pas tourné
+
+== 4. Ce que cron a réellement journalisé ==
+Nov 15 14:00:43 srv-debian13 cron[685]: (CRON) INFO (Running @reboot jobs)
+Nov 15 14:01:37 srv-debian13 systemd[1]: Stopping cron.service - Regular background program processing daemon...
+Nov 15 14:01:37 srv-debian13 systemd[1]: cron.service: Deactivated successfully.
+Nov 15 14:01:37 srv-debian13 systemd[1]: Stopped cron.service - Regular background program processing daemon.
+Nov 15 14:01:37 srv-debian13 systemd[1]: Started cron.service - Regular background program processing daemon.
+Nov 15 14:01:37 srv-debian13 cron[935]: (CRON) INFO (pidfile fd = 3)
+Nov 15 14:01:37 srv-debian13 cron[935]: (*system*lab-sauvegarde) ERROR (Missing newline before EOF, this crontab file will be ignored)
+Nov 15 14:01:37 srv-debian13 cron[935]: (CRON) INFO (Skipping @reboot jobs -- not system startup)
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

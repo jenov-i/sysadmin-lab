@@ -1,0 +1,33 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/03-apres-redemarrage.sh; echo "code de sortie: $?"
+[2026-11-15 14:13:20 · 1.2s · code 0]
+== 1. Démarrages conservés ==
+ -3 764cda8c62ad496b95ff719c780661bc Sun 2026-11-15 01:59:01 WAT Sun 2026-11-15 02:05:46 WAT
+ -2 791604f0991a46588208aced6e2cd065 Sun 2026-11-15 14:00:42 WAT Sun 2026-11-15 14:11:02 WAT
+ -1 a9dccd57196e4344b6ef0cae66a8a8ea Sun 2026-11-15 14:11:24 WAT Sun 2026-11-15 14:12:38 WAT
+  0 38bbd4cc6266429eb10c5df50f4c2a15 Sun 2026-11-15 14:13:19 WAT Sun 2026-11-15 14:13:21 WAT
+
+== 2. Configuration et emplacement du journal courant ==
+20:#Storage=auto
+File path: /var/log/journal/3eccc64d26fc427498e2601c9850493d/system@00066045944a8fe5-607fc903caa1cc49.journal~
+File path: /var/log/journal/3eccc64d26fc427498e2601c9850493d/system.journal
+/run/log/journal existe encore : 0 fichier(s)
+
+== 3. Marqueurs écrits avant le premier redémarrage (boot -2) ==
+  MARQUEUR-PERSISTANT (boot -2) : présent
+  MARQUEUR-VOLATIL (boot -2) : absent
+  MARQUEUR-APRES-RETOUR (boot -2) : absent
+
+== 4. Marqueurs écrits pendant le cycle contrôlé (boot -1) ==
+  MARQUEUR-VOLATIL-2 (boot -1) : absent
+  MARQUEUR-RETOUR-2 (boot -1) : absent
+
+== 5. Preuve que le journal est de nouveau persistant ==
+MARQUEUR-APRES-REBOOT journal persistant confirme
+File path: /var/log/journal/3eccc64d26fc427498e2601c9850493d/system@00066045944a8fe5-607fc903caa1cc49.journal~
+File path: /var/log/journal/3eccc64d26fc427498e2601c9850493d/system.journal
+Archived and active journals take up 24M in the file system.
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

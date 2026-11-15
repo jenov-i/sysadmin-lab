@@ -1,0 +1,7 @@
+[Unit]
+Description=Nettoyage du lab : compte les archives et l'espace libre
+Documentation=man:systemd.timer(5)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/lab-nettoyage.sh

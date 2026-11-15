@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" font-family="DejaVu Sans, Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a5568"/>
+    </marker>
+    <style>
+      .t { font-size: 25px; font-weight: 700; fill: #1a202c; }
+      .s { font-size: 14px; fill: #4a5568; }
+      .src { fill: #f7fafc; stroke: #4a5568; stroke-width: 1.5; }
+      .jd { fill: #ebf8ff; stroke: #2b6cb0; stroke-width: 2; }
+      .run { fill: #fff5f5; stroke: #c53030; stroke-width: 2; }
+      .var { fill: #f0fff4; stroke: #276749; stroke-width: 2; }
+      .b { fill: #ffffff; stroke: #4a5568; stroke-width: 2; }
+      .l { font-size: 15px; font-weight: 700; fill: #1a202c; }
+      .m { font-family: DejaVu Sans Mono, monospace; font-size: 11.5px; fill: #2d3748; }
+      .n { font-size: 12px; fill: #4a5568; }
+      .ok { font-size: 12px; font-weight: 700; fill: #276749; }
+      .ko { font-size: 12px; font-weight: 700; fill: #c53030; }
+      .f { stroke: #4a5568; stroke-width: 2; fill: none; marker-end: url(#ar); }
+      .d { stroke: #718096; stroke-width: 2; fill: none; stroke-dasharray: 5 4; marker-end: url(#ar); }
+    </style>
+  </defs>
+  <rect width="1200" height="700" fill="#ffffff"/>
+  <text class="t" x="40" y="50">Journalctl : du producteur de log à la requête</text>
+  <text class="s" x="40" y="76">srv-debian13 · systemd 257 · journal d'exécution (/run) et journal système (/var/log/journal)</text>
+
+  <!-- sources -->
+  <rect class="src" x="40" y="110" width="180" height="34" rx="6"/>
+  <text class="n" x="52" y="132">noyau (kmsg)</text>
+  <rect class="src" x="40" y="152" width="180" height="34" rx="6"/>
+  <text class="n" x="52" y="174">syslog / logger</text>
+  <rect class="src" x="40" y="194" width="180" height="34" rx="6"/>
+  <text class="n" x="52" y="216">stdout des services</text>
+  <rect class="src" x="40" y="236" width="180" height="34" rx="6"/>
+  <text class="n" x="52" y="258">audit</text>
+
+  <!-- journald -->
+  <rect class="jd" x="290" y="140" width="190" height="100" rx="8"/>
+  <text class="l" x="310" y="172">systemd-journald</text>
+  <text class="m" x="310" y="198">priorités, champs,</text>
+  <text class="m" x="310" y="218">horodatage, boot ID</text>
+
+  <path class="f" d="M 220 127 C 260 127 260 170 286 178"/>
+  <path class="f" d="M 220 169 L 286 182"/>
+  <path class="f" d="M 220 211 L 286 196"/>
+  <path class="f" d="M 220 253 C 260 253 260 215 286 204"/>
+
+  <!-- stockage -->
+  <rect class="run" x="540" y="110" width="250" height="76" rx="8"/>
+  <text class="l" x="558" y="138">/run/log/journal</text>
+  <text class="n" x="558" y="160">volatil : vidé au redémarrage</text>
+  <text class="n" x="558" y="176">Storage=volatile</text>
+
+  <rect class="var" x="540" y="204" width="250" height="76" rx="8"/>
+  <text class="l" x="558" y="232">/var/log/journal</text>
+  <text class="n" x="558" y="254">persistant : survit au reboot</text>
+  <text class="n" x="558" y="270">Storage=persistent ou auto</text>
+
+  <path class="f" d="M 480 175 L 536 148"/>
+  <path class="f" d="M 480 205 L 536 240"/>
+
+  <!-- requêtes -->
+  <rect class="b" x="850" y="110" width="310" height="170" rx="8"/>
+  <text class="l" x="870" y="138">journalctl</text>
+  <text class="m" x="870" y="162">-u unité      -p priorité</text>
+  <text class="m" x="870" y="184">-b [n]        --since/--until</text>
+  <text class="m" x="870" y="206">-g regex      _CHAMP=valeur</text>
+  <text class="m" x="870" y="228">-o json|verbose|cat</text>
+  <text class="m" x="870" y="250">-F champ      --disk-usage</text>
+  <text class="n" x="870" y="270">une seule requête lit les deux stockages</text>
+
+  <path class="f" d="M 790 148 L 846 165"/>
+  <path class="f" d="M 790 242 L 846 215"/>
+
+  <!-- expérience -->
+  <rect class="b" x="40" y="330" width="560" height="180" rx="8"/>
+  <text class="l" x="60" y="360">Expérience : cinq marqueurs, deux redémarrages</text>
+  <text class="m" x="60" y="388">MARQUEUR-PERSISTANT   écrit en /var  → retrouvé (boot -2)</text>
+  <text class="m" x="60" y="410">MARQUEUR-VOLATIL      écrit en /run  → perdu</text>
+  <text class="m" x="60" y="432">MARQUEUR-APRES-RETOUR écrit après retour, resté /run → perdu</text>
+  <text class="m" x="60" y="454">MARQUEUR-VOLATIL-2    cycle contrôlé → perdu</text>
+  <text class="m" x="60" y="476">MARQUEUR-RETOUR-2     cycle contrôlé → perdu</text>
+  <text class="n" x="60" y="498">Après reboot : /run vide, chemin /var/log/journal, 24 Mo conservés.</text>
+
+  <!-- résultat -->
+  <rect class="b" x="630" y="330" width="530" height="180" rx="8"/>
+  <text class="l" x="650" y="360">Ce que ça prouve</text>
+  <text class="n" x="650" y="388">1. Un journal persistant conserve plusieurs démarrages :</text>
+  <text class="m" x="666" y="408">--list-boots → 10 démarrages, de -9 à 0</text>
+  <text class="n" x="650" y="432">2. Le mode volatil ne survit pas au reboot, même après retour</text>
+  <text class="n" x="666" y="450">à la configuration par défaut : redémarrer le service ne suffit pas.</text>
+  <text class="n" x="650" y="474">3. Les filtres se combinent : unité + priorité + temps + regex.</text>
+  <text class="m" x="666" y="494">-p err -b · -u service · -g motif · _PID=1 · -o json</text>
+
+  <!-- bas -->
+  <rect class="b" x="40" y="540" width="1120" height="56" rx="8"/>
+  <text class="n" x="60" y="566">Preuve : 15 commandes exécutées avec leur sortie réelle, 5 captures console, 5 journaux horodatés,</text>
+  <text class="n" x="60" y="584">et un test de survie des journaux après deux redémarrages successifs.</text>
+</svg>

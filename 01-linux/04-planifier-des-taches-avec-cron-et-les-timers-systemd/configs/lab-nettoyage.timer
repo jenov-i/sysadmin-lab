@@ -1,0 +1,13 @@
+[Unit]
+Description=Exécute le nettoyage du lab toutes les minutes
+Documentation=man:systemd.timer(5)
+
+[Timer]
+# Toutes les minutes, à la seconde 0.
+OnCalendar=*:0/1
+AccuracySec=1s
+Persistent=true
+Unit=lab-nettoyage.service
+
+[Install]
+WantedBy=timers.target

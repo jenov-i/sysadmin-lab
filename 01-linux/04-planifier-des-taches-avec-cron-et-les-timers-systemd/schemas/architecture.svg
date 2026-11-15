@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" font-family="DejaVu Sans, Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a5568"/>
+    </marker>
+    <style>
+      .t { font-size: 25px; font-weight: 700; fill: #1a202c; }
+      .s { font-size: 14px; fill: #4a5568; }
+      .cron { fill: #fffaf0; stroke: #b7791f; stroke-width: 2; }
+      .sys { fill: #ebf8ff; stroke: #2b6cb0; stroke-width: 2; }
+      .out { fill: #f0fff4; stroke: #276749; stroke-width: 2; }
+      .b { fill: #ffffff; stroke: #4a5568; stroke-width: 2; }
+      .red { fill: #fff5f5; stroke: #c53030; stroke-width: 2; }
+      .l { font-size: 15.5px; font-weight: 700; fill: #1a202c; }
+      .m { font-family: DejaVu Sans Mono, monospace; font-size: 12px; fill: #2d3748; }
+      .n { font-size: 12px; fill: #4a5568; }
+      .f { stroke: #4a5568; stroke-width: 2; fill: none; marker-end: url(#ar); }
+      .d { stroke: #718096; stroke-width: 2; fill: none; stroke-dasharray: 6 4; marker-end: url(#ar); }
+    </style>
+  </defs>
+  <rect width="1200" height="700" fill="#ffffff"/>
+  <text class="t" x="40" y="50">Deux planificateurs, un même résultat</text>
+  <text class="s" x="40" y="76">srv-debian13 · cron 3.0pl1 · systemd 257 · sauvegarde de /etc toutes les minutes</text>
+
+  <!-- cron -->
+  <text class="l" x="40" y="120">cron</text>
+  <rect class="cron" x="40" y="136" width="250" height="110" rx="8"/>
+  <text class="m" x="58" y="164">/etc/cron.d/lab-sauvegarde</text>
+  <text class="m" x="58" y="186">* * * * * root ...</text>
+  <text class="n" x="58" y="210">fichier 644, utilisateur en 6e champ</text>
+  <text class="n" x="58" y="230">saut de ligne final obligatoire</text>
+
+  <rect class="b" x="340" y="136" width="200" height="110" rx="8"/>
+  <text class="l" x="358" y="164">cron.service</text>
+  <text class="m" x="358" y="190">scan chaque minute</text>
+  <text class="n" x="358" y="214">environnement minimal</text>
+  <text class="n" x="358" y="232">PATH à déclarer</text>
+
+  <rect class="out" x="590" y="136" width="230" height="110" rx="8"/>
+  <text class="l" x="608" y="164">sauvegarde-etc.sh</text>
+  <text class="m" x="608" y="190">tar -czf /etc → .tar.gz</text>
+  <text class="n" x="608" y="214">rotation : 3 archives</text>
+  <text class="n" x="608" y="232">log : /var/log/lab-sauvegarde.log</text>
+
+  <path class="f" d="M 290 191 L 336 191"/>
+  <path class="f" d="M 540 191 L 586 191"/>
+
+  <!-- systemd -->
+  <text class="l" x="880" y="120">systemd timer</text>
+  <rect class="sys" x="880" y="136" width="280" height="110" rx="8"/>
+  <text class="m" x="898" y="164">lab-nettoyage.timer</text>
+  <text class="m" x="898" y="186">OnCalendar=*:0/1</text>
+  <text class="m" x="898" y="208">AccuracySec=1s</text>
+  <text class="n" x="898" y="232">Persistent=true, activé au boot</text>
+
+  <rect class="out" x="880" y="286" width="280" height="110" rx="8"/>
+  <text class="l" x="898" y="314">lab-nettoyage.service</text>
+  <text class="m" x="898" y="340">Type=oneshot</text>
+  <text class="m" x="898" y="362">ExecStart=.../lab-nettoyage.sh</text>
+  <text class="n" x="898" y="386">sortie capturée dans le journal</text>
+
+  <path class="f" d="M 1020 246 L 1020 282"/>
+  <text class="n" x="1030" y="270">déclenche</text>
+
+  <!-- timeline -->
+  <rect class="b" x="40" y="290" width="810" height="150" rx="8"/>
+  <text class="l" x="60" y="320">Même minute, deux traces indépendantes</text>
+  <text class="m" x="60" y="350">14:03:01  cron    etc-20261115-1403.tar.gz  518 625 octets</text>
+  <text class="m" x="60" y="372">14:04:01  cron    etc-20261115-1404.tar.gz  518 625 octets</text>
+  <text class="m" x="60" y="394">14:05:01  cron    etc-20261115-1405.tar.gz  518 625 octets</text>
+  <text class="m" x="60" y="416">14:08:00  systemd 3 archives, 2,2 G libres · 14:08:01 cron passe</text>
+
+  <!-- erreur -->
+  <rect class="red" x="40" y="470" width="380" height="140" rx="8"/>
+  <text class="l" x="60" y="500">Ce qui a bloqué cron</text>
+  <text class="m" x="60" y="526">fichier écrit sans « \n » final</text>
+  <text class="m" x="60" y="548">ERROR (Missing newline before EOF,</text>
+  <text class="m" x="78" y="568">this crontab file will be ignored)</text>
+  <text class="n" x="60" y="596">aucune exécution pendant 75 s</text>
+
+  <!-- comparatif -->
+  <rect class="b" x="450" y="470" width="710" height="130" rx="8"/>
+  <text class="l" x="470" y="500">Comparaison utile</text>
+  <text class="n" x="470" y="526">cron : simple, mais fichier strict (newline final), PATH minimal, pas de dépendances.</text>
+  <text class="n" x="470" y="548">systemd : granularité, Persistent=true rattrape un déclenchement manqué au boot,</text>
+  <text class="n" x="470" y="570">journal centralisé et sortie capturée ; activation par symlink dans timers.target.</text>
+  <text class="n" x="470" y="592">Sur systemd 257, `enable --now` recharge les unités sans daemon-reload manuel.</text>
+
+  <!-- bas -->
+  <rect class="b" x="40" y="626" width="1120" height="44" rx="8"/>
+  <text class="n" x="60" y="653">Preuve : cron écrit 3 archives tournantes et son journal ; le timer s'exécute à la même minute et laisse sa trace dans journalctl.</text>
+</svg>

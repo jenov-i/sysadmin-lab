@@ -1,0 +1,94 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/01-filtres.sh; echo "code de sortie: $?"
+[2026-11-15 14:10:50 · 1.5s · code 0]
+== 0. Messages de test, à trois priorités ==
+Nov 15 14:10:50 srv-debian13 lab-journal[1697]: erreur volontaire du lab (priorite err)
+Nov 15 14:10:50 srv-debian13 lab-journal[1698]: avertissement volontaire du lab (priorite warning)
+Nov 15 14:10:50 srv-debian13 lab-journal[1699]: information volontaire du lab (priorite info)
+
+== 1. Dernières lignes, sans pagination ==
+Nov 15 14:10:50 srv-debian13 systemd-logind[689]: New session 31 of user root.
+Nov 15 14:10:50 srv-debian13 systemd[1]: Started session-31.scope - Session 31 of User root.
+Nov 15 14:10:50 srv-debian13 lab-journal[1697]: erreur volontaire du lab (priorite err)
+Nov 15 14:10:50 srv-debian13 lab-journal[1698]: avertissement volontaire du lab (priorite warning)
+Nov 15 14:10:50 srv-debian13 lab-journal[1699]: information volontaire du lab (priorite info)
+
+== 2. Journal du démarrage courant, par unité ==
+Nov 15 14:10:00 srv-debian13 systemd[1]: Starting lab-nettoyage.service - Nettoyage du lab : compte les archives et l'espace libre...
+Nov 15 14:10:00 srv-debian13 lab-nettoyage.sh[1632]: [2026-11-15 14:10:00] nettoyage : 3 archives, 2.2G libres sur /var
+Nov 15 14:10:00 srv-debian13 systemd[1]: lab-nettoyage.service: Deactivated successfully.
+Nov 15 14:10:00 srv-debian13 systemd[1]: Finished lab-nettoyage.service - Nettoyage du lab : compte les archives et l'espace libre.
+
+== 3. Filtre de priorité : erreurs et plus graves ==
+Nov 15 14:06:36 srv-debian13 (sd-exec-[1201]: /usr/lib/systemd/system-generators/systemd-ssh-generator failed with exit status 1.
+Nov 15 14:06:36 srv-debian13 (sd-exec-[1233]: /usr/lib/systemd/system-generators/systemd-ssh-generator failed with exit status 1.
+Nov 15 14:06:36 srv-debian13 systemd-ssh-generator[1244]: Failed to query local AF_VSOCK CID: Cannot assign requested address
+Nov 15 14:06:36 srv-debian13 systemd-ssh-generator[1279]: Failed to query local AF_VSOCK CID: Cannot assign requested address
+Nov 15 14:06:36 srv-debian13 (sd-exec-[1267]: /usr/lib/systemd/system-generators/systemd-ssh-generator failed with exit status 1.
+Nov 15 14:10:50 srv-debian13 lab-journal[1697]: erreur volontaire du lab (priorite err)
+
+== 4. Filtre de priorité : avertissements et plus graves, tag du lab ==
+Nov 15 14:10:50 srv-debian13 lab-journal[1697]: erreur volontaire du lab (priorite err)
+Nov 15 14:10:50 srv-debian13 lab-journal[1698]: avertissement volontaire du lab (priorite warning)
+
+== 5. Fenêtre temporelle ==
+Nov 15 14:10:50 srv-debian13 lab-journal[1697]: erreur volontaire du lab (priorite err)
+Nov 15 14:10:50 srv-debian13 lab-journal[1698]: avertissement volontaire du lab (priorite warning)
+Nov 15 14:10:50 srv-debian13 lab-journal[1699]: information volontaire du lab (priorite info)
+
+== 6. Recherche plein texte ==
+Nov 15 14:08:00 srv-debian13 lab-nettoyage.sh[1403]: [2026-11-15 14:08:00] nettoyage : 3 archives, 2.2G libres sur /var
+Nov 15 14:09:00 srv-debian13 lab-nettoyage.sh[1606]: [2026-11-15 14:09:00] nettoyage : 3 archives, 2.2G libres sur /var
+Nov 15 14:10:00 srv-debian13 lab-nettoyage.sh[1632]: [2026-11-15 14:10:00] nettoyage : 3 archives, 2.2G libres sur /var
+
+== 7. Par identifiant de processus ==
+Nov 15 14:10:50 srv-debian13 systemd[1]: Started session-30.scope - Session 30 of User root.
+Nov 15 14:10:50 srv-debian13 systemd[1]: session-30.scope: Deactivated successfully.
+Nov 15 14:10:50 srv-debian13 systemd[1]: Started session-31.scope - Session 31 of User root.
+
+== 8. Champs disponibles et transports ==
+syslog
+journal
+stdout
+driver
+kernel
+PRIORITES : 3 4 7 6 5 
+
+== 9. Sortie JSON, un enregistrement ==
+{
+	"_COMM" : "logger",
+	"_EXE" : "/usr/bin/logger",
+	"_SOURCE_REALTIME_TIMESTAMP" : "1794748250497963",
+	"__SEQNUM" : "12747",
+	"_BOOT_ID" : "791604f0991a46588208aced6e2cd065",
+	"_CMDLINE" : "logger -p local0 info -t lab-journal \"information volontaire du lab (priorite info)\"",
+	"_SYSTEMD_USER_SLICE" : "-.slice",
+	"SYSLOG_FACILITY" : "16",
+	"SYSLOG_IDENTIFIER" : "lab-journal",
+	"_AUDIT_LOGINUID" : "0",
+	"__REALTIME_TIMESTAMP" : "1794748250498037",
+
+== 10. Format verbeux : tous les champs d'un message ==
+    PRIORITY=6
+    SYSLOG_IDENTIFIER=lab-journal
+    MESSAGE=information volontaire du lab (priorite info)
+
+== 11. Messages du noyau ==
+Nov 15 14:05:11 srv-debian13 systemd-ssh-generator[1123]: Failed to query local AF_VSOCK CID: Cannot assign requested address
+Nov 15 14:06:36 srv-debian13 systemd-ssh-generator[1212]: Failed to query local AF_VSOCK CID: Cannot assign requested address
+Nov 15 14:06:36 srv-debian13 systemd-ssh-generator[1244]: Failed to query local AF_VSOCK CID: Cannot assign requested address
+Nov 15 14:06:36 srv-debian13 systemd-ssh-generator[1279]: Failed to query local AF_VSOCK CID: Cannot assign requested address
+
+== 12. Volume occupé et intégrité des fichiers ==
+Archived and active journals take up 24M in the file system.
+PASS: /var/log/journal/3eccc64d26fc427498e2601c9850493d/system@00066045944a8fe5-607fc903caa1cc49.journal~
+PASS: /var/log/journal/3eccc64d26fc427498e2601c9850493d/system.journal
+PASS: /var/log/journal/3eccc64d26fc427498e2601c9850493d/system@000660458fe60067-b6950306cc38f1be.journal~
+
+== 13. Emplacement réel du journal courant ==
+File path: /var/log/journal/3eccc64d26fc427498e2601c9850493d/system@00066045944a8fe5-607fc903caa1cc49.journal~
+Sequential number ID: d9eca693953d4e0798d382bf1ec4a7ae
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

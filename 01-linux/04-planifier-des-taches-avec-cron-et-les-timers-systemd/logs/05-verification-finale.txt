@@ -1,0 +1,44 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/04-verifier.sh; echo "code de sortie: $?"
+[2026-11-15 14:08:04 · 0.2s · code 0]
+== 1. Les deux planifications sont actives ==
+cron               : active
+lab-nettoyage.timer: active
+NEXT                        LEFT LAST                        PASSED UNIT                ACTIVATES
+Sun 2026-11-15 14:09:00 WAT  55s Sun 2026-11-15 14:08:00 WAT 4s ago lab-nettoyage.timer lab-nettoyage.service
+
+1 timers listed.
+Pass --all to see loaded but inactive timers, too.
+
+== 2. Fichiers de planification réellement en place ==
+# Sauvegarde de /etc toutes les minutes, exécutée par cron.
+# Fichier déposé dans /etc/cron.d : le 6e champ est l'utilisateur.
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+* * * * * root /usr/local/bin/sauvegarde-etc.sh
+OnCalendar=*:0/1
+Persistent=true
+Unit=lab-nettoyage.service
+
+== 3. Résultat côté cron ==
+2026-11-15 14:03:01 archive=/var/backups/lab/etc-20261115-1403.tar.gz taille=518625 octets
+2026-11-15 14:04:01 archive=/var/backups/lab/etc-20261115-1404.tar.gz taille=518625 octets
+2026-11-15 14:05:01 archive=/var/backups/lab/etc-20261115-1405.tar.gz taille=518625 octets
+2026-11-15 14:06:01 archive=/var/backups/lab/etc-20261115-1406.tar.gz taille=518902 octets
+2026-11-15 14:07:01 archive=/var/backups/lab/etc-20261115-1407.tar.gz taille=518902 octets
+2026-11-15 14:08:01 archive=/var/backups/lab/etc-20261115-1408.tar.gz taille=518902 octets
+
+== 4. Résultat côté systemd ==
+Nov 15 14:07:00 srv-debian13 systemd[1]: Finished lab-nettoyage.service - Nettoyage du lab : compte les archives et l'espace libre.
+Nov 15 14:08:00 srv-debian13 systemd[1]: Starting lab-nettoyage.service - Nettoyage du lab : compte les archives et l'espace libre...
+Nov 15 14:08:00 srv-debian13 lab-nettoyage.sh[1403]: [2026-11-15 14:08:00] nettoyage : 3 archives, 2.2G libres sur /var
+Nov 15 14:08:00 srv-debian13 systemd[1]: lab-nettoyage.service: Deactivated successfully.
+Nov 15 14:08:00 srv-debian13 systemd[1]: Finished lab-nettoyage.service - Nettoyage du lab : compte les archives et l'espace libre.
+
+== 5. Les deux mécanismes ont tourné à la même minute ==
+cron    : 2026-11-15 14:08:01
+systemd : [2026-11-15 14:08:00]
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

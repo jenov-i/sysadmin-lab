@@ -1,0 +1,5 @@
+# Sauvegarde de /etc toutes les minutes, exécutée par cron.
+# Fichier déposé dans /etc/cron.d : le 6e champ est l'utilisateur.
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+* * * * * root /usr/local/bin/sauvegarde-etc.sh

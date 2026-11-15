@@ -1,0 +1,29 @@
+# Transcript — VM srv-debian13
+
+$ bash -lc 'hostname; journalctl --version | head -1; echo; journalctl --disk-usage; echo; ls -ld /var/log/journal 2>&1 || echo "/var/log/journal absent : journal volatile"; echo; grep -E \"^#?Storage\" /etc/systemd/journald.conf; echo; journalctl --list-boots --no-pager; echo; journalctl -n 3 --no-pager'
+[2026-11-15 14:10:10 · 0.2s · code 0]
+srv-debian13
+systemd 257 (257.13-1~deb13u1)
+
+Archived and active journals take up 24M in the file system.
+
+drwxr-sr-x+ 3 root systemd-journal 4096 Nov 15 00:51 /var/log/journal
+
+
+IDX BOOT ID                          FIRST ENTRY                 LAST ENTRY
+ -9 36cbd9e4620c4097be2d74f0616c3d72 Sun 2026-11-15 00:51:09 WAT Sun 2026-11-15 00:56:09 WAT
+ -8 1926324e110c4cc0ac87b6489fe4a834 Sun 2026-11-15 01:05:55 WAT Sun 2026-11-15 01:15:15 WAT
+ -7 5d3bc9174aea483f95dbe604db76f428 Sun 2026-11-15 01:15:42 WAT Sun 2026-11-15 01:16:13 WAT
+ -6 9337b593747843e1acbe8874eb105e93 Sun 2026-11-15 01:16:56 WAT Sun 2026-11-15 01:19:06 WAT
+ -5 c3f557f32a714da39db5ab7713b4d284 Sun 2026-11-15 01:19:17 WAT Sun 2026-11-15 01:21:28 WAT
+ -4 a933f89c6e4b47ff8101b94026e8b070 Sun 2026-11-15 01:25:59 WAT Sun 2026-11-15 01:35:58 WAT
+ -3 4233981ad346430ca79e55011c3c869b Sun 2026-11-15 01:36:10 WAT Sun 2026-11-15 01:39:42 WAT
+ -2 fe9537622b8f4dec8ecbf19304ab3607 Sun 2026-11-15 01:51:46 WAT Sun 2026-11-15 01:56:37 WAT
+ -1 764cda8c62ad496b95ff719c780661bc Sun 2026-11-15 01:59:01 WAT Sun 2026-11-15 02:05:46 WAT
+  0 791604f0991a46588208aced6e2cd065 Sun 2026-11-15 14:00:42 WAT Sun 2026-11-15 14:10:10 WAT
+
+Nov 15 14:10:10 srv-debian13 sshd-session[1656]: pam_unix(sshd:session): session opened for user root(uid=0) by root(uid=0)
+Nov 15 14:10:10 srv-debian13 systemd-logind[689]: New session 29 of user root.
+Nov 15 14:10:10 srv-debian13 systemd[1]: Started session-29.scope - Session 29 of User root.
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

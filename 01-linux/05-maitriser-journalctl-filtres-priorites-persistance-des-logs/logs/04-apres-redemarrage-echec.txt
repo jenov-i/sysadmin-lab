@@ -1,0 +1,20 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/03-apres-redemarrage.sh; echo "code de sortie: $?"
+[2026-11-15 14:11:31 · 0.2s · code 0]
+== 1. Démarrages conservés ==
+ -3 fe9537622b8f4dec8ecbf19304ab3607 Sun 2026-11-15 01:51:46 WAT Sun 2026-11-15 01:56:37 WAT
+ -2 764cda8c62ad496b95ff719c780661bc Sun 2026-11-15 01:59:01 WAT Sun 2026-11-15 02:05:46 WAT
+ -1 791604f0991a46588208aced6e2cd065 Sun 2026-11-15 14:00:42 WAT Sun 2026-11-15 14:11:02 WAT
+  0 a9dccd57196e4344b6ef0cae66a8a8ea Sun 2026-11-15 14:11:24 WAT Sun 2026-11-15 14:11:31 WAT
+
+== 2. Marqueur persistant, écrit avant le redémarrage ==
+MARQUEUR-PERSISTANT ecrit avant le passage en volatil
+
+== 3. Marqueur volatil, écrit pendant le mode volatil ==
+absent : le journal volatil n'a pas survécu au redémarrage
+
+== 4. Marqueur écrit après le retour en persistant ==
+code de sortie: 1
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+
