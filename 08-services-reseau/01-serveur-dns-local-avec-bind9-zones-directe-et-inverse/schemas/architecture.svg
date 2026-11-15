@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" font-family="DejaVu Sans, Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a5568"/>
+    </marker>
+    <style>
+      .t { font-size: 25px; font-weight: 700; fill: #1a202c; }
+      .s { font-size: 14px; fill: #4a5568; }
+      .b { fill: #ffffff; stroke: #4a5568; stroke-width: 2; }
+      .cli { fill: #ebf8ff; stroke: #2b6cb0; stroke-width: 2; }
+      .srv { fill: #f0fff4; stroke: #276749; stroke-width: 2; }
+      .zone { fill: #fffaf0; stroke: #b7791f; stroke-width: 2; }
+      .l { font-size: 15.5px; font-weight: 700; fill: #1a202c; }
+      .m { font-family: DejaVu Sans Mono, monospace; font-size: 12.5px; fill: #2d3748; }
+      .n { font-size: 12px; fill: #4a5568; }
+      .f { stroke: #4a5568; stroke-width: 2; fill: none; marker-end: url(#ar); }
+      .g { stroke: #b7791f; stroke-width: 2; fill: none; marker-end: url(#ar); }
+    </style>
+  </defs>
+  <rect width="1200" height="680" fill="#ffffff"/>
+  <text class="t" x="40" y="50">Serveur DNS autoritaire du lab — Bind9</text>
+  <text class="s" x="40" y="76">srv-debian13 · Debian 13.2 · BIND 9.20.30 · zone lab.local + zone inverse 3.0.10.in-addr.arpa</text>
+
+  <!-- client -->
+  <rect class="cli" x="40" y="120" width="290" height="150" rx="10"/>
+  <text class="l" x="62" y="152">Client du lab</text>
+  <text class="m" x="62" y="180">nameserver 10.0.3.10</text>
+  <text class="m" x="62" y="202">search lab.local</text>
+  <text class="n" x="62" y="232">getent -s dns · dig · ping</text>
+  <text class="n" x="62" y="252">10.0.3.0/24 uniquement</text>
+
+  <!-- named -->
+  <rect class="srv" x="440" y="110" width="330" height="170" rx="10"/>
+  <text class="l" x="462" y="142">named — BIND 9.20.30</text>
+  <text class="m" x="462" y="170">listen-on { 127.0.0.1; 10.0.3.10; }</text>
+  <text class="m" x="462" y="192">allow-query { localhost; 10.0.3.0/24; }</text>
+  <text class="m" x="462" y="214">allow-transfer { none; }</text>
+  <text class="m" x="462" y="236">recursion no</text>
+  <text class="n" x="462" y="262">autoritaire, non récursif</text>
+
+  <!-- zones -->
+  <rect class="zone" x="880" y="100" width="280" height="190" rx="10"/>
+  <text class="l" x="900" y="132">Zones servies</text>
+  <text class="m" x="900" y="160">db.lab.local</text>
+  <text class="n" x="916" y="180">SOA · NS · MX · TXT SPF</text>
+  <text class="n" x="916" y="198">ns1, srv-debian13, mail</text>
+  <text class="n" x="916" y="216">www, intranet, dns (CNAME)</text>
+  <text class="m" x="900" y="246">db.10.0.3</text>
+  <text class="n" x="916" y="266">PTR 10 → srv-debian13</text>
+  <text class="n" x="916" y="284">PTR 25 → mail</text>
+
+  <!-- resolved -->
+  <rect class="b" x="440" y="340" width="330" height="120" rx="10"/>
+  <text class="l" x="462" y="370">systemd-resolved</text>
+  <text class="m" x="462" y="398">127.0.0.53:53 · 127.0.0.54:53</text>
+  <text class="n" x="462" y="422">cohabite avec named : ports distincts,</text>
+  <text class="n" x="462" y="442">aucun conflit d'écoute</text>
+
+  <!-- etat -->
+  <rect class="b" x="40" y="340" width="290" height="210" rx="10"/>
+  <text class="l" x="62" y="370">Ce que la capture prouve</text>
+  <text class="n" x="62" y="398">dig A / CNAME / MX / TXT / SOA</text>
+  <text class="n" x="62" y="418">dig -x sur deux adresses</text>
+  <text class="n" x="62" y="438">NXDOMAIN sur une IP absente</text>
+  <text class="n" x="62" y="458">AXFR → REFUSED</text>
+  <text class="n" x="62" y="478">récursion → REFUSED</text>
+  <text class="n" x="62" y="498">getent -s dns côté client</text>
+  <text class="n" x="62" y="526">named-checkconf -z : zones chargées</text>
+
+  <!-- bas : chaine de resolution -->
+  <rect class="b" x="40" y="590" width="1120" height="60" rx="8"/>
+  <text class="l" x="62" y="618">Chaîne vérifiée</text>
+  <text class="m" x="200" y="618">client → 10.0.3.10:53 (named) → zone directe ou inverse → réponse datée du 15/11/2026</text>
+
+  <!-- flèches -->
+  <path class="f" d="M 330 195 L 436 195"/>
+  <text class="n" x="338" y="184">requête UDP/53</text>
+  <path class="f" d="M 770 195 L 876 195"/>
+  <text class="n" x="782" y="184">lecture</text>
+  <path class="f" d="M 605 280 L 605 336"/>
+  <text class="n" x="618" y="314">non utilisé pour lab.local</text>
+</svg>

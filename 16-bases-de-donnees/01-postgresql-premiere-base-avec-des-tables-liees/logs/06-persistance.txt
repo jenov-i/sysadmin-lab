@@ -1,0 +1,19 @@
+# Transcript — VM srv-debian13
+
+$ bash -lc 'uptime -p; systemctl is-active postgresql; pg_lsclusters | tail -1; echo; ss -tlnp | grep 5432; echo; PGPASSFILE=/root/.pgpass psql -h 10.0.3.10 -U lab_admin -d lab_stock -c "SELECT count(*) AS articles, sum(quantite) AS unites FROM stock_par_article;"'
+[2026-11-15 01:36:18 · 0.3s · code 0]
+up 0 minutes
+active
+17  main    5432 online postgres /var/lib/postgresql/17/main /var/log/postgresql/postgresql-17-main.log
+
+LISTEN 0      200        10.0.3.10:5432      0.0.0.0:*    users:(("postgres",pid=769,fd=8))                                           
+LISTEN 0      200        127.0.0.1:5432      0.0.0.0:*    users:(("postgres",pid=769,fd=7))                                           
+LISTEN 0      200            [::1]:5432         [::]:*    users:(("postgres",pid=769,fd=6))                                           
+
+ articles | unites 
+----------+--------
+        5 |     33
+(1 row)
+
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

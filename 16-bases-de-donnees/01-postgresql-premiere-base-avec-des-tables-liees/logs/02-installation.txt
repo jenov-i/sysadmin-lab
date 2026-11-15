@@ -1,0 +1,17 @@
+# Transcript — VM srv-debian13
+
+$ DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql postgresql-client 2>&1 | tail -4; echo; psql --version; echo; pg_lsclusters; echo; systemctl is-active postgresql
+[2026-11-15 01:30:40 · 94.4s · code 0]
+Setting up postgresql-client (17+278) ...
+Setting up postgresql (17+278) ...
+Processing triggers for man-db (2.13.1-1) ...
+Processing triggers for libc-bin (2.41-12+deb13u4) ...
+
+psql (PostgreSQL) 17.12 (Debian 17.12-0+deb13u1)
+
+Ver Cluster Port Status Owner    Data directory              Log file
+17  main    5432 online postgres /var/lib/postgresql/17/main /var/log/postgresql/postgresql-17-main.log
+
+active
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

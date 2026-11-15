@@ -1,0 +1,25 @@
+$TTL 3600
+; Zone directe lab.local — srv-debian13, 15/11/2026
+; Le numéro de série suit la convention AAAAMMJJnn : il doit augmenter
+; à chaque modification, sinon les secondaires ne rechargent pas la zone.
+$ORIGIN lab.local.
+@	IN	SOA	ns1.lab.local. admin.lab.local. (
+			2026111501 ; serial
+			3600       ; refresh
+			900        ; retry
+			1209600    ; expire
+			300 )      ; negative TTL
+
+@		IN	NS	ns1.lab.local.
+@		IN	MX	10 mail.lab.local.
+@		IN	TXT	"v=spf1 mx -all"
+
+; Serveurs
+ns1		IN	A	10.0.3.10
+srv-debian13	IN	A	10.0.3.10
+mail		IN	A	10.0.3.25
+
+; Alias : un seul enregistrement A à maintenir, les noms usuels pointent dessus
+dns		IN	CNAME	srv-debian13
+www		IN	CNAME	srv-debian13
+intranet	IN	CNAME	srv-debian13

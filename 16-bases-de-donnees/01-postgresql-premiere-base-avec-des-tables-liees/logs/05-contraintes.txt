@@ -1,0 +1,52 @@
+# Transcript — VM srv-debian13
+
+$ PGPASSFILE=/root/.pgpass psql -h 10.0.3.10 -U lab_admin -d lab_stock -P pager=off -f /root/tester-contraintes.sql; echo "code de sortie: $?"
+[2026-11-15 01:33:58 · 0.2s · code 0]
+--- 1. Clé étrangère : article rattaché à un fournisseur inexistant
+BEGIN
+ROLLBACK
+--- 2. CHECK : quantité nulle refusée
+BEGIN
+ROLLBACK
+--- 3. CHECK : prix négatif refusé
+BEGIN
+ROLLBACK
+--- 4. ON DELETE CASCADE : supprimer un article supprime ses mouvements
+ mouvements_article_1 
+----------------------
+                    2
+(1 row)
+
+BEGIN
+DELETE 1
+ mouvements_apres_delete 
+-------------------------
+                       0
+(1 row)
+
+ROLLBACK
+ mouvements_apres_rollback 
+---------------------------
+                         2
+(1 row)
+
+--- 5. État final : aucune donnée de test
+ articles 
+----------
+        5
+(1 row)
+
+ mouvements 
+------------
+         11
+(1 row)
+
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+psql:/root/tester-contraintes.sql:6: ERROR:  insert or update on table "article" violates foreign key constraint "article_fournisseur_id_fkey"
+DETAIL:  Key (fournisseur_id)=(999) is not present in table "fournisseur".
+psql:/root/tester-contraintes.sql:11: ERROR:  new row for relation "mouvement" violates check constraint "mouvement_quantite_check"
+DETAIL:  Failing row contains (12, 1, entree, 0, 2026-11-15 01:33:58.597959+01).
+psql:/root/tester-contraintes.sql:16: ERROR:  new row for relation "article" violates check constraint "article_prix_ht_check"
+DETAIL:  Failing row contains (1, SW-24P, Switch 24 ports, -5.00, 1).
+

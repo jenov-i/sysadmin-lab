@@ -1,0 +1,28 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/tester-client.sh; echo "code de sortie: $?"
+[2026-11-15 01:28:16 · 0.2s · code 0]
+== 1. Résolveur actuel ==
+lrwxrwxrwx 1 root root 37 Nov 15 01:13 /etc/resolv.conf -> /run/systemd/resolve/stub-resolv.conf
+nameserver 127.0.0.53
+options edns0 trust-ad
+search lab.local
+
+== 2. Bascule du client sur 10.0.3.10 ==
+nameserver 10.0.3.10
+search lab.local
+
+== 3. Résolution directe (getent, comme n'importe quelle application) ==
+10.0.3.10       srv-debian13.lab.local www.lab.local
+10.0.3.10       srv-debian13.lab.local intranet.lab.local
+10.0.3.25       mail.lab.local
+
+== 4. Résolution inverse ==
+10.0.3.10       srv-debian13.lab.local
+srv-debian13.lab.local.
+
+== 5. Restauration du résolveur systemd ==
+lrwxrwxrwx 1 root root 37 Nov 15 01:13 /etc/resolv.conf -> /run/systemd/resolve/stub-resolv.conf
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

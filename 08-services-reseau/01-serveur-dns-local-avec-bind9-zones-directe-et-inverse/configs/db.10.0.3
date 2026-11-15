@@ -1,0 +1,14 @@
+$TTL 3600
+; Zone inverse 10.0.3.0/24 -> 3.0.10.in-addr.arpa — srv-debian13, 15/11/2026
+$ORIGIN 3.0.10.in-addr.arpa.
+@	IN	SOA	ns1.lab.local. admin.lab.local. (
+			2026111501 ; serial (doit suivre celui de la zone directe)
+			3600       ; refresh
+			900        ; retry
+			1209600    ; expire
+			300 )      ; negative TTL
+
+@	IN	NS	ns1.lab.local.
+
+10	IN	PTR	srv-debian13.lab.local.
+25	IN	PTR	mail.lab.local.

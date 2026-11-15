@@ -1,0 +1,23 @@
+// /etc/bind/named.conf.options — srv-debian13 (lab sysadmin-lab)
+options {
+	directory "/var/cache/bind";
+
+	// Le serveur n'écoute que sur la boucle locale et sur l'interface du lab.
+	// 127.0.0.53:53 est déjà occupé par le stub de systemd-resolved :
+	// aucune collision, les deux processus cohabitent.
+	listen-on { 127.0.0.1; 10.0.3.10; };
+	listen-on-v6 { none; };
+
+	// Seuls la machine elle-même et le réseau 10.0.3.0/24 peuvent interroger.
+	allow-query { localhost; 10.0.3.0/24; };
+
+	// Pas de secondaire : aucun transfert de zone n'est autorisé.
+	allow-transfer { none; };
+
+	// Serveur strictement autoritaire pour lab.local : pas de récursion.
+	recursion no;
+	dnssec-validation no;
+
+	// Ne pas annoncer la version exacte du logiciel aux scanners.
+	version "DNS interne - lab.local";
+};

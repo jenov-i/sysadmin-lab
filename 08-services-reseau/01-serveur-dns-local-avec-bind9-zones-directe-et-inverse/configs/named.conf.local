@@ -1,0 +1,15 @@
+// /etc/bind/named.conf.local — zones internes du lab
+//
+// Une zone directe (nom -> adresse) et sa zone inverse (adresse -> nom).
+// Les deux sont nécessaires : sans la zone inverse, `dig -x` reste sans
+// réponse et les journaux des services affichent des IP au lieu des noms.
+
+zone "lab.local" {
+	type primary;
+	file "/etc/bind/db.lab.local";
+};
+
+zone "3.0.10.in-addr.arpa" {
+	type primary;
+	file "/etc/bind/db.10.0.3";
+};

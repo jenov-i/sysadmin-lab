@@ -1,0 +1,20 @@
+# Transcript — VM srv-debian13
+
+$ apt-get install -y bind9 bind9utils dnsutils 2>&1 | tail -5; echo; named -v; echo; systemctl is-active named; ls /etc/bind/
+[2026-11-15 01:26:33 · 4.8s · code 0]
+wrote key file "/etc/bind/rndc.key"
+named-resolvconf.service is a disabled or a static unit, not starting it.
+Created symlink '/etc/systemd/system/bind9.service' → '/usr/lib/systemd/system/named.service'.
+Created symlink '/etc/systemd/system/multi-user.target.wants/named.service' → '/usr/lib/systemd/system/named.service'.
+Processing triggers for man-db (2.13.1-1) ...
+
+BIND 9.20.30-1~deb13u1-Debian (Stable Release) <id:>
+
+active
+named.conf
+named.conf.local
+named.conf.options
+named.conf.root-hints
+rndc.key
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

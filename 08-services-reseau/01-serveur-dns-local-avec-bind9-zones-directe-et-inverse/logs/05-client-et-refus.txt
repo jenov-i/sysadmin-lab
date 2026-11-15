@@ -1,0 +1,16 @@
+# Transcript — VM srv-debian13
+
+$ bash -lc 'echo "--- récursion demandée pour un nom public"; dig @10.0.3.10 deb.debian.org A +noall +comments | grep -E "status:|WARNING"; echo; echo "--- requête depuis une interface non autorisée (127.0.0.1 reste autorisé)"; dig @10.0.3.10 srv-debian13.lab.local A +short; echo; echo "--- transfert de zone"; dig @10.0.3.10 lab.local AXFR +noall +comments | grep -E "Transfer|status"'
+[2026-11-15 01:27:49 · 0.2s · code 0]
+--- récursion demandée pour un nom public
+;; ->>HEADER<<- opcode: QUERY, status: REFUSED, id: 33769
+;; WARNING: recursion requested but not available
+
+--- requête depuis une interface non autorisée (127.0.0.1 reste autorisé)
+10.0.3.10
+
+--- transfert de zone
+;; ->>HEADER<<- opcode: QUERY, status: REFUSED, id: 3141
+; Transfer failed.
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

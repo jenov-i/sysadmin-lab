@@ -1,0 +1,79 @@
+# Transcript — VM srv-debian13
+
+$ PGPASSFILE=/root/.pgpass psql -h 10.0.3.10 -U lab_admin -d lab_stock -P pager=off -f /root/requetes.sql; echo "code de sortie: $?"
+[2026-11-15 01:33:54 · 0.2s · code 0]
+--- 1. Relations de la base
+            List of relations
+ Schema |    Name     | Type  |   Owner   
+--------+-------------+-------+-----------
+ public | article     | table | lab_admin
+ public | fournisseur | table | lab_admin
+ public | mouvement   | table | lab_admin
+(3 rows)
+
+--- 2. Structure de la table article (clé étrangère incluse)
+                                Table "public.article"
+     Column     |     Type      | Collation | Nullable |           Default            
+----------------+---------------+-----------+----------+------------------------------
+ id             | integer       |           | not null | generated always as identity
+ reference      | text          |           | not null | 
+ libelle        | text          |           | not null | 
+ prix_ht        | numeric(10,2) |           | not null | 
+ fournisseur_id | integer       |           | not null | 
+Indexes:
+    "article_pkey" PRIMARY KEY, btree (id)
+    "article_reference_key" UNIQUE CONSTRAINT, btree (reference)
+Check constraints:
+    "article_prix_ht_check" CHECK (prix_ht > 0::numeric)
+Foreign-key constraints:
+    "article_fournisseur_id_fkey" FOREIGN KEY (fournisseur_id) REFERENCES fournisseur(id)
+Referenced by:
+    TABLE "mouvement" CONSTRAINT "mouvement_article_id_fkey" FOREIGN KEY (article_id) REFERENCES article(id) ON DELETE CASCADE
+
+--- 3. Jointure article / fournisseur
+   reference   |         libelle         |    fournisseur    | prix_ht 
+---------------+-------------------------+-------------------+---------
+ ALIM-650W     | Alimentation 650 W      | Nordic Hardware   |   74.90
+ BAIE-12U      | Baie murale 12U         | Accessoires Lyon  |  219.00
+ RJ45-CAT6-305 | Bobine câble Cat6 305 m | Tech Distribution |  129.50
+ SSD-1TO       | SSD NVMe 1 To           | Nordic Hardware   |   89.00
+ SW-24P        | Switch 24 ports         | Tech Distribution |  189.90
+(5 rows)
+
+--- 4. Stock calculé par la vue
+   reference   |         libelle         |    fournisseur    | prix_ht | quantite | valeur_stock 
+---------------+-------------------------+-------------------+---------+----------+--------------
+ ALIM-650W     | Alimentation 650 W      | Nordic Hardware   |   74.90 |        6 |       449.40
+ BAIE-12U      | Baie murale 12U         | Accessoires Lyon  |  219.00 |        4 |       876.00
+ RJ45-CAT6-305 | Bobine câble Cat6 305 m | Tech Distribution |  129.50 |        4 |       518.00
+ SSD-1TO       | SSD NVMe 1 To           | Nordic Hardware   |   89.00 |       12 |      1068.00
+ SW-24P        | Switch 24 ports         | Tech Distribution |  189.90 |        7 |      1329.30
+(5 rows)
+
+--- 5. Totaux du stock
+ unites | valeur_totale 
+--------+---------------
+     33 |       4240.70
+(1 row)
+
+--- 6. Derniers mouvements, avec le nom de l article
+   reference   |  sens  | quantite |    date    
+---------------+--------+----------+------------
+ BAIE-12U      | entree |        4 | 15/11/2026
+ ALIM-650W     | sortie |        2 | 15/11/2026
+ ALIM-650W     | entree |        8 | 15/11/2026
+ SSD-1TO       | sortie |       12 | 15/11/2026
+ SSD-1TO       | entree |       20 | 15/11/2026
+ RJ45-CAT6-305 | sortie |        1 | 15/11/2026
+(6 rows)
+
+--- 7. Répartition des mouvements par sens
+  sens  | nombre | unites 
+--------+--------+--------
+ entree |      6 |     57
+ sortie |      5 |     24
+(2 rows)
+
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

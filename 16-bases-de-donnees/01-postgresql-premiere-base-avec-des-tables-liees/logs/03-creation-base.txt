@@ -1,0 +1,53 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/creer-base.sh; echo "code de sortie: $?"
+[2026-11-15 01:33:42 · 6.1s · code 0]
+== 1. Rôle applicatif et base ==
+DROP DATABASE
+DROP ROLE
+CREATE ROLE
+CREATE DATABASE
+rôle lab_admin créé, mot de passe dans /root/.pgpass (non publié)
+
+== 2. Schéma ==
+SET
+DROP VIEW
+DROP TABLE
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE VIEW
+
+== 3. Données ==
+SET
+INSERT 0 3
+INSERT 0 5
+INSERT 0 9
+INSERT 0 2
+    table    | count 
+-------------+-------
+ fournisseur |     3
+ article     |     5
+ mouvement   |    11
+(3 rows)
+
+
+== 4. Écoute sur le réseau du lab ==
+Ver Cluster Port Status Owner    Data directory              Log file
+17  main    5432 online postgres /var/lib/postgresql/17/main /var/log/postgresql/postgresql-17-main.log
+LISTEN 0      200        10.0.3.10:5432      0.0.0.0:*    users:(("postgres",pid=4277,fd=8))                                          
+LISTEN 0      200        127.0.0.1:5432      0.0.0.0:*    users:(("postgres",pid=4277,fd=7))                                          
+LISTEN 0      200            [::1]:5432         [::]:*    users:(("postgres",pid=4277,fd=6))                                          
+
+== 5. Connexion TCP avec le rôle applicatif ==
+lab_admin sur 10.0.3.10/32:5432 — PostgreSQL 17.12 (Debian 17.12-0+deb13u1) on x86_64-pc-linux-gnu
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+NOTICE:  view "stock_par_article" does not exist, skipping
+NOTICE:  table "mouvement" does not exist, skipping
+NOTICE:  table "article" does not exist, skipping
+NOTICE:  table "fournisseur" does not exist, skipping
+

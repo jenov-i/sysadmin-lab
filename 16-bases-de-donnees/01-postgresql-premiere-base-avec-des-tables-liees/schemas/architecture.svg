@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" font-family="DejaVu Sans, Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a5568"/>
+    </marker>
+    <marker id="crow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 1 1 L 10 6 L 1 11" fill="none" stroke="#b7791f" stroke-width="1.8"/>
+    </marker>
+    <style>
+      .t { font-size: 25px; font-weight: 700; fill: #1a202c; }
+      .s { font-size: 14px; fill: #4a5568; }
+      .box { fill: #ffffff; stroke: #4a5568; stroke-width: 2; }
+      .tbl { fill: #f0fff4; stroke: #276749; stroke-width: 2; }
+      .view { fill: #ebf8ff; stroke: #2b6cb0; stroke-width: 2; }
+      .l { font-size: 15.5px; font-weight: 700; fill: #1a202c; }
+      .m { font-family: DejaVu Sans Mono, monospace; font-size: 12px; fill: #2d3748; }
+      .pk { font-family: DejaVu Sans Mono, monospace; font-size: 12px; font-weight: 700; fill: #276749; }
+      .n { font-size: 12px; fill: #4a5568; }
+      .rel { stroke: #b7791f; stroke-width: 2; fill: none; marker-end: url(#crow); }
+      .f { stroke: #4a5568; stroke-width: 2; fill: none; marker-end: url(#ar); }
+    </style>
+  </defs>
+  <rect width="1200" height="720" fill="#ffffff"/>
+  <text class="t" x="40" y="50">Base lab_stock — tables liées et vue de stock</text>
+  <text class="s" x="40" y="76">srv-debian13 · PostgreSQL 17.12 · rôle lab_admin · accès TCP 10.0.3.10:5432 (scram-sha-256)</text>
+
+  <!-- fournisseur -->
+  <rect class="tbl" x="40" y="120" width="300" height="150" rx="8"/>
+  <text class="l" x="60" y="150">fournisseur</text>
+  <text class="pk" x="60" y="176">id  PK</text>
+  <text class="m" x="60" y="196">nom  UNIQUE NOT NULL</text>
+  <text class="m" x="60" y="216">pays  char(2) NOT NULL</text>
+  <text class="n" x="60" y="246">3 lignes</text>
+
+  <!-- article -->
+  <rect class="tbl" x="450" y="105" width="320" height="200" rx="8"/>
+  <text class="l" x="470" y="135">article</text>
+  <text class="pk" x="470" y="161">id  PK</text>
+  <text class="m" x="470" y="181">reference  UNIQUE NOT NULL</text>
+  <text class="m" x="470" y="201">libelle  NOT NULL</text>
+  <text class="m" x="470" y="221">prix_ht  CHECK &gt; 0</text>
+  <text class="pk" x="470" y="241">fournisseur_id  FK</text>
+  <text class="n" x="470" y="271">5 lignes · index unique sur reference</text>
+
+  <!-- mouvement -->
+  <rect class="tbl" x="890" y="105" width="270" height="200" rx="8"/>
+  <text class="l" x="910" y="135">mouvement</text>
+  <text class="pk" x="910" y="161">id  PK</text>
+  <text class="pk" x="910" y="181">article_id  FK</text>
+  <text class="m" x="910" y="201">sens  CHECK entree/sortie</text>
+  <text class="m" x="910" y="221">quantite  CHECK &gt; 0</text>
+  <text class="m" x="910" y="241">le  timestamptz</text>
+  <text class="n" x="910" y="271">11 lignes · ON DELETE CASCADE</text>
+
+  <!-- relations -->
+  <path class="rel" d="M 340 195 L 446 195"/>
+  <text class="n" x="352" y="184">1 → N</text>
+  <path class="rel" d="M 770 195 L 886 195"/>
+  <text class="n" x="790" y="184">1 → N</text>
+
+  <!-- vue -->
+  <rect class="view" x="450" y="380" width="710" height="150" rx="8"/>
+  <text class="l" x="470" y="410">Vue stock_par_article</text>
+  <text class="m" x="470" y="438">reference · libelle · fournisseur · prix_ht</text>
+  <text class="m" x="470" y="460">quantite = SUM(entrees) - SUM(sorties)</text>
+  <text class="m" x="470" y="482">valeur_stock = quantite x prix_ht</text>
+  <text class="n" x="470" y="508">Résultat vérifié : 33 unités, 4 240,70 € de valeur totale</text>
+
+  <!-- acces -->
+  <rect class="box" x="40" y="330" width="340" height="200" rx="8"/>
+  <text class="l" x="60" y="360">Chemin d'accès testé</text>
+  <text class="m" x="60" y="388">psql -h 10.0.3.10</text>
+  <text class="m" x="60" y="408">     -U lab_admin -d lab_stock</text>
+  <text class="n" x="60" y="436">pg_hba en tête :</text>
+  <text class="m" x="60" y="456">host lab_stock lab_admin</text>
+  <text class="m" x="60" y="476">     10.0.3.0/24 scram-sha-256</text>
+  <text class="n" x="60" y="504">mot de passe dans /root/.pgpass (600),</text>
+  <text class="n" x="60" y="522">jamais publié</text>
+
+  <!-- bas -->
+  <rect class="box" x="40" y="640" width="1120" height="50" rx="8"/>
+  <text class="n" x="60" y="670">Contraintes vérifiées en transaction annulée : FK 999 refusée, quantité 0 refusée, prix négatif refusé, CASCADE confirmé (2 → 0 → 2 mouvements).</text>
+
+  <path class="f" d="M 610 305 L 610 376"/>
+  <text class="n" x="622" y="344">agrégation</text>
+</svg>
