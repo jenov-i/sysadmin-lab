@@ -1,0 +1,20 @@
+# Sur Debian, le paquet netplan.io ne fournit aucun générateur systemd :
+# `netplan generate` écrit dans /run/systemd/network (tmpfs), donc la
+# configuration disparaît au redémarrage. Cette unité régénère les fichiers
+# avant que systemd-networkd ne démarre.
+[Unit]
+Description=Génère la configuration netplan pour systemd-networkd
+Documentation=man:netplan(5)
+DefaultDependencies=no
+Before=systemd-networkd.service network-pre.target
+After=local-fs.target
+Wants=network-pre.target
+ConditionDirectoryNotEmpty=/etc/netplan
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/netplan generate
+RemainAfterExit=yes
+
+[Install]
+WantedBy=systemd-networkd.service

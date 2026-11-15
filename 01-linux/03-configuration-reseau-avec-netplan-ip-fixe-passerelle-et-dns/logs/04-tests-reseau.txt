@@ -1,0 +1,54 @@
+# Transcript — VM srv-debian13
+
+$ bash -lc 'systemctl is-active systemd-networkd networking; echo; ping -c 3 10.0.3.2; echo; ping -c 3 10.0.3.3; echo; getent hosts deb.debian.org; echo; cat /etc/resolv.conf | grep -v "^#"; echo; netplan status 2>&1 | head -20'
+[2026-11-15 01:13:22 · 4.6s · code 0]
+active
+active
+
+PING 10.0.3.2 (10.0.3.2) 56(84) bytes of data.
+64 bytes from 10.0.3.2: icmp_seq=1 ttl=255 time=0.409 ms
+64 bytes from 10.0.3.2: icmp_seq=2 ttl=255 time=0.244 ms
+64 bytes from 10.0.3.2: icmp_seq=3 ttl=255 time=0.281 ms
+
+--- 10.0.3.2 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2042ms
+rtt min/avg/max/mdev = 0.244/0.311/0.409/0.070 ms
+
+PING 10.0.3.3 (10.0.3.3) 56(84) bytes of data.
+64 bytes from 10.0.3.3: icmp_seq=1 ttl=255 time=0.813 ms
+64 bytes from 10.0.3.3: icmp_seq=2 ttl=255 time=0.632 ms
+64 bytes from 10.0.3.3: icmp_seq=3 ttl=255 time=0.391 ms
+
+--- 10.0.3.3 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2011ms
+rtt min/avg/max/mdev = 0.391/0.612/0.813/0.172 ms
+
+2a04:4e42::644  debian.map.fastlydns.net deb.debian.org
+2a04:4e42:200::644 debian.map.fastlydns.net deb.debian.org
+2a04:4e42:400::644 debian.map.fastlydns.net deb.debian.org
+2a04:4e42:600::644 debian.map.fastlydns.net deb.debian.org
+
+nameserver 10.0.2.3
+
+Call failed: The name org.freedesktop.resolve1 was not provided by any .service files
+     Online state: offline
+    DNS Addresses: 10.0.2.3
+
+●  1: lo ethernet UNKNOWN/UP (unmanaged)
+      MAC Address: 00:00:00:00:00:00
+        Addresses: 127.0.0.1/8
+                   ::1/128
+
+●  2: ens3 ethernet UP (networkd: ens3)
+      MAC Address: 52:54:00:12:34:56 (Red Hat, Inc.)
+        Addresses: 10.0.2.15/24 (dynamic, dhcp)
+                   fec0::5054:ff:fe12:3456/64 (dynamic, ra)
+                   fec0::6e99:214f:a3d6:eb27/64 (dynamic, ra)
+                   fe80::5054:ff:fe12:3456/64 (link)
+                   fe80::3c30:61f9:a0ce:ae9d/64 (link)
+           Routes: default via 10.0.2.2 from 10.0.2.15 metric 1002 (dhcp)
+                   10.0.2.0/24 from 10.0.2.15 metric 1002 (dhcp, link)
+                   10.0.2.2 from 10.0.2.15 metric 100 (dhcp, link)
+                   fe80::/64 metric 256
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

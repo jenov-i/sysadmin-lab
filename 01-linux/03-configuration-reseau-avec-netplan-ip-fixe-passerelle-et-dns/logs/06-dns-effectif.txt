@@ -1,0 +1,32 @@
+# Transcript — VM srv-debian13
+
+$ bash -lc 'echo "--- /etc/resolv.conf"; grep -vE "^#|^$" /etc/resolv.conf; echo; echo "--- /run/systemd/resolve/resolv.conf"; grep -vE "^#|^$" /run/systemd/resolve/resolv.conf; echo; echo "--- networkctl status ens4"; networkctl status ens4 --no-pager | head -12; echo; echo "--- résolution"; getent ahostsv4 deb.debian.org | head -2'
+[2026-11-15 01:15:22 · 0.3s · code 0]
+--- /etc/resolv.conf
+nameserver 127.0.0.53
+options edns0 trust-ad
+search lab.local
+
+--- /run/systemd/resolve/resolv.conf
+nameserver 10.0.3.3
+search lab.local
+
+--- networkctl status ens4
+● 3: ens4
+                   Link File: /usr/lib/systemd/network/99-default.link
+                Network File: /run/systemd/network/10-netplan-ens4.network
+                       State: routable (configured)
+                Online state: online
+                        Type: ether
+                        Path: pci-0000:00:04.0
+                      Driver: virtio_net
+                      Vendor: Red Hat, Inc.
+                       Model: Virtio network device
+           Alternative Names: enp0s4
+                              enx525400123457
+
+--- résolution
+151.101.130.132 STREAM debian.map.fastlydns.net
+151.101.130.132 DGRAM  
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

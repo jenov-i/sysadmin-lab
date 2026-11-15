@@ -1,0 +1,29 @@
+# Transcript — VM srv-debian13
+
+$ bash -lc 'uptime -p; echo; systemctl is-active systemd-networkd networking systemd-resolved netplan-generate; echo; ip -4 -br addr; echo; ip route; echo; ping -c 2 10.0.3.2 | tail -2; echo; getent ahostsv4 deb.debian.org | head -1; echo; sha256sum /etc/netplan/01-lab.yaml'
+[2026-11-15 01:19:25 · 6.5s · code 0]
+up 0 minutes
+
+active
+inactive
+active
+active
+
+lo               UNKNOWN        127.0.0.1/8 
+ens3             UP             10.0.2.15/24 metric 100 
+ens4             UP             10.0.3.10/24 
+
+default via 10.0.2.2 dev ens3 proto dhcp src 10.0.2.15 metric 100 
+default via 10.0.3.2 dev ens4 proto static metric 2000 
+10.0.2.0/24 dev ens3 proto kernel scope link src 10.0.2.15 metric 100 
+10.0.2.2 dev ens3 proto dhcp scope link src 10.0.2.15 metric 100 
+10.0.3.0/24 dev ens4 proto kernel scope link src 10.0.3.10 
+
+2 packets transmitted, 2 received, 0% packet loss, time 1022ms
+rtt min/avg/max/mdev = 0.193/0.313/0.433/0.120 ms
+
+151.101.2.132   STREAM debian.map.fastlydns.net
+
+74cb5de04a75e924d065f65e5afa991303852937971536802faf4a20b48dee4c  /etc/netplan/01-lab.yaml
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

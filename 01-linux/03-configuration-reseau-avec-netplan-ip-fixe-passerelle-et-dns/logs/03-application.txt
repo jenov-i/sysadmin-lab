@@ -1,0 +1,45 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/appliquer-netplan.sh; echo "code de sortie: $?"
+[2026-11-15 01:13:11 · 4.7s · code 0]
+== 1. Dépôt du fichier de configuration ==
+# /etc/netplan/01-lab.yaml
+# Configuration réseau de srv-debian13 — écrite pour netplan 1.1.2 (Debian 13),
+# rendu par systemd-networkd.
+#
+# ens3 : carte NAT de l'hyperviseur QEMU (10.0.2.0/24).
+...
+
+== 2. Validation ==
+netplan generate : OK
+
+== 3. Bascule de ifupdown vers systemd-networkd ==
+
+== 4. Application ==
+
+== 5. État obtenu ==
+lo               UNKNOWN        127.0.0.1/8 
+ens3             UP             10.0.2.15/24 metric 100 
+ens4             UP             10.0.3.10/24 
+
+default via 10.0.2.2 dev ens3 proto dhcp src 10.0.2.15 metric 100 
+default via 10.0.3.2 dev ens4 proto static metric 500 
+10.0.2.0/24 dev ens3 proto kernel scope link src 10.0.2.15 metric 100 
+10.0.2.2 dev ens3 proto dhcp scope link src 10.0.2.15 metric 100 
+10.0.3.0/24 dev ens4 proto kernel scope link src 10.0.3.10 
+
+LISTEN 0      128          0.0.0.0:22        0.0.0.0:*    users:(("sshd",pid=740,fd=6))                                                     
+LISTEN 0      128             [::]:22           [::]:*    users:(("sshd",pid=740,fd=7))                                                     
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+Created symlink '/etc/systemd/system/dbus-org.freedesktop.network1.service' → '/usr/lib/systemd/system/systemd-networkd.service'.
+Created symlink '/etc/systemd/system/multi-user.target.wants/systemd-networkd.service' → '/usr/lib/systemd/system/systemd-networkd.service'.
+Created symlink '/etc/systemd/system/sockets.target.wants/systemd-networkd.socket' → '/usr/lib/systemd/system/systemd-networkd.socket'.
+Created symlink '/etc/systemd/system/sysinit.target.wants/systemd-network-generator.service' → '/usr/lib/systemd/system/systemd-network-generator.service'.
+Created symlink '/etc/systemd/system/network-online.target.wants/systemd-networkd-wait-online.service' → '/usr/lib/systemd/system/systemd-networkd-wait-online.service'.
+Synchronizing state of networking.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
+Executing: /usr/lib/systemd/systemd-sysv-install disable networking
+Removed '/etc/systemd/system/network-online.target.wants/networking.service'.
+Removed '/etc/systemd/system/multi-user.target.wants/networking.service'.
+systemd-networkd is not running, output might be incomplete.
+

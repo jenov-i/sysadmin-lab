@@ -7,6 +7,7 @@ Projets d'administration systèmes, réseaux et cybersécurité réalisés en la
 <!-- PROJETS:START -->
 | Projet | Catégorie | Date |
 |---|---|---|
+| [Configuration réseau avec netplan : IP fixe, passerelle et DNS](01-linux/03-configuration-reseau-avec-netplan-ip-fixe-passerelle-et-dns) | Linux | 2026-11-15 |
 | [Dépôt APT local avec apt-ftparchive et nginx](01-linux/02-depot-apt-local-avec-apt-ftparchive-et-nginx) | Linux | 2026-11-15 |
 | [Installation de Debian 13 avec partitionnement LVM](01-linux/01-installation-de-debian-13-avec-partitionnement-lvm) | Linux | 2026-11-15 |
 

@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" font-family="DejaVu Sans, Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a5568"/>
+    </marker>
+    <style>
+      .t { font-size: 25px; font-weight: 700; fill: #1a202c; }
+      .s { font-size: 14px; fill: #4a5568; }
+      .b { fill: #ffffff; stroke: #4a5568; stroke-width: 2; }
+      .src { fill: #ebf8ff; stroke: #2b6cb0; stroke-width: 2; }
+      .svc { fill: #f0fff4; stroke: #276749; stroke-width: 2; }
+      .nic { fill: #fffaf0; stroke: #b7791f; stroke-width: 2; }
+      .l { font-size: 15.5px; font-weight: 700; fill: #1a202c; }
+      .m { font-family: DejaVu Sans Mono, monospace; font-size: 12.5px; fill: #2d3748; }
+      .n { font-size: 12px; fill: #4a5568; }
+      .f { stroke: #4a5568; stroke-width: 2; fill: none; marker-end: url(#ar); }
+    </style>
+  </defs>
+  <rect width="1200" height="700" fill="#ffffff"/>
+  <text class="t" x="40" y="50">Chaîne netplan → systemd-networkd → interfaces</text>
+  <text class="s" x="40" y="76">srv-debian13 · Debian 13.2 · netplan 1.1.2 · systemd-networkd 257 · systemd-resolved</text>
+
+  <!-- source -->
+  <rect class="src" x="40" y="120" width="300" height="170" rx="10"/>
+  <text class="l" x="60" y="150">/etc/netplan/01-lab.yaml</text>
+  <text class="m" x="60" y="178">renderer: networkd</text>
+  <text class="m" x="60" y="200">ens3: dhcp4 true</text>
+  <text class="m" x="60" y="222">ens4: 10.0.3.10/24</text>
+  <text class="m" x="60" y="244">      via 10.0.3.2</text>
+  <text class="m" x="60" y="266">      dns 10.0.3.3</text>
+
+  <!-- generateur -->
+  <rect class="b" x="40" y="330" width="300" height="120" rx="10"/>
+  <text class="l" x="60" y="360">netplan-generate.service</text>
+  <text class="n" x="60" y="384">unité ajoutée : le paquet Debian</text>
+  <text class="n" x="60" y="404">netplan.io n'en fournit aucune,</text>
+  <text class="n" x="60" y="424">/run est un tmpfs vidé au boot</text>
+
+  <!-- fichiers générés -->
+  <rect class="b" x="420" y="120" width="330" height="170" rx="10"/>
+  <text class="l" x="440" y="150">/run/systemd/network/</text>
+  <text class="m" x="440" y="180">10-netplan-ens3.network</text>
+  <text class="m" x="440" y="204">10-netplan-ens4.network</text>
+  <text class="n" x="440" y="236">générés par netplan generate</text>
+  <text class="n" x="440" y="256">(et non écrits à la main)</text>
+
+  <!-- networkd -->
+  <rect class="svc" x="420" y="330" width="330" height="120" rx="10"/>
+  <text class="l" x="440" y="360">systemd-networkd</text>
+  <text class="n" x="440" y="384">applique les .network, client DHCP</text>
+  <text class="n" x="440" y="404">et routes statiques</text>
+
+  <!-- resolved -->
+  <rect class="svc" x="420" y="490" width="330" height="110" rx="10"/>
+  <text class="l" x="440" y="520">systemd-resolved</text>
+  <text class="n" x="440" y="544">stub 127.0.0.53 dans /etc/resolv.conf</text>
+  <text class="n" x="440" y="564">résolveurs réels : 10.0.3.3</text>
+
+  <!-- NICs -->
+  <rect class="nic" x="820" y="120" width="340" height="170" rx="10"/>
+  <text class="l" x="840" y="150">ens3 — réseau NAT</text>
+  <text class="m" x="840" y="178">10.0.2.15/24 (DHCP)</text>
+  <text class="m" x="840" y="200">gw 10.0.2.2 · metric 100</text>
+  <text class="n" x="840" y="228">SSH de gestion : tcp/2222 → 22</text>
+  <text class="n" x="840" y="248">route par défaut principale</text>
+
+  <rect class="nic" x="820" y="330" width="340" height="170" rx="10"/>
+  <text class="l" x="840" y="360">ens4 — réseau du lab</text>
+  <text class="m" x="840" y="388">10.0.3.10/24 (statique)</text>
+  <text class="m" x="840" y="410">gw 10.0.3.2 · metric 2000</text>
+  <text class="n" x="840" y="438">DNS 10.0.3.3 · search lab.local</text>
+  <text class="n" x="840" y="458">route de secours, jamais prioritaire</text>
+
+  <!-- flèches -->
+  <path class="f" d="M 190 292 L 190 326"/>
+  <path class="f" d="M 340 180 L 416 180"/>
+  <path class="f" d="M 585 292 L 585 326"/>
+  <path class="f" d="M 585 452 L 585 486"/>
+  <path class="f" d="M 750 180 L 816 180"/>
+  <path class="f" d="M 750 380 L 816 380"/>
+  <path class="f" d="M 750 545 L 816 470"/>
+
+  <!-- bas -->
+  <rect class="b" x="40" y="630" width="1120" height="50" rx="8"/>
+  <text class="n" x="60" y="660">Après redémarrage : ens4 conserve 10.0.3.10/24, la passerelle répond, deb.debian.org se résout — vérifié le 15/11/2026.</text>
+</svg>

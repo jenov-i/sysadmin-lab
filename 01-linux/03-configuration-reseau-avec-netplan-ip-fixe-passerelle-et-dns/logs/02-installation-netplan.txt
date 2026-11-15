@@ -1,0 +1,37 @@
+# Transcript — VM srv-debian13
+
+$ bash -lc 'apt-get install -y netplan.io 2>&1 | tail -3; netplan --version; systemctl is-enabled systemd-networkd; lsmod >/dev/null; echo'
+[2026-11-15 01:12:54 · 7.3s · code 0]
+Processing triggers for libc-bin (2.41-12+deb13u4) ...
+Processing triggers for man-db (2.13.1-1) ...
+Processing triggers for dbus (1.16.2-2) ...
+disabled
+
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+You need to specify a command
+usage: /usr/sbin/netplan  [-h] [--debug]  ...
+
+Network configuration in YAML
+
+options:
+  -h, --help  show this help message and exit
+  --debug     Enable debug messages
+
+Available commands:
+  
+    help      Show this help message
+    apply     Apply current netplan config to running system
+    generate  Generate backend specific configuration files from
+              /etc/netplan/*.yaml
+    get       Get a setting by specifying a nested key like
+              "ethernets.eth0.addresses", or "all"
+    info      Show available features
+    ip        Retrieve IP information from the system
+    set       Add new setting by specifying a dotted key=value pair like
+              ethernets.eth0.dhcp4=true
+    rebind    Rebind SR-IOV virtual functions of given physical functions to
+              their driver
+    status    Query networking state of the running system
+    try       Try to apply a new netplan config to running system, with
+              automatic rollback
+

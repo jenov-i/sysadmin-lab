@@ -72,6 +72,7 @@ Script exécuté sur la machine :
 | Les tailles obtenues ne correspondaient pas à la recette (`/` 5,72 Gio au lieu de 6, `/tmp` 7,13 Gio au lieu de 1) | `partman-auto` redistribue l'espace libre du groupe entre les volumes ; une fourchette large laisse la main à l'installateur | Compris et documenté : pour imposer une taille stricte, il faut donner la même valeur en minimum et en maximum dans la recette — vérifié avec `lvs` |
 | `vgs`/`lvs` affichaient `File descriptor 4 leaked on vgs invocation` | `openvt` transmet un descripteur ouvert à la commande lancée sur la console virtuelle | `exec 4>&-` en tête du script de capture ; le message a disparu des captures publiées |
 | Installation longue (environ 25 minutes) | Les paquets venaient du miroir réseau `deb.debian.org` à travers le NAT QEMU | Acceptable ici ; pour aller plus vite, utiliser le dépôt du CD (`apt-setup/use_mirror boolean false`) |
+| Le serveur s'appelait `debian` et non `srv-debian13` | La directive `netcfg/get_hostname` du preseed n'a pas été retenue par l'installeur | Corrigé après coup avec `hostnamectl set-hostname srv-debian13` et l'entrée `127.0.1.1` de `/etc/hosts` ; à vérifier systématiquement en fin d'installation |
 
 ## Durée et publication
 

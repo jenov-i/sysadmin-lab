@@ -1,0 +1,39 @@
+# /etc/netplan/01-lab.yaml
+# Configuration réseau de srv-debian13 — écrite pour netplan 1.1.2 (Debian 13),
+# rendu par systemd-networkd.
+#
+# ens3 : carte NAT de l'hyperviseur QEMU (10.0.2.0/24).
+#        Elle garde le DHCP : c'est par là que passent l'accès Internet et SSH.
+# ens4 : carte du réseau du lab (10.0.3.0/24), adresse fixe.
+#        Elle ne dépend d'aucun serveur DHCP : c'est le cas d'un serveur
+#        qu'on raccorde à un segment d'administration.
+network:
+  version: 2
+  renderer: networkd
+
+  ethernets:
+    ens3:
+      dhcp4: true
+      # Le bail DHCP de QEMU annonce un DNS (10.0.2.3) que l'on n'utilise pas :
+      # les résolveurs sont déclarés une seule fois, sur ens4.
+      dhcp4-overrides:
+        use-dns: false
+        use-routes: true
+
+    ens4:
+      dhcp4: false
+      addresses:
+        - 10.0.3.10/24
+      # Passerelle du segment de lab. Métrique volontairement très haute (2000) :
+      # la route DHCP de ens3 sort en 1002, elle doit rester prioritaire.
+      routes:
+        - to: default
+          via: 10.0.3.2
+          metric: 2000
+      nameservers:
+        addresses:
+          - 10.0.3.3      # résolveur du lab (QEMU user-net)
+        search:
+          - lab.local
+      # Pas de SLAAC ni de DHCPv6 sur ce segment.
+      accept-ra: false
