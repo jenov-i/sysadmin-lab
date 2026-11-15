@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" font-family="DejaVu Sans, Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a5568"/>
+    </marker>
+    <style>
+      .t { font-size: 25px; font-weight: 700; fill: #1a202c; }
+      .s { font-size: 14px; fill: #4a5568; }
+      .net { fill: #f7fafc; stroke: #4a5568; stroke-width: 2; }
+      .srv { fill: #ebf8ff; stroke: #2b6cb0; stroke-width: 2; }
+      .ok { fill: #f0fff4; stroke: #276749; stroke-width: 2; }
+      .ko { fill: #fff5f5; stroke: #c53030; stroke-width: 2; }
+      .b { fill: #ffffff; stroke: #4a5568; stroke-width: 2; }
+      .l { font-size: 15.5px; font-weight: 700; fill: #1a202c; }
+      .m { font-family: DejaVu Sans Mono, monospace; font-size: 12px; fill: #2d3748; }
+      .n { font-size: 12px; fill: #4a5568; }
+      .f { stroke: #4a5568; stroke-width: 2; fill: none; marker-end: url(#ar); }
+      .g { stroke: #276749; stroke-width: 2.5; fill: none; marker-end: url(#ar); }
+      .x { stroke: #c53030; stroke-width: 2.5; fill: none; stroke-dasharray: 7 5; marker-end: url(#ar); }
+    </style>
+  </defs>
+  <rect width="1200" height="700" fill="#ffffff"/>
+  <text class="t" x="40" y="50">Un serveur NTP pour tout le réseau</text>
+  <text class="s" x="40" y="76">srv-debian13 · chrony 4.6.1 · amont pool Debian · références en stratum 1 et 2</text>
+
+  <!-- amont -->
+  <rect class="net" x="40" y="120" width="250" height="150" rx="10"/>
+  <text class="l" x="60" y="150">Amont Internet</text>
+  <text class="m" x="60" y="178">pool 2.debian.pool.ntp.org</text>
+  <text class="m" x="60" y="200">tick.sanren.ac.za (stratum 1)</text>
+  <text class="m" x="60" y="222">ntp6.inx.net.za (stratum 2)</text>
+  <text class="m" x="60" y="244">jnb.clearnet.pw (stratum 2)</text>
+  <text class="n" x="60" y="262">offsets mesurés : dizaines de µs</text>
+
+  <!-- serveur -->
+  <rect class="srv" x="390" y="120" width="330" height="150" rx="10"/>
+  <text class="l" x="412" y="150">srv-debian13 — serveur NTP</text>
+  <text class="m" x="412" y="178">écoute 0.0.0.0:123 (UDP)</text>
+  <text class="m" x="412" y="200">stratum 2 · réf. tick.sanren.ac.za</text>
+  <text class="m" x="412" y="222">allow 10.0.9.0/24</text>
+  <text class="n" x="412" y="246">systemd-timesyncd désactivé</text>
+  <text class="n" x="412" y="262">NTP + serveur : deux rôles dans chrony</text>
+
+  <path class="f" d="M 290 195 L 386 195"/>
+  <text class="n" x="300" y="185">interroge</text>
+
+  <!-- client autorisé -->
+  <rect class="ok" x="820" y="110" width="340" height="120" rx="10"/>
+  <text class="l" x="842" y="140">client-ntp — 10.0.9.50</text>
+  <text class="m" x="842" y="166">chronyd -Q 'server 10.0.9.1'</text>
+  <text class="m" x="842" y="188">System clock wrong by 0.000010 s</text>
+  <text class="n" x="842" y="212">3 paquets NTP reçus côté serveur, 0 perdu</text>
+
+  <path class="g" d="M 720 160 C 770 150 780 152 816 158"/>
+  <text class="n" x="738" y="146">123/udp</text>
+
+  <!-- client refusé -->
+  <rect class="ko" x="820" y="262" width="340" height="120" rx="10"/>
+  <text class="l" x="842" y="292">client-refuse — 10.0.8.50</text>
+  <text class="m" x="842" y="318">chronyd -Q -t 6 'server 10.0.8.1'</text>
+  <text class="m" x="842" y="340">Timeout reached (aucune réponse)</text>
+  <text class="n" x="842" y="364">hors de allow : les paquets sont ignorés</text>
+
+  <path class="x" d="M 720 210 C 780 240 780 300 816 318"/>
+  <text class="n" x="760" y="300">refusé</text>
+
+  <!-- veth -->
+  <text class="n" x="740" y="394">Les deux clients sont des namespaces réseau reliés par veth :</text>
+  <text class="m" x="740" y="414">veth-ntp 10.0.9.1/24 · veth-ref 10.0.8.1/24</text>
+
+  <!-- bas -->
+  <rect class="b" x="40" y="330" width="520" height="220" rx="10"/>
+  <text class="l" x="60" y="362">Le piège rencontré</text>
+  <text class="m" x="60" y="390">local stratum 10</text>
+  <text class="n" x="60" y="412">Avec cette directive, chronyc tracking restait au stratum 10</text>
+  <text class="n" x="60" y="430">(référence 127.127.1.1) alors qu'une source amont était</text>
+  <text class="n" x="60" y="448">sélectionnée : le serveur ne suivait pas l'heure réelle.</text>
+  <text class="n" x="60" y="472">Après retrait et redémarrage : stratum 2, réf. tick.sanren.ac.za,</text>
+  <text class="n" x="60" y="490">offset de -0,0002 s, fréquence 14 ppm.</text>
+  <text class="n" x="60" y="512">Leçon : ne pas masquer un problème de synchronisation avec</text>
+  <text class="n" x="60" y="528">une référence locale.</text>
+
+  <rect class="b" x="590" y="430" width="570" height="100" rx="10"/>
+  <text class="l" x="610" y="460">Preuves mesurées</text>
+  <text class="m" x="610" y="486">chronyc clients → 10.0.9.50 · 9 requêtes · 0 drop</text>
+  <text class="m" x="610" y="508">chronyc serverstats → 9 paquets NTP reçus, 0 perdu</text>
+
+  <rect class="b" x="40" y="560" width="1120" height="50" rx="8"/>
+  <text class="n" x="60" y="590">Amont réel, serveur réel, clients réels : le serveur répond à un client autorisé et ignore un client hors réseau, mesuré par les deux côtés.</text>
+</svg>

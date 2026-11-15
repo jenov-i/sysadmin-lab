@@ -1,0 +1,37 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/04-tester-clients.sh; echo "code de sortie: $?"
+[2026-11-15 14:23:46 · 10.8s · code 0]
+== 1. Deux LAN de test rattachés à la machine ==
+--- côté serveur
+  veth-ntp@if8     UP             10.0.9.1/24 fe80::b449:2eff:fe99:659f/64 
+  veth-ref@if10    UP             10.0.8.1/24 fe80::446b:bdff:fe07:9d66/64 
+--- côté clients
+  client-ntp   ntp0@if9         UP             10.0.9.50/24 fe80::ec96:b1ff:fed1:3b41/64 
+  client-refuse ref0@if11        UP             10.0.8.50/24 fe80::982e:f6ff:fe52:d02c/64 
+
+== 2. Client autorisé : une requête NTP réelle ==
+2026-11-15T13:23:46Z chronyd version 4.6.1 starting (+CMDMON +NTP +REFCLOCK +RTC +PRIVDROP +SCFILTER +SIGND +ASYNCDNS +NTS +SECHASH +IPV6 -DEBUG)
+2026-11-15T13:23:46Z Disabled control of system clock
+2026-11-15T13:23:50Z System clock wrong by 0.001788 seconds (ignored)
+2026-11-15T13:23:50Z chronyd exiting
+code du client autorisé : 0
+
+== 3. Ce que le serveur a vu ==
+Hostname                      NTP   Drop Int IntL Last     Cmd   Drop Int  Last
+===============================================================================
+10.0.9.50                       6      0   1   -     0       0      0   -     -
+NTP packets received       : 6
+NTP packets dropped        : 0
+Command packets received   : 11
+Command packets dropped    : 0
+
+== 4. Client hors réseau autorisé ==
+2026-11-15T13:23:50Z chronyd version 4.6.1 starting (+CMDMON +NTP +REFCLOCK +RTC +PRIVDROP +SCFILTER +SIGND +ASYNCDNS +NTS +SECHASH +IPV6 -DEBUG)
+2026-11-15T13:23:50Z Disabled control of system clock
+2026-11-15T13:23:56Z Timeout reached
+2026-11-15T13:23:56Z chronyd exiting
+-> refus attendu : le serveur ignore les paquets venant de 10.0.8.0/24
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

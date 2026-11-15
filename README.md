@@ -9,6 +9,7 @@ Projets d'administration systèmes, réseaux et cybersécurité réalisés en la
 |---|---|---|
 | [PostgreSQL : première base avec des tables liées](16-bases-de-donnees/01-postgresql-premiere-base-avec-des-tables-liees) | Bases de données & données | 2026-11-15 |
 | [Créer sa propre autorité de certification avec OpenSSL](10-identite-pki/04-creer-sa-propre-autorite-de-certification-avec-openssl) | Identité, annuaires & PKI | 2026-11-15 |
+| [Mettre en place un serveur NTP pour tout le réseau](08-services-reseau/08-mettre-en-place-un-serveur-ntp-pour-tout-le-reseau) | Services réseau & applicatifs | 2026-11-15 |
 | [Serveur DNS local avec Bind9 : zones directe et inverse](08-services-reseau/01-serveur-dns-local-avec-bind9-zones-directe-et-inverse) | Services réseau & applicatifs | 2026-11-15 |
 | [Configurer le routage statique entre trois routeurs](03-reseaux/03-configurer-le-routage-statique-entre-trois-routeurs) | Réseaux (LAN/WAN) | 2026-11-15 |
 | [Maîtriser journalctl : filtres, priorités, persistance des logs](01-linux/05-maitriser-journalctl-filtres-priorites-persistance-des-logs) | Linux | 2026-11-15 |

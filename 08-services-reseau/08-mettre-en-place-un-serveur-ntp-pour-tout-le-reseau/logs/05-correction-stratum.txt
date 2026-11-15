@@ -1,0 +1,46 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/03-corriger-et-verifier.sh; echo "code de sortie: $?"
+[2026-11-15 14:22:28 · 20.2s · code 0]
+== 1. Configuration corrigée ==
+pool 2.debian.pool.ntp.org iburst
+driftfile /var/lib/chrony/chrony.drift
+rtcsync
+makestep 1 3
+maxupdateskew 100.0
+allow 10.0.9.0/24
+keyfile /etc/chrony/chrony.keys
+
+== 2. Redémarrage, puis 20 s de convergence ==
+active
+Reference ID    : 9BE81306 (tick.sanren.ac.za)
+Stratum         : 2
+Ref time (UTC)  : Sun Nov 15 13:22:35 2026
+System time     : 0.000000211 seconds fast of NTP time
+Last offset     : -0.000201310 seconds
+RMS offset      : 0.000201310 seconds
+Frequency       : 14.355 ppm fast
+Residual freq   : -51.660 ppm
+Skew            : 31.455 ppm
+Root delay      : 0.088149510 seconds
+Root dispersion : 0.002522334 seconds
+Update interval : 2.0 seconds
+Leap status     : Normal
+
+== 3. Sources amont réellement utilisées ==
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^+ dns.0.za.jsdaav.net           2   6    17    12    -14us[ -215us] +/-   68ms
+^+ ntp6.inx.net.za               2   6    17    13    +19us[ -183us] +/-   77ms
+^* tick.sanren.ac.za             1   6    17    12  -2003us[-2205us] +/-   45ms
+^+ jnb.clearnet.pw               2   6    17    12  -1081us[-1282us] +/-   81ms
+
+== 4. Le serveur a bien reçu des paquets NTP de l'amont ==
+NTP packets received       : 0
+NTP packets dropped        : 0
+Command packets received   : 7
+Command packets dropped    : 0
+UNCONN 0      0             0.0.0.0:123       0.0.0.0:*    users:(("chronyd",pid=1693,fd=7))        
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

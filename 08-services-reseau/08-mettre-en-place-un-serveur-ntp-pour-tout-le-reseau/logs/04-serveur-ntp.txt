@@ -1,0 +1,52 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/02-configurer-serveur-ntp.sh; echo "code de sortie: $?"
+[2026-11-15 14:21:52 · 3.6s · code 0]
+== 1. Configuration en place ==
+pool 2.debian.pool.ntp.org iburst
+driftfile /var/lib/chrony/chrony.drift
+rtcsync
+makestep 1 3
+maxupdateskew 100.0
+allow 10.0.9.0/24
+local stratum 10
+keyfile /etc/chrony/chrony.keys
+
+== 2. Redémarrage et écoute ==
+active
+UNCONN 0      0             0.0.0.0:123       0.0.0.0:*    users:(("chronyd",pid=1573,fd=7))        
+
+== 3. Synchronisation avec l'amont ==
+Reference ID    : 7F7F0101 ()
+Stratum         : 10
+Ref time (UTC)  : Sun Nov 15 13:21:51 2026
+System time     : 0.000000000 seconds fast of NTP time
+Last offset     : +0.000000000 seconds
+RMS offset      : 0.000000000 seconds
+Frequency       : 0.000 ppm slow
+Residual freq   : +0.000 ppm
+Skew            : 0.000 ppm
+Root delay      : 0.000000000 seconds
+Root dispersion : 0.000000000 seconds
+Update interval : 0.0 seconds
+Leap status     : Normal
+
+
+  .-- Source mode  '^' = server, '=' = peer, '#' = local clock.
+ / .- Source state '*' = current best, '+' = combined, '-' = not combined,
+| /             'x' = may be in error, '~' = too variable, '?' = unusable.
+||                                                 .- xxxx [ yyyy ] +/- zzzz
+||      Reachability register (octal) -.           |  xxxx = adjusted offset,
+||      Log2(Polling interval) --.      |          |  yyyy = measured offset,
+||                                \     |          |  zzzz = estimated error.
+
+== 4. Réglages de service ==
+NTP packets received       : 0
+NTP packets dropped        : 0
+Command packets received   : 7
+Command packets dropped    : 0
+Client log records dropped : 0
+NTS-KE connections accepted: 0
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

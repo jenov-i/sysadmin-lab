@@ -1,0 +1,27 @@
+# Transcript — VM srv-debian13
+
+$ bash -lc 'hostname; timedatectl | head -6; echo; dpkg-query -W -f=\"\\${Status}\\n\" chrony 2>/dev/null || echo chrony absent; systemctl is-active systemd-timesyncd 2>/dev/null; echo; ip -br a | grep -v ^lo; echo; ip route; echo; ping -c1 -W2 1.1.1.1 2>&1 | tail -2'
+[2026-11-15 14:20:34 · 0.5s · code 0]
+srv-debian13
+               Local time: Sun 2026-11-15 14:20:35 WAT
+           Universal time: Sun 2026-11-15 13:20:35 UTC
+                 RTC time: Sun 2026-11-15 13:20:34
+                Time zone: Africa/Brazzaville (WAT, +0100)
+System clock synchronized: no
+              NTP service: active
+
+"\n"active
+
+ens3             UP             10.0.2.15/24 metric 100 fec0::5054:ff:fe12:3456/64 fe80::5054:ff:fe12:3456/64 
+ens4             UP             10.0.3.10/24 fe80::5054:ff:fe12:3457/64 
+
+default via 10.0.2.2 dev ens3 proto dhcp src 10.0.2.15 metric 100 
+default via 10.0.3.2 dev ens4 proto static metric 2000 
+10.0.2.0/24 dev ens3 proto kernel scope link src 10.0.2.15 metric 100 
+10.0.2.2 dev ens3 proto dhcp scope link src 10.0.2.15 metric 100 
+10.0.3.0/24 dev ens4 proto kernel scope link src 10.0.3.10 
+
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 83.859/83.859/83.859/0.000 ms
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+
