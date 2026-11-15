@@ -1,0 +1,58 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/creer-pki.sh; echo "code de sortie: $?"
+[2026-11-15 01:52:29 · 0.5s · code 0]
+== 1. Arborescence de la CA ==
+total 28
+-rw------- 1 root root   32 Nov 15 01:52 ca.pass
+drwxr-xr-x 2 root root 4096 Nov 15 01:52 certs
+drwxr-xr-x 2 root root 4096 Nov 15 01:52 crl
+-rw-r--r-- 1 root root    5 Nov 15 01:52 crlnumber
+-rw-r--r-- 1 root root    0 Nov 15 01:52 index.txt
+drwxr-xr-x 2 root root 4096 Nov 15 01:52 newcerts
+-rw-r--r-- 1 root root 1572 Nov 15 01:52 openssl.cnf
+-rw-r--r-- 1 root root    5 Nov 15 01:52 serial
+
+== 2. Clé et certificat racine ==
+subject=C=FR, O=Lab sysadmin-lab, OU=PKI, CN=lab-sysadmin Root CA
+issuer=C=FR, O=Lab sysadmin-lab, OU=PKI, CN=lab-sysadmin Root CA
+notBefore=Nov 15 00:52:29 2026 GMT
+notAfter=Nov 12 00:52:29 2036 GMT
+            X509v3 Basic Constraints: critical
+                CA:TRUE, pathlen:0
+            X509v3 Key Usage: critical
+
+== 3. Clé et demande du serveur ==
+subject=C=FR, O=Lab sysadmin-lab, CN=srv-debian13.lab.local
+
+== 4. Signature par la CA ==
+subject=C=FR, O=Lab sysadmin-lab, CN=srv-debian13.lab.local
+issuer=C=FR, O=Lab sysadmin-lab, OU=PKI, CN=lab-sysadmin Root CA
+notBefore=Nov 15 00:52:29 2026 GMT
+notAfter=Dec 17 00:52:29 2027 GMT
+
+== 5. Chaîne vérifiée ==
+/root/pki/certs/server.crt: OK
+X509v3 Extended Key Usage: 
+    TLS Web Server Authentication
+X509v3 Subject Alternative Name: 
+    DNS:srv-debian13.lab.local, DNS:www.lab.local, IP Address:10.0.3.10
+
+== 6. Publication HTTPS ==
+LISTEN 0      511          0.0.0.0:8443      0.0.0.0:*    users:(("nginx",pid=957,fd=13),("nginx",pid=956,fd=13),("nginx",pid=818,fd=13))                                           
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+Using configuration from /root/pki/openssl.cnf
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+countryName           :PRINTABLE:'FR'
+organizationName      :ASN.1 12:'Lab sysadmin-lab'
+commonName            :ASN.1 12:'srv-debian13.lab.local'
+Certificate is to be certified until Dec 17 00:52:29 2027 GMT (397 days)
+
+Write out database with 1 new entries
+Database updated
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+

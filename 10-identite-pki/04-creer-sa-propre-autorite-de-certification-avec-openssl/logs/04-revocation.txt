@@ -1,0 +1,33 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/revoquer-certificat.sh; echo "code de sortie: $?"
+[2026-11-15 01:53:19 · 0.3s · code 0]
+== 1. Émission d'un certificat de test ==
+/root/pki/certs/obsolete.crt: OK
+
+== 2. Révocation ==
+ligne de la base de la CA :
+R	261215005320Z	261115005320Z	1001	unknown	/C=FR/O=Lab sysadmin-lab/CN=obsolete.lab.local
+
+== 3. Publication de la CRL ==
+lastUpdate=Nov 15 00:53:20 2026 GMT
+nextUpdate=Nov 12 00:53:20 2036 GMT
+Revoked Certificates:
+    Serial Number: 1001
+        Revocation Date: Nov 15 00:53:20 2026 GMT
+    Signature Algorithm: sha256WithRSAEncryption
+
+== 4. Vérification avec la CRL ==
+-> refus attendu ci-dessus (error 23 = certificate revoked)
+
+== 5. Le certificat du serveur reste valide ==
+/root/pki/certs/server.crt: OK
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+Using configuration from /root/pki/openssl.cnf
+Revoking Certificate 1001.
+Database updated
+C=FR, O=Lab sysadmin-lab, CN=obsolete.lab.local
+error 23 at 0 depth lookup: certificate revoked
+error /root/pki/certs/obsolete.crt: verification failed
+

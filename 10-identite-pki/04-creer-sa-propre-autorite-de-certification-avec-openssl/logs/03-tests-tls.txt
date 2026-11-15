@@ -1,0 +1,30 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/tester-tls.sh; echo "code de sortie: $?"
+[2026-11-15 01:53:14 · 0.4s · code 0]
+== 1. Requête HTTPS validée par la CA du lab ==
+<h1>Site interne du lab</h1>
+code HTTP 200 · ssl_verify_result 0
+
+== 2. Handshake OpenSSL avec vérification du nom ==
+depth=1 C=FR, O=Lab sysadmin-lab, OU=PKI, CN=lab-sysadmin Root CA
+depth=0 C=FR, O=Lab sysadmin-lab, CN=srv-debian13.lab.local
+subject=C=FR, O=Lab sysadmin-lab, CN=srv-debian13.lab.local
+issuer=C=FR, O=Lab sysadmin-lab, OU=PKI, CN=lab-sysadmin Root CA
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+Protocol: TLSv1.3
+Verify return code: 0 (ok)
+    Protocol  : TLSv1.3
+    Verify return code: 0 (ok)
+    Protocol  : TLSv1.3
+    Verify return code: 0 (ok)
+
+== 3. Sans la CA, la chaîne n'est pas reconnue ==
+refusé : SSL certificate problem: unable to get local issuer certificate
+
+== 4. Mauvais nom d'hôte : la chaîne est bonne, le nom non ==
+verify error:num=62:hostname mismatch
+Verify return code: 62 (hostname mismatch)
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+
