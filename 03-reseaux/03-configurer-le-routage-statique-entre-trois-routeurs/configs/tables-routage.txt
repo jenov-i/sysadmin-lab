@@ -1,0 +1,38 @@
+# Tables réellement exportées de srv-debian13 le 15/11/2026, après construction
+# de la topologie par scripts/construire-topologie.sh.
+# Les interfaces eth0@ifNN sont les extrémités des liens veth créés par le noyau.
+
+### client
+eth0@if13        UP             192.168.10.10/24 fe80::4cf2:66ff:fe95:264c/64 
+default via 192.168.10.1 dev eth0 
+192.168.10.0/24 dev eth0 proto kernel scope link src 192.168.10.10 
+
+### r1
+eth0@if14        UP             192.168.10.1/24 fe80::84bb:5bff:fede:4d4a/64 
+eth1@if15        UP             10.0.12.1/30 fe80::3c16:cff:fe4d:1de7/64 
+10.0.12.0/30 dev eth1 proto kernel scope link src 10.0.12.1 
+10.0.23.0/30 via 10.0.12.2 dev eth1 
+192.168.10.0/24 dev eth0 proto kernel scope link src 192.168.10.1 
+192.168.30.0/24 via 10.0.12.2 dev eth1 
+
+### r2
+eth0@if16        UP             10.0.12.2/30 fe80::44d5:acff:fe6d:d758/64 
+eth1@if17        UP             10.0.23.1/30 fe80::207c:abff:fe88:90e2/64 
+10.0.12.0/30 dev eth0 proto kernel scope link src 10.0.12.2 
+10.0.23.0/30 dev eth1 proto kernel scope link src 10.0.23.1 
+192.168.10.0/24 via 10.0.12.1 dev eth0 
+192.168.30.0/24 via 10.0.23.2 dev eth1 
+
+### r3
+eth0@if18        UP             10.0.23.2/30 fe80::bc53:f8ff:fe8a:d238/64 
+eth1@if19        UP             192.168.30.1/24 fe80::3c10:65ff:fe41:db21/64 
+10.0.12.0/30 via 10.0.23.1 dev eth0 
+10.0.23.0/30 dev eth0 proto kernel scope link src 10.0.23.2 
+192.168.10.0/24 via 10.0.23.1 dev eth0 
+192.168.30.0/24 dev eth1 proto kernel scope link src 192.168.30.1 
+
+### serveur
+eth0@if20        UP             192.168.30.10/24 fe80::9c89:24ff:fee6:2477/64 
+default via 192.168.30.1 dev eth0 
+192.168.30.0/24 dev eth0 proto kernel scope link src 192.168.30.10 
+

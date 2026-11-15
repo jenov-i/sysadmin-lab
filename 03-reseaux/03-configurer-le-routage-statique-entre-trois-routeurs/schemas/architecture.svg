@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" font-family="DejaVu Sans, Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a5568"/>
+    </marker>
+    <style>
+      .t { font-size: 25px; font-weight: 700; fill: #1a202c; }
+      .s { font-size: 14px; fill: #4a5568; }
+      .r { fill: #fffaf0; stroke: #b7791f; stroke-width: 2; }
+      .cli { fill: #f0fff4; stroke: #276749; stroke-width: 2; }
+      .srv { fill: #ebf8ff; stroke: #2b6cb0; stroke-width: 2; }
+      .b { fill: #ffffff; stroke: #4a5568; stroke-width: 2; }
+      .l { font-size: 16px; font-weight: 700; fill: #1a202c; }
+      .m { font-family: DejaVu Sans Mono, monospace; font-size: 12.5px; fill: #2d3748; }
+      .n { font-size: 12px; fill: #4a5568; }
+      .ln { stroke: #4a5568; stroke-width: 2.5; fill: none; }
+      .net { stroke: #718096; stroke-width: 2; fill: none; stroke-dasharray: 7 5; }
+      .f { stroke: #2b6cb0; stroke-width: 2.5; fill: none; marker-end: url(#ar); }
+      .back { stroke: #276749; stroke-width: 2.5; fill: none; stroke-dasharray: 7 5; marker-end: url(#ar); }
+    </style>
+  </defs>
+  <rect width="1200" height="700" fill="#ffffff"/>
+  <text class="t" x="40" y="50">Routage statique entre trois routeurs</text>
+  <text class="s" x="40" y="76">srv-debian13 · 3 namespaces routeurs avec ip_forward=1 · 2 LAN /24 · 2 liens /30</text>
+
+  <!-- client -->
+  <rect class="cli" x="40" y="180" width="170" height="120" rx="10"/>
+  <text class="l" x="62" y="212">client</text>
+  <text class="m" x="62" y="240">eth0</text>
+  <text class="m" x="62" y="262">192.168.10.10/24</text>
+  <text class="n" x="62" y="284">route par défaut</text>
+
+  <!-- r1 -->
+  <rect class="r" x="290" y="170" width="170" height="140" rx="10"/>
+  <text class="l" x="312" y="200">R1</text>
+  <text class="m" x="312" y="226">eth0 192.168.10.1/24</text>
+  <text class="m" x="312" y="248">eth1 10.0.12.1/30</text>
+  <text class="n" x="312" y="274">ip_forward = 1</text>
+  <text class="n" x="312" y="292">2 routes statiques</text>
+
+  <!-- r2 -->
+  <rect class="r" x="530" y="170" width="170" height="140" rx="10"/>
+  <text class="l" x="552" y="200">R2</text>
+  <text class="m" x="552" y="226">eth0 10.0.12.2/30</text>
+  <text class="m" x="552" y="248">eth1 10.0.23.1/30</text>
+  <text class="n" x="552" y="274">ip_forward = 1</text>
+  <text class="n" x="552" y="292">2 routes statiques</text>
+
+  <!-- r3 -->
+  <rect class="r" x="770" y="170" width="170" height="140" rx="10"/>
+  <text class="l" x="792" y="200">R3</text>
+  <text class="m" x="792" y="226">eth0 10.0.23.2/30</text>
+  <text class="m" x="792" y="248">eth1 192.168.30.1/24</text>
+  <text class="n" x="792" y="274">ip_forward = 1</text>
+  <text class="n" x="792" y="292">2 routes statiques</text>
+
+  <!-- serveur -->
+  <rect class="srv" x="990" y="180" width="170" height="120" rx="10"/>
+  <text class="l" x="1012" y="212">serveur</text>
+  <text class="m" x="1012" y="240">eth0</text>
+  <text class="m" x="1012" y="262">192.168.30.10/24</text>
+  <text class="n" x="1012" y="284">route par défaut</text>
+
+  <!-- links -->
+  <path class="ln" d="M 210 240 L 290 240"/>
+  <path class="ln" d="M 460 240 L 530 240"/>
+  <path class="ln" d="M 700 240 L 770 240"/>
+  <path class="ln" d="M 940 240 L 990 240"/>
+
+  <!-- chemin -->
+  <path class="f" d="M 120 180 C 180 100 340 90 380 165"/>
+  <text class="n" x="230" y="112">aller : 4 sauts, TTL décrémenté à chaque routeur</text>
+  <path class="back" d="M 1060 306 C 980 400 300 400 140 306"/>
+  <text class="n" x="480" y="400">retour : route par défaut du serveur, puis routes statiques symétriques</text>
+
+  <!-- tables -->
+  <rect class="b" x="40" y="440" width="540" height="180" rx="10"/>
+  <text class="l" x="62" y="472">Routes posées à la main</text>
+  <text class="m" x="62" y="500">client   default via 192.168.10.1</text>
+  <text class="m" x="62" y="522">R1       192.168.30.0/24 via 10.0.12.2</text>
+  <text class="m" x="62" y="544">R1       10.0.23.0/30 via 10.0.12.2</text>
+  <text class="m" x="62" y="566">R2       192.168.10.0/24 via 10.0.12.1</text>
+  <text class="m" x="62" y="588">R2       192.168.30.0/24 via 10.0.23.2</text>
+  <text class="m" x="62" y="610">R3       192.168.10.0/24 via 10.0.23.1</text>
+
+  <rect class="b" x="620" y="440" width="540" height="180" rx="10"/>
+  <text class="l" x="642" y="472">Résultat mesuré</text>
+  <text class="m" x="642" y="500">ping 192.168.30.10 → 0 % de perte</text>
+  <text class="m" x="642" y="522">traceroute → 192.168.10.1</text>
+  <text class="m" x="662" y="544">10.0.12.2</text>
+  <text class="m" x="662" y="566">10.0.23.2</text>
+  <text class="m" x="662" y="588">192.168.30.10</text>
+  <text class="n" x="642" y="610">route supprimée sur R1 → 100 % de perte, puis retour à 0 %</text>
+</svg>

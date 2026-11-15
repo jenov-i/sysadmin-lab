@@ -1,0 +1,48 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/tester-panne.sh; echo "code de sortie: $?"
+[2026-11-15 02:02:04 · 3.3s · code 0]
+== 1. Route présente sur R1 ==
+10.0.12.0/30 dev eth1 proto kernel scope link src 10.0.12.1 
+10.0.23.0/30 via 10.0.12.2 dev eth1 
+192.168.10.0/24 dev eth0 proto kernel scope link src 192.168.10.1 
+192.168.30.0/24 via 10.0.12.2 dev eth1 
+--- ping avant la panne
+PING 192.168.30.10 (192.168.30.10) 56(84) bytes of data.
+64 bytes from 192.168.30.10: icmp_seq=1 ttl=61 time=0.041 ms
+64 bytes from 192.168.30.10: icmp_seq=2 ttl=61 time=0.120 ms
+
+--- 192.168.30.10 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1022ms
+rtt min/avg/max/mdev = 0.041/0.080/0.120/0.039 ms
+
+== 2. Suppression de la route 192.168.30.0/24 sur R1 ==
+10.0.12.0/30 dev eth1 proto kernel scope link src 10.0.12.1 
+10.0.23.0/30 via 10.0.12.2 dev eth1 
+192.168.10.0/24 dev eth0 proto kernel scope link src 192.168.10.1 
+--- ping pendant la panne
+PING 192.168.30.10 (192.168.30.10) 56(84) bytes of data.
+From 192.168.10.1 icmp_seq=1 Destination Net Unreachable
+From 192.168.10.1 icmp_seq=2 Destination Net Unreachable
+
+--- 192.168.30.10 ping statistics ---
+2 packets transmitted, 0 received, +2 errors, 100% packet loss, time 1010ms
+
+-> échec attendu : R1 n'a plus de route vers le LAN serveur
+
+== 3. Remise en place de la route ==
+10.0.12.0/30 dev eth1 proto kernel scope link src 10.0.12.1 
+10.0.23.0/30 via 10.0.12.2 dev eth1 
+192.168.10.0/24 dev eth0 proto kernel scope link src 192.168.10.1 
+192.168.30.0/24 via 10.0.12.2 dev eth1 
+--- ping après restauration
+PING 192.168.30.10 (192.168.30.10) 56(84) bytes of data.
+64 bytes from 192.168.30.10: icmp_seq=1 ttl=61 time=0.048 ms
+64 bytes from 192.168.30.10: icmp_seq=2 ttl=61 time=0.098 ms
+
+--- 192.168.30.10 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1008ms
+rtt min/avg/max/mdev = 0.048/0.073/0.098/0.025 ms
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+
