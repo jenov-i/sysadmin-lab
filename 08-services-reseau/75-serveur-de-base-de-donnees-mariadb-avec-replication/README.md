@@ -14,7 +14,7 @@ Projet tiré au hasard dans le catalogue (`08-375`).
 
 | Élément | Détail |
 |---|---|
-| Hyperviseur | VMware Workstation 17, deux VM du parc |
+| Hyperviseur | VMware Workstation 25.0.1, deux VM du parc |
 | Primaire | `lab-linux-01`, 192.168.99.11, 2 vCPU, 2 932 Mo, `server_id = 11` |
 | Réplica | `lab-linux-02`, 192.168.99.12, 2 vCPU, `server_id = 12` |
 | Système | Ubuntu 22.04.5 LTS, noyau 5.15.0-203 |
