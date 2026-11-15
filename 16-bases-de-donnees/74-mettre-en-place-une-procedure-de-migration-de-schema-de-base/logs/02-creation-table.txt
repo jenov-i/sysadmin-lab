@@ -1,0 +1,32 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/01-creer-base-et-table.sh; echo "code de sortie: $?"
+[2026-11-15 15:39:59 · 10.3s · code 0]
+== 1. Table commandes ==
+Time: 9494.943 ms (00:09.495)
+
+== 2. Volume réel de la table ==
+ lignes  | taille_totale | table_seule 
+---------+---------------+-------------
+ 3000000 | 331 MB        | 266 MB
+(1 row)
+
+== 3. Réglages qui influencent la durée des migrations ==
+ work_mem 
+----------
+ 4MB
+(1 row)
+
+ maintenance_work_mem 
+----------------------
+ 64MB
+(1 row)
+
+ max_parallel_maintenance_workers 
+----------------------------------
+ 2
+(1 row)
+
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

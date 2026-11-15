@@ -1,0 +1,34 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/02-phase-a-index-bloquant.sh; echo "code de sortie: $?"
+[2026-11-15 15:45:01 · 24.5s · code 0]
+== 1. Charge continue : 4 écrivains (timeout 1 s) + 2 lecteurs ==
+   écrivains pid 2009, lecteurs pid 2010
+
+== 2. Migration naïve : CREATE INDEX sans CONCURRENTLY ==
+   durée du CREATE INDEX : 1.43 s
+
+== Récapitulatif de la phase A ==
+  CREATE INDEX bloquant : 1.43 s
+  écrivains   18082 requêtes · moyenne   5.29 ms · max  1002.3 ms · >= 1 s : 4   échecs : 4
+  lecteurs     8322 requêtes · moyenne   0.58 ms · max    12.0 ms · >= 1 s : 0   échecs : 0
+  lignes réellement insérées : 18078
+  index construit : 20 MB
+
+== Photo prise pendant le verrou ==
+ attente | sessions |            exemple             
+---------+----------+--------------------------------
+         |        2 | CREATE INDEX idx_commandes_sta
+ Client  |        2 | SELECT id, statut FROM command
+ Lock    |        4 |  INSERT INTO commandes (client
+(3 rows)
+
+      verrou      | accorde | sessions 
+------------------+---------+----------
+ RowExclusiveLock | f       |        4
+ ShareLock        | t       |        2
+(2 rows)
+
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

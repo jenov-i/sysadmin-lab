@@ -7,6 +7,7 @@ Projets d'administration systèmes, réseaux et cybersécurité réalisés en la
 <!-- PROJETS:START -->
 | Projet | Catégorie | Date |
 |---|---|---|
+| [Mettre en place une procédure de migration de schéma de base de données sans interruption](16-bases-de-donnees/74-mettre-en-place-une-procedure-de-migration-de-schema-de-base) | Bases de données & données | 2026-11-15 |
 | [PostgreSQL : première base avec des tables liées](16-bases-de-donnees/01-postgresql-premiere-base-avec-des-tables-liees) | Bases de données & données | 2026-11-15 |
 | [Créer sa propre autorité de certification avec OpenSSL](10-identite-pki/04-creer-sa-propre-autorite-de-certification-avec-openssl) | Identité, annuaires & PKI | 2026-11-15 |
 | [Mettre en place un serveur NTP pour tout le réseau](08-services-reseau/08-mettre-en-place-un-serveur-ntp-pour-tout-le-reseau) | Services réseau & applicatifs | 2026-11-15 |

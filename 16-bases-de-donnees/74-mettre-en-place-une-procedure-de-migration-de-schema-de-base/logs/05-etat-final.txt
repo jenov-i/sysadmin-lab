@@ -1,0 +1,54 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/04-verifier-etat-final.sh; echo "code de sortie: $?"
+[2026-11-15 15:57:52 · 1.0s · code 0]
+== 1. Structure de la table ==
+                                      Table "public.commandes"
+  Column   |           Type           | Collation | Nullable |                Default                
+-----------+--------------------------+-----------+----------+---------------------------------------
+ id        | bigint                   |           | not null | nextval('commandes_id_seq'::regclass)
+ client_id | integer                  |           | not null | 
+ montant   | numeric(10,2)            |           | not null | 
+ statut    | text                     |           | not null | 
+ cree_le   | timestamp with time zone |           | not null | 
+ notes     | text                     |           |          | 
+ canal     | text                     |           | not null | 
+Indexes:
+    "commandes_pkey" PRIMARY KEY, btree (id)
+    "idx_commandes_canal" btree (canal)
+    "idx_commandes_statut" btree (statut)
+Check constraints:
+    "canal_non_nul" CHECK (canal IS NOT NULL)
+    "montant_positif" CHECK (montant >= 0::numeric)
+
+== 2. Contraintes : validées ou seulement déclarées ? ==
+   contrainte    | validee |            definition             
+-----------------+---------+-----------------------------------
+ canal_non_nul   | t       | CHECK ((canal IS NOT NULL))
+ montant_positif | t       | CHECK ((montant >= (0)::numeric))
+(2 rows)
+
+== 3. Index réellement utilisables ==
+        index         | valide | taille 
+----------------------+--------+--------
+ commandes_pkey       | t      | 138 MB
+ idx_commandes_canal  | t      | 21 MB
+ idx_commandes_statut | t      | 42 MB
+(3 rows)
+
+== 4. Volumétrie et cohérence ==
+ lignes  | canal_null | valeurs_canal | taille_totale 
+---------+------------+---------------+---------------
+ 3216839 |          0 |             2 | 830 MB
+(1 row)
+
+== 5. Répartition de la nouvelle colonne ==
+  canal  |  count  
+---------+---------
+ magasin | 1608474
+ web     | 1608365
+(2 rows)
+
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

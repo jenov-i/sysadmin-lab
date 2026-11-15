@@ -1,0 +1,48 @@
+# Transcript — VM srv-debian13
+
+$ bash /root/03-phase-b-migration-en-ligne.sh; echo "code de sortie: $?"
+[2026-11-15 15:53:07 · 26.8s · code 0]
+== 0. Remise à l'état d'avant migration (essai rejouable) ==
+
+== 1. Charge continue : 4 écrivains (timeout 1 s) + 2 lecteurs ==
+   écrivains pid 3244, lecteurs pid 3245
+
+== 2. Nouvelle colonne, sans réécriture de la table ==
+   ALTER TABLE ADD COLUMN : 0.05 s
+
+== 3. Remplissage par lots de 10000 lignes ==
+   377 lots en 17.06 s (moyenne 26 ms, lot le plus lent 93 ms)
+
+== 4. Index construit en ligne ==
+   CREATE INDEX CONCURRENTLY : 2.24 s
+
+== 5. Contrainte sur une colonne existante, pendant la charge ==
+   CHECK ... NOT VALID : 0.03 s
+   VALIDATE montant_positif : 0.32 s
+
+== 6. NOT NULL : les écritures doivent d'abord fournir la colonne ==
+   canal NULL restants : 0
+   VALIDATE canal_non_nul : 0.28 s
+   ALTER COLUMN SET NOT NULL : 0.04 s
+
+== Récapitulatif de la phase B ==
+  ADD COLUMN canal            0.05 s
+  remplissage par lots        17.06 s (377 lots)
+  CREATE INDEX CONCURRENTLY   2.24 s
+  VALIDATE contrainte         0.32 s
+  SET NOT NULL (3 M lignes)   0.04 s
+  écrivains   22732 requêtes · moyenne   4.56 ms · max    78.1 ms · >= 1 s : 0   échecs : 0
+  lecteurs     9310 requêtes · moyenne   0.43 ms · max     7.9 ms · >= 1 s : 0   échecs : 0
+
+== Progression de l'index en ligne (photo) ==
+             phase              | blocks_done | blocks_total | pourcent 
+--------------------------------+-------------+--------------+----------
+ building index: scanning table |       74222 |        79249 |     93.7
+(1 row)
+
+code de sortie: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+NOTICE:  constraint "canal_non_nul" of relation "commandes" does not exist, skipping
+NOTICE:  column "canal" of relation "commandes" does not exist, skipping
+NOTICE:  index "idx_commandes_canal" does not exist, skipping
+

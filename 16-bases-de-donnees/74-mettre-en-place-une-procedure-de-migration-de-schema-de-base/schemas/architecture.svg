@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" font-family="DejaVu Sans, Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a5568"/>
+    </marker>
+    <marker id="ar-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c53030"/>
+    </marker>
+    <marker id="ar-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#276749"/>
+    </marker>
+    <style>
+      .t { font-size: 25px; font-weight: 700; fill: #1a202c; }
+      .s { font-size: 14px; fill: #4a5568; }
+      .srv { fill: #ebf8ff; stroke: #2b6cb0; stroke-width: 2; }
+      .ok { fill: #f0fff4; stroke: #276749; stroke-width: 2; }
+      .ko { fill: #fff5f5; stroke: #c53030; stroke-width: 2; }
+      .b { fill: #ffffff; stroke: #4a5568; stroke-width: 2; }
+      .l { font-size: 16px; font-weight: 700; fill: #1a202c; }
+      .m { font-family: DejaVu Sans Mono, monospace; font-size: 12.5px; fill: #2d3748; }
+      .n { font-size: 12.5px; fill: #4a5568; }
+      .f { stroke: #4a5568; stroke-width: 2; fill: none; marker-end: url(#ar); }
+      .x { stroke: #c53030; stroke-width: 2.5; fill: none; marker-end: url(#ar-r); }
+      .g { stroke: #276749; stroke-width: 2.5; fill: none; marker-end: url(#ar-g); }
+    </style>
+  </defs>
+  <rect width="1200" height="760" fill="#ffffff"/>
+  <text class="t" x="40" y="46">Migration de schéma sans interruption</text>
+  <text class="s" x="40" y="72">PostgreSQL 17.12 · table commandes de 3,2 millions de lignes · 4 écrivains et 2 lecteurs en continu</text>
+
+  <!-- Clients -->
+  <rect class="b" x="40" y="104" width="250" height="120" rx="10"/>
+  <text class="l" x="60" y="132">Charge applicative</text>
+  <text class="m" x="60" y="158">4 écrivains (INSERT)</text>
+  <text class="m" x="60" y="180">2 lecteurs (SELECT)</text>
+  <text class="n" x="60" y="204">statement_timeout = 1 s</text>
+
+  <!-- Table -->
+  <rect class="srv" x="380" y="96" width="330" height="140" rx="10"/>
+  <text class="l" x="402" y="124">commandes</text>
+  <text class="m" x="402" y="150">id · client_id · montant · statut</text>
+  <text class="m" x="402" y="170">cree_le · notes · (canal)</text>
+  <text class="m" x="402" y="192">PK btree (id) · 373 Mo</text>
+  <text class="n" x="402" y="216">work_mem 4 Mo · table en écriture</text>
+
+  <path class="f" d="M 290 156 L 376 156"/>
+  <path class="f" d="M 376 186 L 290 186"/>
+
+  <!-- Phase A -->
+  <rect class="ko" x="40" y="290" width="540" height="270" rx="10"/>
+  <text class="l" x="64" y="322">Phase A — migration naïve</text>
+  <text class="m" x="64" y="350">CREATE INDEX idx_commandes_statut ON … (statut)</text>
+  <text class="n" x="64" y="378">Le verrou SHARE de la construction d'index est</text>
+  <text class="n" x="64" y="396">incompatible avec les INSERT : toutes les écritures</text>
+  <text class="n" x="64" y="414">attendent la fin de l'index.</text>
+  <text class="m" x="64" y="446">durée du CREATE INDEX : 1,43 s</text>
+  <text class="m" x="64" y="468">écrivains bloqués : 4 → 4 rejets (timeout 1 s)</text>
+  <text class="m" x="64" y="490">latence max écrivain : 1002 ms</text>
+  <text class="m" x="64" y="512">lecteurs : aucune attente (max 12 ms)</text>
+  <text class="n" x="64" y="540">Les SELECT restent servis : le verrou SHARE est</text>
+  <text class="n" x="64" y="558">compatible avec ACCESS SHARE, pas avec ROW EXCLUSIVE.</text>
+
+  <path class="x" d="M 300 240 C 300 270 220 268 220 286"/>
+
+  <!-- Phase B -->
+  <rect class="ok" x="620" y="290" width="540" height="270" rx="10"/>
+  <text class="l" x="644" y="322">Phase B — migration en ligne</text>
+  <text class="m" x="644" y="350">1. ADD COLUMN canal text            0,05 s</text>
+  <text class="m" x="644" y="372">2. UPDATE par lots de 10 000        380 lots / 17,6 s</text>
+  <text class="m" x="644" y="394">3. CREATE INDEX CONCURRENTLY        2,10 s</text>
+  <text class="m" x="644" y="416">4. CHECK (montant &gt;= 0) NOT VALID   0,04 s</text>
+  <text class="m" x="644" y="438">   VALIDATE CONSTRAINT              0,33 s</text>
+  <text class="m" x="644" y="460">5. VALIDATE canal_non_nul           0,28 s</text>
+  <text class="m" x="644" y="482">   SET NOT NULL                     0,04 s</text>
+  <text class="m" x="644" y="512">écrivains : 23 155 requêtes, 0 rejet, max 81 ms</text>
+  <text class="n" x="644" y="540">Aucun verrou exclusif : SHARE UPDATE EXCLUSIVE en</text>
+  <text class="n" x="644" y="558">phase 3 et 4, instantané en phase 1 et 5.</text>
+
+  <path class="g" d="M 700 240 C 700 270 760 268 760 286"/>
+
+  <!-- Bandeau bas -->
+  <rect class="b" x="40" y="600" width="1120" height="120" rx="10"/>
+  <text class="l" x="64" y="630">Le piège qui décide du succès</text>
+  <text class="n" x="64" y="656">Une contrainte CHECK s'applique immédiatement aux nouvelles lignes, même avec NOT VALID :</text>
+  <text class="n" x="64" y="676">posée avant la bascule des écritures applicatives, elle rejette 100 % des INSERT. En phase B,</text>
+  <text class="n" x="64" y="696">elle est donc ajoutée après l'arrêt de la charge, une fois les écritures à jour.</text>
+  <text class="m" x="900" y="656">SET NOT NULL = 0,04 s</text>
+  <text class="n" x="900" y="678">car la contrainte validée</text>
+  <text class="n" x="900" y="696">évite le balayage complet.</text>
+</svg>
