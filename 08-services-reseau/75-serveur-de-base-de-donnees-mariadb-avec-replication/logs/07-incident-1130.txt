@@ -1,0 +1,20 @@
+########## INCIDENT : ERROR 1130 À LA CONNEXION APPLICATIVE ##########
+--- qui se présente au réplica
+192.168.99.11   lab-linux-01
+
+--- résolution de noms côté serveur
+Variable_name	Value
+host_cache_size	279
+skip_name_resolve	OFF
+
+--- comptes connus
+
+--- dernières lignes du journal MariaDB
+Nov 15 23:19:14 lab-linux-02 /etc/mysql/debian-start[34519]: Triggering myisam-recover for all MyISAM tables and aria-recover for all Aria t
+Nov 15 23:20:55 lab-linux-02 mariadbd[34487]: 2026-11-15 23:20:55 40 [Note] Master connection name: ''  Master_info_file: 'master.info'  Rel
+Nov 15 23:20:55 lab-linux-02 mariadbd[34487]: 2026-11-15 23:20:55 40 [Note] 'CHANGE MASTER TO executed'. Previous state master_host='', mast
+Nov 15 23:20:55 lab-linux-02 mariadbd[34487]: 2026-11-15 23:20:55 40 [Note] Previous Using_Gtid=No. New Using_Gtid=Slave_Pos
+Nov 15 23:20:55 lab-linux-02 mariadbd[34487]: 2026-11-15 23:20:55 41 [Note] Slave I/O thread: Start asynchronous replication to master 'repl
+Nov 15 23:20:55 lab-linux-02 mariadbd[34487]: 2026-11-15 23:20:55 42 [Note] Slave SQL thread initialized, starting replication in log 'FIRST
+Nov 15 23:20:55 lab-linux-02 mariadbd[34487]: 2026-11-15 23:20:55 41 [Note] Slave I/O thread: connected to master 'repl@192.168.99.11:3306',
+Nov 15 23:21:25 lab-linux-02 mariadbd[34487]: 2026-11-15 23:21:25 44 [Warning] Aborted connection 44 to db: 'unconnected' user: 'unauthentic

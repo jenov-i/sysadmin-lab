@@ -1,0 +1,39 @@
+=== lab-linux-01 (primaire) ===
+########## CONFIGURATION DU NOEUD ##########
+hote : lab-linux-01
+fuseau : Africa/Brazzaville — 2026-11-15 23:19:10 WAT
+-rw-r--r-- 1 root root 948 Nov 15 23:19 /etc/mysql/mariadb.conf.d/60-lab-replication.cnf
+active
+Variable_name	Value
+bind_address	192.168.99.11
+binlog_format	ROW
+gtid_strict_mode	ON
+log_bin	ON
+log_slave_updates	OFF
+read_only	OFF
+server_id	11
+--- état du journal binaire
+File	Position	Binlog_Do_DB	Binlog_Ignore_DB
+mariadb-bin.000001	330		
+gtid_binlog_pos	gtid_current_pos
+	
+
+=== lab-linux-02 (replica) ===
+########## CONFIGURATION DU NOEUD ##########
+hote : lab-linux-02
+fuseau : Africa/Brazzaville — 2026-11-15 23:19:14 WAT
+-rw-r--r-- 1 root root 1018 Nov 15 23:19 /etc/mysql/mariadb.conf.d/60-lab-replication.cnf
+active
+Variable_name	Value
+bind_address	192.168.99.12
+binlog_format	ROW
+gtid_strict_mode	ON
+log_bin	ON
+log_slave_updates	ON
+read_only	ON
+server_id	12
+--- état du journal binaire
+File	Position	Binlog_Do_DB	Binlog_Ignore_DB
+mariadb-bin.000001	330		
+gtid_binlog_pos	gtid_current_pos
+	

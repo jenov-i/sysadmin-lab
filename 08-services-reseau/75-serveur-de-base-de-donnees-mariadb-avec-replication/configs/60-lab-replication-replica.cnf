@@ -1,0 +1,26 @@
+# ============================================================
+# Réplica de réplication MariaDB
+# lab-linux-02 / 192.168.99.12 / server_id 12
+# Déployé dans /etc/mysql/mariadb.conf.d/60-lab-replication.cnf
+# ============================================================
+
+[mysqld]
+
+# Identité distincte de celle du primaire, sinon la réplication refuse de démarrer
+server_id                = 12
+
+bind_address             = 192.168.99.12
+
+# Le réplica journalise aussi : c'est ce qui permet de le promouvoir en primaire
+log_bin                  = /var/log/mysql/mariadb-bin
+binlog_format            = ROW
+gtid_strict_mode         = ON
+log_slave_updates        = ON
+
+# Les écritures applicatives sont refusées sur le réplica (root garde le droit
+# d'écrire : sur MariaDB, read_only ne s'applique pas aux comptes avec SUPER)
+read_only                = ON
+
+# Journal relais : les événements reçus, appliqués un par un
+relay_log                = /var/log/mysql/mariadb-relay-bin
+relay_log_purge          = ON

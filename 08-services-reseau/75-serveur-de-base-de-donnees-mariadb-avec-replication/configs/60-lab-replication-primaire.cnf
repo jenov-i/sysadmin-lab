@@ -1,0 +1,26 @@
+# ============================================================
+# Primaire de réplication MariaDB
+# lab-linux-01 / 192.168.99.11 / server_id 11
+# Déployé dans /etc/mysql/mariadb.conf.d/60-lab-replication.cnf
+# ============================================================
+
+[mysqld]
+
+# Identité unique dans la topologie (obligatoire : 1 sur les paquets Ubuntu)
+server_id                = 11
+
+# Écoute sur le réseau du lab uniquement ; l'administration passe par la socket
+bind_address             = 192.168.99.11
+
+# Journal binaire : la source de vérité pour le réplica
+log_bin                  = /var/log/mysql/mariadb-bin
+binlog_format            = ROW
+binlog_row_image         = FULL
+expire_logs_days         = 7
+
+# GTID : chaque transaction reçoit un identifiant global 0-11-N
+gtid_strict_mode         = ON
+
+# Durabilité : le binlog est écrit sur disque à chaque commit
+sync_binlog              = 1
+innodb_flush_log_at_trx_commit = 1

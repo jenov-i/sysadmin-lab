@@ -1,0 +1,37 @@
+########## PREUVE DE RÉPLICATION ##########
+--- écriture applicative sur 192.168.99.11
+client_id	commande_id
+64	512
+
+--- état du primaire
+table_nom	lignes
+clients	61
+commandes	301
+lignes_commande	902
+id	nom	ville	commande	total_cents
+64	client-preuve-01	Cotonou	512	3507
+File	Position	Binlog_Do_DB	Binlog_Ignore_DB
+mariadb-bin.000001	117479		
+gtid_binlog_pos
+0-11-57
+
+--- un client qui vise le réplica : l'écriture doit être refusée
+ERROR 1130 (HY000): Host 'lab-linux-01' is not allowed to connect to this MariaDB server
+
+--- état du réplica
+table_nom	lignes
+clients	61
+commandes	301
+lignes_commande	902
+id	nom	ville	commande	total_cents
+64	client-preuve-01	Cotonou	512	3507
+--- position GTID et santé de la réplication
+gtid_current_pos	gtid_slave_pos	read_only
+0-11-57	0-11-57	1
+              Slave_IO_Running: Yes
+             Slave_SQL_Running: Yes
+         Seconds_Behind_Master: 0
+                Last_SQL_Error: 
+                    Using_Gtid: Slave_Pos
+                   Gtid_IO_Pos: 0-11-57
+       Slave_SQL_Running_State: Slave has read all relay log; waiting for more updates

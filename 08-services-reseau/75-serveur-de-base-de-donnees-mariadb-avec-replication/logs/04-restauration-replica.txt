@@ -1,0 +1,22 @@
+--- instantané
+-rw------- 1 root root 36400 Nov 15 23:20 /root/lab-boutique.sql
+-- CHANGE MASTER TO MASTER_LOG_FILE='mariadb-bin.000001', MASTER_LOG_POS=116236;
+position GTID annoncée par l'instantané : 0-11-56
+
+--- restauration
+
+--- position appliquée
+gtid_slave_pos
+0-11-56
+
+--- contenu restauré
+clients
+60
+commandes
+300
+lignes
+900
+id	nom	ville
+1	client-001	Porto-Novo
+2	client-002	Parakou
+3	client-003	Abomey

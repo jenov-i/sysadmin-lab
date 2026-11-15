@@ -1,0 +1,34 @@
+secrets déjà présents dans /root/.lab-secrets
+
+--- schéma et jeu de données
+
+--- comptes
+User	Host	plugin
+app_boutique	192.168.99.%	mysql_native_password
+repl	192.168.99.%	mysql_native_password
+Grants for repl@192.168.99.%
+GRANT REPLICATION SLAVE, BINLOG MONITOR ON *.* TO `repl`@`192.168.99.%` IDENTIFIED BY PASSWORD '<masque>'
+Grants for app_boutique@192.168.99.%
+GRANT USAGE ON *.* TO `app_boutique`@`192.168.99.%` IDENTIFIED BY PASSWORD '<masque>'
+GRANT SELECT, INSERT, UPDATE, DELETE ON `lab_boutique`.* TO `app_boutique`@`192.168.99.%`
+
+--- volumes
+table_nom	lignes
+clients	60
+produits	24
+commandes	300
+lignes_commande	900
+id	nom	ville
+1	client-001	Porto-Novo
+2	client-002	Parakou
+3	client-003	Abomey
+id	libelle	prix_cents	stock
+1	The vert 100 g	637	17
+2	Riz 5 kg	774	24
+3	Huile 1 L	911	31
+
+--- instantané cohérent (transaction unique + position GTID)
+-rw-r--r-- 1 root root 36400 Nov 15 23:20 /var/backups/lab-boutique.sql
+-- CHANGE MASTER TO MASTER_USE_GTID=slave_pos;
+-- CHANGE MASTER TO MASTER_LOG_FILE='mariadb-bin.000001', MASTER_LOG_POS=116236;
+nombre d INSERT dans le dump : 4

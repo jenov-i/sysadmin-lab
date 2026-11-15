@@ -1,0 +1,39 @@
+########## PREUVE DE RÉPLICATION (PASSAGE FINAL) ##########
+--- écriture applicative sur 192.168.99.11
+client_id	commande_id
+65	513
+
+--- état du primaire
+table_nom	lignes
+clients	62
+commandes	302
+lignes_commande	904
+id	nom	ville	commande	total_cents
+64	client-preuve-01	Cotonou	512	3507
+65	client-preuve-01	Cotonou	513	3507
+File	Position	Binlog_Do_DB	Binlog_Ignore_DB
+mariadb-bin.000001	119656		
+gtid_binlog_pos
+0-11-63
+
+--- un client qui vise le réplica : l'écriture doit être refusée
+ERROR 1290 (HY000) at line 1: The MariaDB server is running with the --read-only option so it cannot execute this statement
+
+--- état du réplica
+table_nom	lignes
+clients	62
+commandes	302
+lignes_commande	904
+id	nom	ville	commande	total_cents
+64	client-preuve-01	Cotonou	512	3507
+65	client-preuve-01	Cotonou	513	3507
+--- position GTID et santé de la réplication
+gtid_current_pos	gtid_slave_pos	read_only
+0-11-63	0-11-63	1
+              Slave_IO_Running: Yes
+             Slave_SQL_Running: Yes
+         Seconds_Behind_Master: 0
+                Last_SQL_Error: 
+                    Using_Gtid: Slave_Pos
+                   Gtid_IO_Pos: 0-11-63
+       Slave_SQL_Running_State: Slave has read all relay log; waiting for more updates

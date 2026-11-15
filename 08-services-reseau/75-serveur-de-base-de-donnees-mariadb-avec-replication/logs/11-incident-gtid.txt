@@ -1,0 +1,88 @@
+########## INCIDENT : CLÉ DUPLIQUÉE SUR LE RÉPLICA (ERREUR 1062) ##########
+
+--- écriture directe sur le réplica (root, donc malgré read_only)
+id	nom	ville
+1000	client-fantome	Parakou
+
+--- même identifiant écrit sur le primaire
+id	nom	ville
+1000	client-1000	Cotonou
+
+--- état de la réplication
+              Slave_IO_Running: Yes
+             Slave_SQL_Running: No
+         Seconds_Behind_Master: NULL
+                Last_SQL_Errno: 1950
+                Last_SQL_Error: An attempt was made to binlog GTID 0-11-67 which would create an out-of-order sequence number with existing GTID 0-12-
+                   Gtid_IO_Pos: 0-11-67
+
+--- GTID de la transaction en échec
+transaction : 0-12-67
+
+--- tentative de saut classique (sql_slave_skip_counter)
+compteur
+1
+
+--- saut par la position GTID (0-12-67)
+              Slave_IO_Running: No
+             Slave_SQL_Running: Yes
+         Seconds_Behind_Master: NULL
+                Last_SQL_Error: 
+
+--- contenu après correction
+id	nom	ville
+1000	client-fantome	Parakou
+clients
+63
+
+########## RÉPARATION PROPRE ##########
+--- réparation : on annule la dérive, on repart de la position du primaire
+clients_apres_suppression
+62
+position_avant_reprise
+0-11-66
+
+--- état après reprise
+              Slave_IO_Running: Yes
+             Slave_SQL_Running: Yes
+         Seconds_Behind_Master: 0
+                Last_SQL_Error: 
+                   Gtid_IO_Pos: 0-11-67
+
+--- convergence des deux machines
+clients
+62
+commandes
+302
+
+--- côté primaire, pour comparaison
+id	nom	ville
+1000	client-1000	Cotonou
+clients
+63
+commandes
+302
+@@gtid_binlog_pos
+0-11-67
+
+########## LE COMPTEUR DE SAUT AVAIT ÉTÉ OUBLIÉ ##########
+--- le compteur de saut était resté à 1 : il a sauté la transaction en silence
+compteur_oublie
+0
+--------------
+SET GLOBAL sql_slave_skip_counter = 0
+--------------
+
+ERROR 1198 (HY000) at line 1: This operation cannot be performed as you have a running slave ''; run STOP SLAVE '' first
+
+--- rejeu de la transaction 0-11-67
+position	compteur
+0-11-67	0
+              Slave_IO_Running: Yes
+             Slave_SQL_Running: Yes
+         Seconds_Behind_Master: 0
+                Last_SQL_Error: 
+id	nom	ville
+1000	client-1000	Cotonou
+clients
+63

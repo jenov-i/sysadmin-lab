@@ -1,0 +1,91 @@
+=== lab-linux-01 (primaire) ===
+########## ETAT INITIAL ##########
+date        : 2026-11-15 22:18:23 UTC
+hote        : lab-linux-01  (192.168.99.11172.18.0.1172.17.0.1)
+systeme     : Ubuntu 22.04.5 LTS  noyau 5.15.0-203-generic
+cpu / ram   : 2 vCPU, 2932 Mo
+
+--- paquets
+mariadb-client 1:10.6.23-0ubuntu0.22.04.1
+mariadb-server 1:10.6.23-0ubuntu0.22.04.1
+
+--- version et moteur
+mariadb  Ver 15.1 Distrib 10.6.23-MariaDB, for debian-linux-gnu (x86_64) using  EditLine wrapper
+*************************** 1. row ***************************
+      version: 10.6.23-MariaDB-0ubuntu0.22.04.1
+    server_id: 1
+      log_bin: 0
+binlog_format: MIXED
+  gtid_strict: 0
+    read_only: 0
+
+--- instance
+active
+Variable_name	Value
+bind_address	127.0.0.1
+datadir	/var/lib/mysql/
+gtid_binlog_pos	
+gtid_current_pos	
+gtid_slave_pos	
+log_bin	OFF
+log_bin_basename	
+port	3306
+read_only	OFF
+server_id	1
+socket	/run/mysqld/mysqld.sock
+
+--- fichiers de configuration lus
+50-client.cnf
+50-mysql-clients.cnf
+50-mysqld_safe.cnf
+50-server.cnf
+60-galera.cnf
+
+--- espace disque
+/dev/mapper/ubuntu--vg-ubuntu--lv   28G   11G   16G  39% /
+
+=== lab-linux-02 (replica) ===
+########## ETAT INITIAL ##########
+date        : 2026-11-15 23:18:23 WAT
+hote        : lab-linux-02  (192.168.99.12)
+systeme     : Ubuntu 22.04.5 LTS  noyau 5.15.0-198-generic
+cpu / ram   : 2 vCPU, 2932 Mo
+
+--- paquets
+mariadb-client 1:10.6.23-0ubuntu0.22.04.1
+mariadb-server 1:10.6.23-0ubuntu0.22.04.1
+
+--- version et moteur
+mariadb  Ver 15.1 Distrib 10.6.23-MariaDB, for debian-linux-gnu (x86_64) using  EditLine wrapper
+*************************** 1. row ***************************
+      version: 10.6.23-MariaDB-0ubuntu0.22.04.1
+    server_id: 1
+      log_bin: 0
+binlog_format: MIXED
+  gtid_strict: 0
+    read_only: 0
+
+--- instance
+active
+Variable_name	Value
+bind_address	127.0.0.1
+datadir	/var/lib/mysql/
+gtid_binlog_pos	
+gtid_current_pos	
+gtid_slave_pos	
+log_bin	OFF
+log_bin_basename	
+port	3306
+read_only	OFF
+server_id	1
+socket	/run/mysqld/mysqld.sock
+
+--- fichiers de configuration lus
+50-client.cnf
+50-mysql-clients.cnf
+50-mysqld_safe.cnf
+50-server.cnf
+60-galera.cnf
+
+--- espace disque
+/dev/mapper/ubuntu--vg-ubuntu--lv   28G  8.1G   19G  31% /

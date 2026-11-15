@@ -1,0 +1,36 @@
+########## LATENCE SOUS CHARGE : 100 000 LIGNES EN UNE TRANSACTION ##########
+
+=== réplica : on arrête d'appliquer, mais on continue de recevoir
+--- avant la charge : thread SQL arrêté
+           Read_Master_Log_Pos: 119656
+             Slave_SQL_Running: No
+           Exec_Master_Log_Pos: 119656
+         Seconds_Behind_Master: NULL
+
+=== primaire : chargement
+--- chargement de 100 000 lignes sur le primaire
+lignes	plus_ancien	plus_recent
+100000	2026-11-14 19:39:55.161	2026-11-15 23:26:34.161
+durée du chargement : 0.49 s
+File	Position	Binlog_Do_DB	Binlog_Ignore_DB
+mariadb-bin.000001	2931808		
+
+=== réplica : reprise et mesure du rattrapage
+--- après la charge, avant reprise
+           Read_Master_Log_Pos: 2931808
+           Exec_Master_Log_Pos: 119656
+         Seconds_Behind_Master: NULL
+                   Gtid_IO_Pos: 0-11-66
+écart : 2812152 octets de journal binaire
+
+--- reprise du thread SQL
+rattrapage complet en 644 ms
+
+--- état final
+              Slave_IO_Running: Yes
+             Slave_SQL_Running: Yes
+         Seconds_Behind_Master: 0
+                Last_SQL_Error: 
+                   Gtid_IO_Pos: 0-11-66
+lignes_mesures	sondes	plus_ancien	plus_recent
+100000	8	2026-11-14 19:39:55.161	2026-11-15 23:26:34.161

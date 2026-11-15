@@ -1,0 +1,17 @@
+########## CORRECTIF 1 : LES COMPTES N'ÉTAIENT PAS DANS L'INSTANTANÉ ##########
+l'instantané ne couvre que la base lab_boutique (option --databases) :
+les comptes vivent dans mysql.user et n'ont donc pas été restaurés.
+
+--- recréation des comptes sur le primaire (la base mysql n'est pas dans l'instantané)
+User	Host
+app_boutique	192.168.99.%
+repl	192.168.99.%
+gtid_binlog_pos
+0-11-62
+
+--- côté réplica, après réplication des CREATE USER
+User	Host
+app_boutique	192.168.99.%
+repl	192.168.99.%
+@@gtid_current_pos
+0-11-62
