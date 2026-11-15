@@ -1,0 +1,31 @@
+# Transcript — VM srv-debian13
+
+$ bash -lc 'set -x; apt-cache policy sl; curl -sI http://127.0.0.1:8080/Release | head -3; apt-get install -y --reinstall sl 2>&1 | grep -E "Get:|Setting up|already"; dpkg -s sl | head -4'
+[2026-11-15 01:09:16 · 2.3s · code 0]
+sl:
+  Installed: (none)
+  Candidate: 5.02-1+b1
+  Version table:
+     5.02-1+b1 500
+        500 http://deb.debian.org/debian trixie/main amd64 Packages
+        500 http://127.0.0.1:8080 ./ Packages
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sun, 15 Nov 2026 00:09:17 GMT
+Get:1 http://deb.debian.org/debian trixie/main amd64 libncurses6 amd64 6.5+20250216-2 [105 kB]
+Get:2 http://deb.debian.org/debian trixie/main amd64 sl amd64 5.02-1+b1 [13.2 kB]
+Setting up libncurses6:amd64 (6.5+20250216-2) ...
+Setting up sl (5.02-1+b1) ...
+Package: sl
+Status: install ok installed
+Priority: optional
+Section: games
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
++ apt-cache policy sl
++ curl -sI http://127.0.0.1:8080/Release
++ head -3
++ apt-get install -y --reinstall sl
++ grep -E 'Get:|Setting up|already'
++ dpkg -s sl
++ head -4
+

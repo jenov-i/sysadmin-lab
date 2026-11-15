@@ -1,0 +1,54 @@
+# Transcript — VM srv-debian13
+
+$ bash -lc 'apt-cache policy sl; echo; apt-get install -y --reinstall sl 2>&1 | grep -E "Get:|Setting up|upgraded"; echo; curl -s http://127.0.0.1:8080/Packages | grep -E "^Package|^Version"'
+[2026-11-15 01:09:25 · 1.6s · code 0]
+sl:
+  Installed: 5.02-1+b1
+  Candidate: 5.02-1+b1
+  Version table:
+ *** 5.02-1+b1 1001
+        500 http://deb.debian.org/debian trixie/main amd64 Packages
+       1001 http://127.0.0.1:8080 ./ Packages
+        100 /var/lib/dpkg/status
+
+0 upgraded, 0 newly installed, 1 reinstalled, 0 to remove and 28 not upgraded.
+Setting up sl (5.02-1+b1) ...
+
+Package: htop
+Version: 3.4.1-5
+Package: sl
+Version: 5.02-1+b1
+Package: tree
+Version: 2.2.1-1
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+
+$ bash -lc 'apt-get clean; apt-get install -y --reinstall sl 2>&1 | grep -E "Get:|Setting up"'
+[2026-11-15 01:09:31 · 2.3s · code 0]
+Get:1 http://deb.debian.org/debian trixie/main amd64 sl amd64 5.02-1+b1 [13.2 kB]
+Setting up sl (5.02-1+b1) ...
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+
+$ bash -lc 'apt-get clean; apt-get install -y lab-bienvenue 2>&1 | grep -E "Get:|Unpacking|Setting up"; echo; bienvenue; echo; apt-cache policy lab-bienvenue'
+[2026-11-15 01:09:58 · 1.6s · code 0]
+Get:1 http://127.0.0.1:8080 ./ lab-bienvenue 1.0 [1,208 B]
+Unpacking lab-bienvenue (1.0) ...
+Setting up lab-bienvenue (1.0) ...
+
+Bienvenue sur debian — Debian GNU/Linux 13 (trixie)
+Role : serveur du lab sysadmin-lab
+Volumes montes :
+/boot /dev/vda1 ext4
+/ /dev/mapper/debian--vg-root ext4
+/home /dev/mapper/debian--vg-home ext4
+/tmp /dev/mapper/debian--vg-tmp ext4
+/var /dev/mapper/debian--vg-var ext4
+
+lab-bienvenue:
+  Installed: 1.0
+  Candidate: 1.0
+  Version table:
+ *** 1.0 500
+        500 http://127.0.0.1:8080 ./ Packages
+        100 /var/lib/dpkg/status
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

@@ -1,0 +1,28 @@
+# Transcript — VM srv-debian13
+
+$ bash -lc 'cat /etc/apt/sources.list 2>/dev/null; ls /etc/apt/sources.list.d/; apt-get update 2>&1 | tail -5'
+[2026-11-15 01:06:40 · 1.5s · code 0]
+#deb cdrom:[Debian GNU/Linux 13.2.0 _Trixie_ - Official amd64 NETINST with firmware 20251115-11:04]/ trixie contrib main non-free-firmware
+
+deb http://deb.debian.org/debian trixie main non-free-firmware
+deb-src http://deb.debian.org/debian trixie main non-free-firmware
+
+deb http://security.debian.org/debian-security trixie-security main non-free-firmware
+deb-src http://security.debian.org/debian-security trixie-security main non-free-firmware
+
+# trixie-updates, to get updates before a point release is made;
+# see https://www.debian.org/doc/manuals/debian-reference/ch02.en.html#_updates_and_backports
+deb http://deb.debian.org/debian trixie-updates main non-free-firmware
+deb-src http://deb.debian.org/debian trixie-updates main non-free-firmware
+
+# This system was installed using small removable media
+# (e.g. netinst, live or single CD). The matching "deb cdrom"
+# entries were disabled at the end of the installation process.
+# For information about how to configure apt package sources,
+# see the sources.list(5) manual.
+Hit:1 http://deb.debian.org/debian trixie InRelease
+Hit:2 http://security.debian.org/debian-security trixie-security InRelease
+Hit:3 http://deb.debian.org/debian trixie-updates InRelease
+Reading package lists...
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

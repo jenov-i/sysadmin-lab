@@ -1,0 +1,10 @@
+# Transcript — VM srv-debian13
+
+$ rm -f /etc/apt/preferences.d/depot-local; bash /root/construire-paquet.sh 2>&1 | grep -v "^W: Download"; echo "code: $?"
+[2026-11-15 01:09:53 · 1.2s · code 0]
+dpkg-deb: building package 'lab-bienvenue' in '/srv/depot/pool/lab-bienvenue_1.0_all.deb'.
+paquets dans l'index :
+4
+code: 0
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" font-family="DejaVu Sans, Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a5568"/>
+    </marker>
+    <style>
+      .title { font-size: 25px; font-weight: 700; fill: #1a202c; }
+      .sub   { font-size: 14px; fill: #4a5568; }
+      .box   { fill: #ffffff; stroke: #4a5568; stroke-width: 2; }
+      .svc   { fill: #f0fff4; stroke: #276749; stroke-width: 2; }
+      .store { fill: #ebf8ff; stroke: #2b6cb0; stroke-width: 2; }
+      .label { font-size: 16px; font-weight: 700; fill: #1a202c; }
+      .mono  { font-family: DejaVu Sans Mono, monospace; font-size: 13px; fill: #2d3748; }
+      .meta  { font-size: 12.5px; fill: #4a5568; }
+      .flow  { stroke: #4a5568; stroke-width: 2; fill: none; marker-end: url(#a); }
+    </style>
+  </defs>
+  <rect width="1200" height="640" fill="#ffffff"/>
+  <text class="title" x="40" y="52">Dépôt APT local servi par nginx</text>
+  <text class="sub" x="40" y="78">srv-debian13 · Debian 13.2 · nginx 1.26.3 · apt-ftparchive (dpkg-dev 1.22.22) · paquet maison lab-bienvenue 1.0</text>
+
+  <!-- client apt -->
+  <rect class="box" x="40" y="130" width="270" height="180" rx="10"/>
+  <text class="label" x="62" y="164">Client apt</text>
+  <text class="mono" x="62" y="192">/etc/apt/sources.list.d/</text>
+  <text class="mono" x="62" y="212">  depot-local.list</text>
+  <text class="meta" x="62" y="240">deb [trusted=yes]</text>
+  <text class="mono" x="62" y="260">http://127.0.0.1:8080/ ./</text>
+  <text class="meta" x="62" y="288">apt-get update · apt-get install</text>
+
+  <!-- nginx -->
+  <rect class="svc" x="390" y="130" width="330" height="180" rx="10"/>
+  <text class="label" x="412" y="164">nginx — écoute 8080</text>
+  <text class="mono" x="412" y="192">root /srv/depot;</text>
+  <text class="mono" x="412" y="212">autoindex on;</text>
+  <text class="meta" x="412" y="240">service actif, config validée</text>
+  <text class="meta" x="412" y="260">par nginx -t</text>
+  <text class="meta" x="412" y="288">sert l'index et les .deb en HTTP</text>
+
+  <!-- depot -->
+  <rect class="store" x="800" y="110" width="360" height="230" rx="10"/>
+  <text class="label" x="822" y="144">/srv/depot</text>
+  <text class="mono" x="822" y="172">Release        (métadonnées)</text>
+  <text class="mono" x="822" y="192">Packages       (4 paquets)</text>
+  <text class="mono" x="822" y="212">Packages.gz</text>
+  <text class="mono" x="822" y="232">pool/</text>
+  <text class="mono" x="846" y="252">htop_3.4.1-5_amd64.deb</text>
+  <text class="mono" x="846" y="272">tree_2.2.1-1_amd64.deb</text>
+  <text class="mono" x="846" y="292">sl_5.02-1+b1_amd64.deb</text>
+  <text class="mono" x="846" y="312">lab-bienvenue_1.0_all.deb</text>
+
+  <!-- flèches -->
+  <path class="flow" d="M 310 220 L 386 220"/>
+  <path class="flow" d="M 720 220 L 796 220"/>
+  <text class="meta" x="316" y="208">HTTP GET</text>
+  <text class="meta" x="726" y="208">fichiers</text>
+
+  <!-- bas : construction -->
+  <rect class="box" x="40" y="400" width="1120" height="200" rx="10"/>
+  <text class="label" x="62" y="434">Construction et mise à jour du dépôt</text>
+  <text class="mono" x="62" y="466">1. apt-get download sl tree htop    # paquets du miroir public rapatriés dans pool/</text>
+  <text class="mono" x="62" y="490">2. dpkg-deb --build /tmp/build-lab-bienvenue   # paquet maison, arch all</text>
+  <text class="mono" x="62" y="514">3. apt-ftparchive packages pool &gt; Packages     # index des paquets</text>
+  <text class="mono" x="62" y="538">4. apt-ftparchive release .  &gt; Release         # métadonnées signées par Origin/Label</text>
+  <text class="mono" x="62" y="562">5. systemctl reload nginx                      # publication immédiate</text>
+  <text class="meta" x="62" y="586">Le client n'a plus besoin d'Internet : apt install lab-bienvenue se fait depuis 127.0.0.1:8080.</text>
+</svg>
