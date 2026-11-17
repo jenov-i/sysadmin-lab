@@ -6,7 +6,7 @@ Faire de `srv-debian13` le serveur de temps du lab : synchronisé sur des source
 Internet réelles, il doit servir l'heure aux machines du réseau autorisé et refuser
 les autres. Le projet vérifie les deux côtés — ce que le serveur répond et ce que le
 client mesure — avec de vrais échanges NTP sur UDP 123, pas une simple relecture de
-configuration. Projet tiré au hasard dans le catalogue (`08-358`).
+configuration.
 
 ## Environnement
 

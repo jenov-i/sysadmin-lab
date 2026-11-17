@@ -7,7 +7,6 @@ contrainte, nouvel index) sans jamais bloquer les écritures de l'application. L
 projet mesure les deux approches sous charge réelle : une migration naïve qui coupe
 les insertions, puis une migration en ligne où les 4 écrivains et les 2 lecteurs ne
 perdent aucune requête. Les chiffres viennent de la base, pas d'une estimation.
-Projet tiré au hasard dans le catalogue (`16-774`).
 
 ## Environnement
 

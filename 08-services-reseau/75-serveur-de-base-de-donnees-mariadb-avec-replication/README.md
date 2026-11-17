@@ -8,7 +8,6 @@ Le projet vérifie le mécanisme de bout en bout : écriture applicative réelle
 `192.168.99.11`, lecture de la même ligne sur `192.168.99.12`, mesure du retard sous
 une charge de 100 000 lignes. Les incidents classiques de la réplication GTID sont
 provoqués, diagnostiqués et corrigés, avec leurs journaux.
-Projet tiré au hasard dans le catalogue (`08-375`).
 
 ## Environnement
 

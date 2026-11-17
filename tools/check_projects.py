@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Contrôle automatique des projets publiés dans ce dépôt.
+"""Contrôle des projets publiés dans ce dépôt.
 
   python3 tools/check_projects.py              # tout le dépôt
   python3 tools/check_projects.py replication  # les dossiers dont le nom contient « replication »
   python3 tools/check_projects.py --strict     # un avertissement suffit à échouer
-  python3 tools/check_projects.py --catalogue ../catalogue.json
 
 Deux niveaux :
 
@@ -16,11 +15,9 @@ Deux niveaux :
 Code de retour : 0 si aucune erreur (en --strict : ni erreur ni avertissement),
 1 sinon, 2 en cas d'usage incorrect.
 
-Ce fichier est la seule règle : `bin/publish.py` l'appelle avant de committer et
-la CI GitHub l'exécute à chaque push. Une règle, deux endroits.
+La CI GitHub l'exécute à chaque push.
 """
 import argparse
-import json
 import re
 import struct
 import sys
@@ -190,30 +187,10 @@ def projets(racine: Path) -> list[Path]:
     return trouve
 
 
-def verifier_catalogue(catalogue: Path, racine: Path) -> list[str]:
-    """Le catalogue et le dépôt doivent dire la même chose."""
-    messages = []
-    try:
-        donnees = json.loads(catalogue.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        return [f"catalogue illisible : {exc}"]
-
-    faits = {p["slug"]: p for p in donnees.get("projects", [])
-             if p.get("status") == "done" and p.get("slug")}
-    sur_disque = {p.relative_to(racine).as_posix() for p in projets(racine)}
-
-    for slug in sorted(set(faits) - sur_disque):
-        messages.append(f"catalogue marque « done » sans dossier : {slug}")
-    for slug in sorted(sur_disque - set(faits)):
-        messages.append(f"projet publié absent du catalogue (ou statut ≠ done) : {slug}")
-    return messages
-
-
 def main() -> int:
     analyseur = argparse.ArgumentParser(description=__doc__)
     analyseur.add_argument("motif", nargs="?", default=None)
     analyseur.add_argument("--strict", action="store_true")
-    analyseur.add_argument("--catalogue", type=Path, default=None)
     analyseur.add_argument("--racine", type=Path, default=RACINE)
     options = analyseur.parse_args()
 
@@ -240,14 +217,6 @@ def main() -> int:
             print(f"     ERREUR  {message}")
         for message in verdict.avertissements:
             print(f"     noté    {message}")
-
-    if options.catalogue:
-        messages = verifier_catalogue(options.catalogue, racine)
-        total_erreurs += len(messages)
-        print(("\nCohérence avec le catalogue : " if messages else "\nCatalogue cohérent."),
-              end="\n" if messages else "")
-        for message in messages:
-            print(f"     ERREUR  {message}")
 
     print(f"\n{len(liste)} projet(s) · {total_erreurs} erreur(s) · "
           f"{total_avertissements} avertissement(s)")

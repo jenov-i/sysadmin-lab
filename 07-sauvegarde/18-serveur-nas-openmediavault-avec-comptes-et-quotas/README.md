@@ -8,7 +8,6 @@ VM, expose un partage SMB privé et applique un quota par utilisateur : **512 Mi
 `sauvegarde`, **256 Mio** pour `archive`. La preuve est faite depuis une autre machine
 du lab : dépôt et relecture d'un fichier de 256 Mio, montage CIFS, puis refus réel du
 noyau (`NT_STATUS_DISK_FULL`) au-delà du quota.
-Projet tiré au hasard dans le catalogue (`07-318`).
 
 ## Environnement
 
