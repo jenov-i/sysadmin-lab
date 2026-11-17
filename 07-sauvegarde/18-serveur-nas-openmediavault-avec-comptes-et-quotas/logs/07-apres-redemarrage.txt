@@ -1,0 +1,16 @@
+# Transcript — VM nas-omv8
+
+$ bash /root/08-preuve-redemarrage.sh
+[2026-11-17 18:01:38 · 0.2s · code 0]
+Démarrage du 2026-11-17 18:00:52 — 1.900s (kernel) + 4.403s (userspace) = 6.304s 
+services actifs : active active active active 
+attente réseau  : networkd=masked ifupdown=enabled
+montage         : /dev/vdb1 /srv/dev-disk-by-uuid-eaa46f06-2017-41b0-8c9d-047989b6e920 xfs
+
+--- quotas après redémarrage ---
+root            0      0      0  00 [------]
+sauvegarde   320M      0   512M  00 [------]
+archive         0      0   256M  00 [------]
+
+Warning: Permanently added '[127.0.0.1]:2223' (ED25519) to the list of known hosts.
+

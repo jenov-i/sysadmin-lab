@@ -1,0 +1,19 @@
+==== lab-linux-01 (192.168.99.11) · 04-test-montage-cifs.sh · 2026-11-17 08:25:32 WAT · code 0 ====
+=== montage CIFS (SMB 3.0) ===
+montage réussi
+//192.168.99.1/sauvegardes /mnt/nas-test cifs   rw,relatime,vers=3.0,cache=strict,upcall_target=app,username=sauvegarde,uid=1000,forceuid,gid=1000,forcegid,addr=192.168.99.1,file_mode=0755,dir_mode=0755,soft,nounix,serverino,mapposix,rsize=4194304,wsize=4194304,bsize=1048576,echo_interval=60,actimeo=1,closetimeo=1
+
+=== espace vu par le client ===
+//192.168.99.1/sauvegardes  512M  256M  256M  50% /mnt/nas-test
+
+=== écriture de 64 Mio à travers le montage ===
+0653a7350c7b2bce5c6fbf247b5f19d347809bcf02680b1d3521f49b100c1f84  /tmp/montage-nas.MTJs8T/source-64m.bin
+-rwxr-xr-x 1 test test 67108864 Nov 17 08:25 /mnt/nas-test/depuis-le-montage.bin
+
+=== relecture depuis le montage ===
+0653a7350c7b2bce5c6fbf247b5f19d347809bcf02680b1d3521f49b100c1f84  /mnt/nas-test/depuis-le-montage.bin
+contenu identique (cmp)
+
+=== permissions vues par le client ===
+/mnt/nas-test/depuis-le-montage.bin test:test 755 67108864
+démonté

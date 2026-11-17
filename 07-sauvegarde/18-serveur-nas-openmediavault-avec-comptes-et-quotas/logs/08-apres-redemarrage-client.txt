@@ -1,0 +1,15 @@
+==== lab-linux-01 (192.168.99.11) · 09-test-apres-redemarrage.sh · 2026-11-17 18:02:45 WAT · code 0 ====
+=== NAS joignable ===
+	---------       ----      -------
+	sauvegardes     Disk      sauvegardes des serveurs
+	IPC$            IPC       IPC Service (NAS de sauvegarde)
+SMB1 disabled -- no workgroup available
+
+=== écriture et relecture d'un fichier de 8 Mio ===
+90e7d75faf27f0c0e373ea719101683ea8837c8a3e3bd6917bdf052fe2ef7866  /tmp/apres-reboot.sLnrLh/apres.bin
+putting file /tmp/apres-reboot.sLnrLh/apres.bin as \apres-redemarrage.bin (118724.5 kb/s) (average 118724.6 kb/s)
+getting file \apres-redemarrage.bin of size 8388608 as /tmp/apres-reboot.sLnrLh/relu.bin (67147.5 KiloBytes/sec) (average 67147.5 KiloBytes/sec)
+90e7d75faf27f0c0e373ea719101683ea8837c8a3e3bd6917bdf052fe2ef7866  /tmp/apres-reboot.sLnrLh/relu.bin
+contenu identique (cmp)
+
+=== suppression du fichier de test ===

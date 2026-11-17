@@ -1,0 +1,55 @@
+==== lab-linux-01 (192.168.99.11) · 02-test-smb-quotas.sh · 2026-11-17 08:22:59 WAT · code 0 ====
+=== client ===
+lab-linux-01
+    inet 192.168.99.11/24 brd 192.168.99.255 scope global ens33
+Version 4.15.13-Ubuntu
+
+=== 1. énumération des partages (compte sauvegarde) ===
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	sauvegardes     Disk      sauvegardes des serveurs
+	IPC$            IPC       IPC Service (NAS de sauvegarde)
+SMB1 disabled -- no workgroup available
+
+=== 2. dépôt d'un fichier de 256 Mio ===
+a6d72ac7690f53be6ae46ba88506bd97302a093f7108472bd9efc3cefda06484  /tmp/test-nas.kMZgtU/fichier-256m.bin
+putting file /tmp/test-nas.kMZgtU/fichier-256m.bin as \fichier-256m.bin (200569.2 kb/s) (average 200569.2 kb/s)
+
+=== 3. relecture et comparaison d'empreinte ===
+getting file \fichier-256m.bin of size 268435456 as /tmp/test-nas.kMZgtU/relu.bin (115736.9 KiloBytes/sec) (average 115736.9 KiloBytes/sec)
+a6d72ac7690f53be6ae46ba88506bd97302a093f7108472bd9efc3cefda06484  /tmp/test-nas.kMZgtU/relu.bin
+contenu identique (cmp)
+
+=== 4. dépassement du quota de 512 Mio (300 Mio de plus) ===
+cli_push returned NT_STATUS_DISK_FULL
+NT_STATUS_INVALID_NETWORK_RESPONSE closing remote file \fichier-300m.bin
+code retour smbclient : 1
+
+=== 5. quota du compte archive (256 Mio) ===
+cli_push returned NT_STATUS_DISK_FULL
+NT_STATUS_CONNECTION_DISCONNECTED closing remote file \archive-300m.bin
+code retour smbclient : 1
+
+=== 6. montage CIFS et écriture directe ===
+//192.168.99.1/sauvegardes on /mnt/nas-test type cifs (rw,relatime,vers=3.0,cache=strict,upcall_target=app,username=sauvegarde,uid=1000,forceuid,gid=1000,forcegid,addr=192.168.99.1,file_mode=0755,dir_mode=0755,soft,nounix,serverino,mapposix,rsize=4194304,wsize=4194304,bsize=1048576,echo_interval=60,actimeo=1,closetimeo=1)
+//192.168.99.1/sauvegardes  512M  512M     0 100% /mnt/nas-test
+total 786432
+-rwxr-xr-x 1 test test 268435456 Nov 17 08:22 archive-300m.bin
+-rwxr-xr-x 1 test test 268435456 Nov 17 08:22 fichier-256m.bin
+-rwxr-xr-x 1 test test 268435456 Nov 17 08:22 fichier-300m.bin
+
+=== 7. fichiers visibles côté client ===
+  .                                   D        0  Tue Nov 17 08:22:57 2026
+  ..                                  D        0  Tue Nov 17 08:22:57 2026
+  fichier-256m.bin                    N 268435456  Tue Nov 17 08:22:52 2026
+  fichier-300m.bin                    N 268435456  Tue Nov 17 08:22:57 2026
+  archive-300m.bin                    N 268435456  Tue Nov 17 08:22:58 2026
+
+		524288 blocks of size 1024. 0 blocks available
+
+real	0m1.345s
+user	0m0.022s
+sys	0m0.363s
+/tmp/vmexec-lab-linux-01.sh: line 58: /mnt/nas-test/depuis-le-montage.txt: No space left on device
+cat: /mnt/nas-test/depuis-le-montage.txt: No such file or directory

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" font-family="DejaVu Sans, Arial, sans-serif">
+  <rect width="1200" height="720" fill="#f7f9fc"/>
+  <text x="40" y="52" font-size="28" font-weight="bold" fill="#1b2a41">NAS OpenMediaVault pour les sauvegardes</text>
+  <text x="40" y="82" font-size="16" fill="#51637a">Debian 13 · OpenMediaVault 8 · partage SMB authentifié · quotas par utilisateur</text>
+
+  <!-- réseau -->
+  <rect x="330" y="300" width="220" height="60" rx="10" fill="#e3edf9" stroke="#4a7dbd" stroke-width="2"/>
+  <text x="440" y="328" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b2a41">Réseau 10.0.2.0/24</text>
+  <text x="440" y="348" text-anchor="middle" font-size="13" fill="#51637a">QEMU (user), SSH 22</text>
+
+  <!-- client -->
+  <rect x="50" y="270" width="230" height="120" rx="10" fill="#ffffff" stroke="#8a9bb0" stroke-width="2"/>
+  <text x="165" y="300" text-anchor="middle" font-size="17" font-weight="bold" fill="#1b2a41">Poste client</text>
+  <text x="165" y="322" text-anchor="middle" font-size="13" fill="#51637a">smbclient / montage CIFS</text>
+  <text x="165" y="342" text-anchor="middle" font-size="13" fill="#51637a">lecture des archives</text>
+  <text x="165" y="370" text-anchor="middle" font-size="13" fill="#2f6b3a">écrit, lit, sature le quota</text>
+
+  <!-- lien client-réseau -->
+  <line x1="280" y1="330" x2="330" y2="330" stroke="#4a7dbd" stroke-width="2"/>
+  <text x="305" y="316" text-anchor="middle" font-size="10" fill="#51637a">SMB</text>
+
+  <!-- lien réseau-NAS -->
+  <line x1="550" y1="330" x2="620" y2="330" stroke="#4a7dbd" stroke-width="2"/>
+
+  <!-- NAS -->
+  <rect x="620" y="200" width="260" height="300" rx="10" fill="#ffffff" stroke="#1b2a41" stroke-width="2"/>
+  <text x="750" y="232" text-anchor="middle" font-size="18" font-weight="bold" fill="#1b2a41">nas-omv8</text>
+  <text x="750" y="254" text-anchor="middle" font-size="13" fill="#51637a">Debian 13 (trixie) · 2 vCPU · 2 Go</text>
+  <line x1="640" y1="266" x2="860" y2="266" stroke="#d5dde8" stroke-width="1"/>
+  <text x="640" y="290" font-size="13" fill="#1b2a41">smbd (SMB/CIFS)</text>
+  <text x="640" y="312" font-size="13" fill="#1b2a41">nginx + omv-engined (HTTP 80)</text>
+  <text x="640" y="334" font-size="13" fill="#1b2a41">comptes : sauvegarde, archive</text>
+  <text x="640" y="356" font-size="13" fill="#1b2a41">quotas XFS (usrquota, grpquota)</text>
+  <text x="640" y="378" font-size="13" fill="#1b2a41">quotas persistants (quota.service)</text>
+  <text x="640" y="400" font-size="13" fill="#51637a">/dev/vda : système, LVM 30 Go</text>
+  <text x="640" y="422" font-size="13" fill="#51637a">/dev/vdb1 : données, XFS 20 Go</text>
+  <text x="640" y="452" font-size="12" fill="#2f6b3a">partage //nas-omv8/sauvegardes</text>
+  <text x="640" y="472" font-size="12" fill="#2f6b3a">privé : login obligatoire</text>
+
+  <!-- disque données -->
+  <rect x="960" y="270" width="200" height="190" rx="10" fill="#eaf4ec" stroke="#2f6b3a" stroke-width="2"/>
+  <text x="1060" y="300" text-anchor="middle" font-size="13" font-weight="bold" fill="#1b2a41">/srv/dev-disk-by-uuid-…</text>
+  <text x="1060" y="324" text-anchor="middle" font-size="12" fill="#2f6b3a">XFS + quotas</text>
+  <line x1="980" y1="340" x2="1140" y2="340" stroke="#bcd8c3"/>
+  <text x="980" y="364" font-size="12" fill="#1b2a41">sauvegarde : 512 Mio</text>
+  <text x="980" y="388" font-size="12" fill="#1b2a41">archive : 256 Mio</text>
+  <text x="980" y="412" font-size="12" fill="#1b2a41">écriture au-delà = refus</text>
+  <line x1="880" y1="330" x2="960" y2="330" stroke="#2f6b3a" stroke-width="2"/>
+
+  <!-- bandeau bas -->
+  <rect x="50" y="560" width="1110" height="110" rx="10" fill="#ffffff" stroke="#d5dde8"/>
+  <text x="70" y="590" font-size="14" font-weight="bold" fill="#1b2a41">Preuves mesurées</text>
+  <text x="70" y="616" font-size="13" fill="#51637a">• montage du partage avec les identifiants OMV, écriture et relecture d'un fichier de 256 Mio</text>
+  <text x="70" y="638" font-size="13" fill="#51637a">• dépassement du quota refusé par le noyau (« Disk quota exceeded »), vérifié par repquota et l'API Quota</text>
+  <text x="70" y="660" font-size="13" fill="#51637a">• état OMV (version, services, partages, comptes) relu dans la base de configuration interne</text>
+</svg>

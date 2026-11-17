@@ -1,0 +1,33 @@
+# Transcript — VM nas-omv8
+
+$ bash /root/07-corriger-demarrage.sh
+[2026-11-17 17:59:34 · 1.0s · code 141]
+=== constat ===
+TimeoutStartUSec=infinity
+IDX LINK TYPE     OPERATIONAL SETUP
+  1 lo   loopback carrier     unmanaged
+  2 ens3 ether    routable    unmanaged
+
+2 links listed.
+enabled
+disabled
+enabled
+
+=== nettoyage des fichiers de test interrompus ===
+total 327680
+-rw-rw-r-- 1 sauvegarde users  67108864 Nov 17 08:25 depuis-le-montage.bin
+-rw-rw-r-- 1 sauvegarde users 268435456 Nov 17 08:22 fichier-256m.bin
+=== correctif ===
+
+=== état après correctif ===
+disabled
+enabled
+JOB UNIT                           TYPE  STATE
+169 collectd.service               start running
+17  graphical.target               start waiting
+18  multi-user.target              start waiting
+176 getty.target                   start waiting
+Warning: Permanently added '[127.0.0.1]:2223' (ED25519) to the list of known hosts.
+Removed '/etc/systemd/system/network-online.target.wants/systemd-networkd-wait-online.service'.
+Created symlink '/etc/systemd/system/network-online.target.wants/ifupdown-wait-online.service' → '/usr/lib/systemd/system/ifupdown-wait-online.service'.
+

@@ -1,0 +1,114 @@
+# Transcript — VM nas-omv8
+
+$ bash /root/00-preparation.sh
+[2026-11-16 19:15:18 · 0.2s · code 1]
+=== nom d'hôte ===
+nas-omv8
+fec0::ee53:e679:88ec:36b0 nas-omv8
+fe80::b4b0:531d:25ce:bb76 nas-omv8
+=== prérequis OpenMediaVault ===
+active
+active
+serveur web déjà installé : 0
+Warning: Permanently added '[127.0.0.1]:2223' (ED25519) to the list of known hosts.
+
+$ bash /root/00-preparation.sh
+[2026-11-16 19:15:30 · 0.2s · code 127]
+=== nom d'hôte ===
+nas-omv8
+fec0::ee53:e679:88ec:36b0 nas-omv8
+fe80::b4b0:531d:25ce:bb76 nas-omv8
+=== prérequis OpenMediaVault ===
+active
+active
+serveur web déjà installé : 0
+=== /etc/hosts ===
+127.0.0.1	localhost
+127.0.1.1 nas-omv8
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+=== disques ===
+NAME                 SIZE TYPE FSTYPE      MOUNTPOINT
+fd0                    4K disk             
+sr0                 1024M rom              
+vda                   30G disk             
+├─vda1               487M part ext4        /boot
+├─vda2                 1K part             
+└─vda5              29.5G part LVM2_member 
+  ├─debian--vg-swap  1.9G lvm  swap        [SWAP]
+  ├─debian--vg-root  5.7G lvm  ext4        /
+  ├─debian--vg-var   2.9G lvm  ext4        /var
+  ├─debian--vg-home  1.9G lvm  ext4        /home
+  └─debian--vg-tmp  17.1G lvm  ext4        /tmp
+vdb                   20G disk             
+Filesystem                   Size  Used Avail Use% Mounted on
+/dev/mapper/debian--vg-root  5.6G  756M  4.6G  15% /
+=== partition de données /dev/vdb ===
+Warning: Permanently added '[127.0.0.1]:2223' (ED25519) to the list of known hosts.
+/root/00-preparation.sh: line 28: parted: command not found
+
+$ bash /root/00-preparation.sh
+[2026-11-16 19:15:37 · 0.6s · code 0]
+=== nom d'hôte ===
+nas-omv8
+fec0::ee53:e679:88ec:36b0 nas-omv8
+fe80::b4b0:531d:25ce:bb76 nas-omv8
+=== prérequis OpenMediaVault ===
+active
+active
+serveur web déjà installé : 0
+=== /etc/hosts ===
+127.0.0.1	localhost
+127.0.1.1 nas-omv8
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+=== disques ===
+NAME                 SIZE TYPE FSTYPE      MOUNTPOINT
+fd0                    4K disk             
+sr0                 1024M rom              
+vda                   30G disk             
+├─vda1               487M part ext4        /boot
+├─vda2                 1K part             
+└─vda5              29.5G part LVM2_member 
+  ├─debian--vg-swap  1.9G lvm  swap        [SWAP]
+  ├─debian--vg-root  5.7G lvm  ext4        /
+  ├─debian--vg-var   2.9G lvm  ext4        /var
+  ├─debian--vg-home  1.9G lvm  ext4        /home
+  └─debian--vg-tmp  17.1G lvm  ext4        /tmp
+vdb                   20G disk             
+Filesystem                   Size  Used Avail Use% Mounted on
+/dev/mapper/debian--vg-root  5.6G  756M  4.6G  15% /
+=== partition de données /dev/vdb ===
+Checking that no-one is using this disk right now ... OK
+
+Disk /dev/vdb: 20 GiB, 21474836480 bytes, 41943040 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+>>> Script header accepted.
+>>> Created a new GPT disklabel (GUID: C9CBD46D-AF00-4512-89A8-9587F7D28AF1).
+/dev/vdb1: Created a new partition 1 of type 'Linux filesystem' and of size 20 GiB.
+/dev/vdb2: Done.
+
+New situation:
+Disklabel type: gpt
+Disk identifier: C9CBD46D-AF00-4512-89A8-9587F7D28AF1
+
+Device     Start      End  Sectors Size Type
+/dev/vdb1   2048 41940991 41938944  20G Linux filesystem
+
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+NAME   SIZE TYPE FSTYPE MOUNTPOINT
+vdb     20G disk        
+└─vdb1  20G part        
+Warning: Permanently added '[127.0.0.1]:2223' (ED25519) to the list of known hosts.
+

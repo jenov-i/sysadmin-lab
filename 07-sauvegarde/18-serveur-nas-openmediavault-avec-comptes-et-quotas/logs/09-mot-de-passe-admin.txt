@@ -1,0 +1,10 @@
+# Transcript — VM nas-omv8
+
+$ bash /root/10-changer-mot-de-passe-admin.sh
+[2026-11-17 18:05:34 · 3.2s · code 0]
+avant : accepté
+mot de passe admin remplacé (valeur hors dépôt)
+après, ancien mot de passe : refusé
+après, nouveau mot de passe : accepté
+Warning: Permanently added '[127.0.0.1]:2223' (ED25519) to the list of known hosts.
+

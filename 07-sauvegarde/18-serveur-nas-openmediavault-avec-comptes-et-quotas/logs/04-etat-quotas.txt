@@ -1,0 +1,84 @@
+# Transcript — VM nas-omv8
+
+$ bash /root/03-verifier-quotas.sh
+[2026-11-17 08:23:24 · 0.3s · code 0]
+=== système de fichiers ===
+/dev/vdb1 /srv/dev-disk-by-uuid-eaa46f06-2017-41b0-8c9d-047989b6e920 xfs rw,relatime,attr2,inode64,logbufs=8,logbsize=32k,usrquota,grpquota
+/dev/vdb1        20G  1.2G   19G   6% /srv/dev-disk-by-uuid-eaa46f06-2017-41b0-8c9d-047989b6e920
+
+=== état des quotas XFS ===
+User quota state on /srv/dev-disk-by-uuid-eaa46f06-2017-41b0-8c9d-047989b6e920 (/dev/vdb1)
+  Accounting: ON
+  Enforcement: ON
+  Inode: #131 (2 blocks, 2 extents)
+Blocks grace time: [7 days]
+Blocks max warnings: 0
+Inodes grace time: [7 days]
+Inodes max warnings: 0
+Realtime Blocks grace time: [7 days]
+Realtime Blocks max warnings: 0
+
+=== consommation des comptes ===
+User quota on /srv/dev-disk-by-uuid-eaa46f06-2017-41b0-8c9d-047989b6e920 (/dev/vdb1)
+                        Blocks              
+User ID      Used   Soft   Hard Warn/Grace   
+---------- --------------------------------- 
+root            0      0      0  00 [------]
+sauvegarde   512M      0   512M  00 [------]
+archive      256M      0   256M  00 [------]
+
+
+*** Report for user quotas on device /dev/vdb1
+Block grace time: 7days; Inode grace time: 7days
+                        Space limits                File limits
+User            used    soft    hard  grace    used  soft  hard  grace
+----------------------------------------------------------------------
+root      --      0K      0K      0K              4     0     0       
+sauvegarde --    512M      0K    512M              2     0     0       
+archive   --    256M      0K    256M              1     0     0       
+
+
+
+=== limites vues par l'API OpenMediaVault ===
+[
+    {
+        "type": "user",
+        "name": "sauvegarde",
+        "bused": "512.00 MiB",
+        "bhardlimit": 512,
+        "bunit": "MiB"
+    },
+    {
+        "type": "user",
+        "name": "archive",
+        "bused": "256.00 MiB",
+        "bhardlimit": 256,
+        "bunit": "MiB"
+    }
+]
+
+=== contenu du partage ===
+total 786432
+262144 -rw-rw-r-- 1 archive    users 268435456 Nov 17 08:22 archive-300m.bin
+262144 -rw-rw-r-- 1 sauvegarde users 268435456 Nov 17 08:22 fichier-256m.bin
+262144 -rw-rw-r-- 1 sauvegarde users 268435456 Nov 17 08:22 fichier-300m.bin
+
+=== service de quotas (persistance au démarrage) ===
+enabled
+active
+
+=== état OMV ===
+paquet : openmediavault 8.6.1-1
+--- services
+active active active 
+--- partage SMB
+--- comptes
+  sauvegarde | uid 1000 | groupes users
+  archive | uid 1001 | groupes users
+Warning: Permanently added '[127.0.0.1]:2223' (ED25519) to the list of known hosts.
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+    print(" ", s["name"], "| guest=" + s["guest"], "| readonly=" + str(s["readonly"]), "| dossier=" + s["sharedfolderref"])
+               ~^^^^^^^^
+KeyError: 'name'
+
