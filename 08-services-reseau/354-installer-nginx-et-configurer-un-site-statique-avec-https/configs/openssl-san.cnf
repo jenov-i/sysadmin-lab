@@ -1,0 +1,30 @@
+# Certificat auto-signé pour site.lab.local
+# Utilisé par : openssl req -x509 -new -key ... -config openssl-san.cnf ...
+
+[req]
+default_bits       = 3072
+default_md         = sha256
+prompt             = no
+distinguished_name = dn
+x509_extensions    = v3_ext
+
+[dn]
+C            = CG
+ST           = Brazzaville
+L            = Brazzaville
+O            = Lab Jenovi
+OU           = Administration systemes
+CN           = site.lab.local
+
+[v3_ext]
+basicConstraints       = critical, CA:FALSE
+keyUsage               = critical, digitalSignature, keyEncipherment
+extendedKeyUsage       = serverAuth
+subjectAltName         = @san
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid
+
+[san]
+DNS.1 = site.lab.local
+DNS.2 = www.site.lab.local
+IP.1  = 10.0.3.10

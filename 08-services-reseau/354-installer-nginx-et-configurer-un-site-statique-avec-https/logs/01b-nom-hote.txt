@@ -1,0 +1,28 @@
+# Transcript — VM srv-web
+
+$ bash /root/projet/scripts/01b-nom-hote.sh
+[2026-11-18 07:36:36 · 0.3s · code 0]
+=== Avant ===
+debian
+debian
+1:127.0.0.1	localhost
+2:127.0.1.1	debian
+4:# The following lines are desirable for IPv6 capable hosts
+5:::1     localhost ip6-localhost ip6-loopback
+6:ff02::1 ip6-allnodes
+7:ff02::2 ip6-allrouters
+
+=== Correction ===
+
+=== Après ===
+srv-web
+srv-web
+srv-web.lab.local
+10.0.2.15 10.0.3.10 fec0::b5ab:12db:2d77:d658 fec0::5054:ff:fe12:3457 
+1:127.0.0.1	localhost
+2:10.0.3.10	srv-web.lab.local srv-web
+4:::1	localhost ip6-localhost ip6-loopback
+5:ff02::1	ip6-allnodes
+6:ff02::2	ip6-allrouters
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

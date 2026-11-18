@@ -1,0 +1,86 @@
+# Transcript — VM srv-web
+
+$ bash /root/projet/scripts/01-preparer-serveur.sh
+[2026-11-18 07:36:02 · 5.7s · code 0]
+=== Etat initial ===
+2026-11-18T07:36:01+01:00
+Debian GNU/Linux 13 (trixie) — noyau 6.12.57+deb13-amd64
+
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+ens3             UP             10.0.2.15/24 fec0::b5ab:12db:2d77:d658/64 fe80::f523:79c5:73eb:d4ba/64 
+ens4             DOWN           
+
+-- paquets déjà présents --
+openssl 3.5.7-1~deb13u3
+nginx absent
+
+-- service nginx --
+not-found
+inactive
+
+=== Adresse fixe 10.0.3.10 sur ens4 ===
+ens4             UP             10.0.3.10/24 fe80::5054:ff:fe12:3457/64 
+
+=== Installation ===
+Reading package lists...
+Building dependency tree...
+Reading state information...
+openssl is already the newest version (3.5.7-1~deb13u3).
+openssl set to manually installed.
+Suggested packages:
+  fcgiwrap nginx-doc ssl-cert
+The following NEW packages will be installed:
+  nginx nginx-common
+0 upgraded, 2 newly installed, 0 to remove and 36 not upgraded.
+Need to get 725 kB of archives.
+After this operation, 1,906 kB of additional disk space will be used.
+Get:1 http://security.debian.org/debian-security trixie-security/main amd64 nginx-common all 1.26.3-3+deb13u10 [112 kB]
+Get:2 http://security.debian.org/debian-security trixie-security/main amd64 nginx amd64 1.26.3-3+deb13u10 [614 kB]
+Preconfiguring packages ...
+Fetched 725 kB in 1s (661 kB/s)
+Selecting previously unselected package nginx-common.
+(Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 32228 files and directories currently installed.)
+Preparing to unpack .../nginx-common_1.26.3-3+deb13u10_all.deb ...
+Unpacking nginx-common (1.26.3-3+deb13u10) ...
+Selecting previously unselected package nginx.
+Preparing to unpack .../nginx_1.26.3-3+deb13u10_amd64.deb ...
+Unpacking nginx (1.26.3-3+deb13u10) ...
+Setting up nginx-common (1.26.3-3+deb13u10) ...
+Created symlink '/etc/systemd/system/multi-user.target.wants/nginx.service' → '/usr/lib/systemd/system/nginx.service'.
+Setting up nginx (1.26.3-3+deb13u10) ...
+Upgrading binary: nginx.
+Processing triggers for man-db (2.13.1-1) ...
+
+OpenSSL 3.5.7 9 Jun 2026 (Library: OpenSSL 3.5.7 9 Jun 2026)
+
+enabled
+active
+
+-- version exacte --
+nginx 1.26.3-3+deb13u10
+nginx-common 1.26.3-3+deb13u10
+openssl 3.5.7-1~deb13u3
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+nginx version: nginx/1.26.3
+

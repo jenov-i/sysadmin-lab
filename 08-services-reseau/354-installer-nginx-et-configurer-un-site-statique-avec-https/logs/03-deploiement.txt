@@ -1,0 +1,44 @@
+# Transcript — VM srv-web
+
+$ bash /root/projet/scripts/03-deployer-site.sh
+[2026-11-18 07:36:45 · 1.3s · code 0]
+=== Contenu du site ===
+-rw-r--r-- www-data:www-data 2009	/var/www/site.lab.local/html/index.html
+-rw-r--r-- www-data:www-data 23	/var/www/site.lab.local/html/robots.txt
+-rw-r--r-- www-data:www-data 2652	/var/www/site.lab.local/html/style.css
+drwxr-xr-x www-data:www-data 4096	/var/www/site.lab.local
+drwxr-xr-x www-data:www-data 4096	/var/www/site.lab.local/html
+
+=== Hôte virtuel ===
+total 0
+lrwxrwxrwx 1 root root 46 Nov 18 07:36 site.lab.local.conf -> /etc/nginx/sites-available/site.lab.local.conf
+
+=== Validation de la configuration ===
+
+=== Rechargement ===
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2026-11-18 07:36:05 WAT; 40s ago
+ Invocation: 098dd4598fae452787f456b996f4c849
+       Docs: man:nginx(8)
+    Process: 1035 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 1036 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 1194 ExecReload=/usr/sbin/nginx -g daemon on; master_process on; -s reload (code=exited, status=0/SUCCESS)
+   Main PID: 1064 (nginx)
+      Tasks: 3 (limit: 2298)
+     Memory: 3.7M (peak: 7.2M)
+        CPU: 57ms
+     CGroup: /system.slice/nginx.service
+             ├─1064 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+             ├─1195 "nginx: worker process"
+             └─1196 "nginx: worker process"
+
+=== Ecoute ===
+LISTEN 0      511          0.0.0.0:443       0.0.0.0:*    users:(("nginx",pid=1196,fd=15),("nginx",pid=1195,fd=15),("nginx",pid=1064,fd=15))
+LISTEN 0      511          0.0.0.0:80        0.0.0.0:*    users:(("nginx",pid=1196,fd=5),("nginx",pid=1195,fd=5),("nginx",pid=1064,fd=5))   
+LISTEN 0      511             [::]:443          [::]:*    users:(("nginx",pid=1196,fd=16),("nginx",pid=1195,fd=16),("nginx",pid=1064,fd=16))
+LISTEN 0      511             [::]:80           [::]:*    users:(("nginx",pid=1196,fd=6),("nginx",pid=1195,fd=6),("nginx",pid=1064,fd=6))   
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+

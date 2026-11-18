@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" font-family="DejaVu Sans, Arial, sans-serif">
+  <rect width="1200" height="640" fill="#f7f9fc"/>
+  <text x="40" y="52" font-size="28" font-weight="bold" fill="#1b2a41">Site statique en HTTPS avec certificat auto-signé</text>
+  <text x="40" y="82" font-size="16" fill="#51637a">Debian 13 · nginx · TLS 1.2 / 1.3 · redirection HTTP → HTTPS · en-têtes de sécurité</text>
+
+  <!-- client -->
+  <rect x="45" y="230" width="250" height="170" rx="10" fill="#ffffff" stroke="#8a9bb0" stroke-width="2"/>
+  <text x="170" y="262" text-anchor="middle" font-size="17" font-weight="bold" fill="#1b2a41">Client</text>
+  <text x="170" y="286" text-anchor="middle" font-size="13" fill="#51637a">curl · openssl s_client</text>
+  <text x="170" y="308" text-anchor="middle" font-size="13" fill="#51637a">navigateur</text>
+  <line x1="65" y1="322" x2="275" y2="322" stroke="#d5dde8"/>
+  <text x="65" y="346" font-size="12" fill="#1b2a41">approuve le certificat</text>
+  <text x="65" y="366" font-size="12" fill="#1b2a41">ou le refuse (auto-signé)</text>
+  <text x="65" y="386" font-size="12" fill="#51637a">site.lab.local</text>
+
+  <!-- réseau -->
+  <rect x="330" y="280" width="190" height="70" rx="10" fill="#e3edf9" stroke="#4a7dbd" stroke-width="2"/>
+  <text x="425" y="308" text-anchor="middle" font-size="15" font-weight="bold" fill="#1b2a41">Réseau 10.0.3.0/24</text>
+  <text x="425" y="330" text-anchor="middle" font-size="12" fill="#51637a">QEMU, second NIC</text>
+
+  <line x1="295" y1="315" x2="330" y2="315" stroke="#4a7dbd" stroke-width="2"/>
+  <text x="312" y="300" text-anchor="middle" font-size="10" fill="#51637a">443</text>
+  <line x1="520" y1="315" x2="565" y2="315" stroke="#4a7dbd" stroke-width="2"/>
+  <text x="542" y="300" text-anchor="middle" font-size="10" fill="#51637a">443</text>
+
+  <!-- serveur -->
+  <rect x="565" y="150" width="330" height="330" rx="10" fill="#ffffff" stroke="#1b2a41" stroke-width="2"/>
+  <text x="730" y="182" text-anchor="middle" font-size="18" font-weight="bold" fill="#1b2a41">srv-web</text>
+  <text x="730" y="204" text-anchor="middle" font-size="13" fill="#51637a">Debian 13 · 2 vCPU · 2 Go · 10.0.3.10</text>
+  <line x1="585" y1="218" x2="875" y2="218" stroke="#d5dde8"/>
+
+  <text x="585" y="244" font-size="13" font-weight="bold" fill="#1b2a41">nginx 1.26</text>
+  <text x="585" y="266" font-size="12" fill="#1b2a41">:80 → 301 https://$host$request_uri</text>
+  <text x="585" y="288" font-size="12" fill="#1b2a41">:443 ssl · HTTP/2 · TLSv1.2 + TLSv1.3</text>
+  <text x="585" y="310" font-size="12" fill="#1b2a41">ECDHE + AEAD, tickets désactivés</text>
+  <text x="585" y="332" font-size="12" fill="#1b2a41">HSTS, CSP, nosniff, Referrer-Policy</text>
+  <text x="585" y="354" font-size="12" fill="#1b2a41">server_tokens off</text>
+
+  <line x1="585" y1="368" x2="875" y2="368" stroke="#d5dde8"/>
+  <text x="585" y="390" font-size="12" fill="#51637a">racine : /var/www/site.lab.local/html</text>
+  <text x="585" y="410" font-size="12" fill="#51637a">index.html · style.css · robots.txt</text>
+  <text x="585" y="430" font-size="12" fill="#51637a">propriétaire : www-data · 644</text>
+  <text x="585" y="456" font-size="12" fill="#2f6b3a">journaux : site.lab.local.access.log</text>
+
+  <!-- certificat -->
+  <rect x="945" y="185" width="215" height="260" rx="10" fill="#eaf4ec" stroke="#2f6b3a" stroke-width="2"/>
+  <text x="1052" y="215" text-anchor="middle" font-size="14" font-weight="bold" fill="#1b2a41">/etc/nginx/tls</text>
+  <line x1="965" y1="230" x2="1140" y2="230" stroke="#bcd8c3"/>
+  <text x="965" y="254" font-size="12" fill="#1b2a41">site.lab.local.crt</text>
+  <text x="965" y="274" font-size="12" fill="#51637a">644 · public</text>
+  <text x="965" y="302" font-size="12" fill="#1b2a41">site.lab.local.key</text>
+  <text x="965" y="322" font-size="12" fill="#51637a">600 · root uniquement</text>
+  <line x1="965" y1="338" x2="1140" y2="338" stroke="#bcd8c3"/>
+  <text x="965" y="362" font-size="12" fill="#1b2a41">RSA 3072 · SHA-256</text>
+  <text x="965" y="382" font-size="12" fill="#1b2a41">825 jours</text>
+  <text x="965" y="402" font-size="12" fill="#1b2a41">SAN : hôte + www + IP</text>
+  <text x="965" y="422" font-size="12" fill="#2f6b3a">auto-signé : pas de CA</text>
+
+  <line x1="895" y1="315" x2="945" y2="315" stroke="#2f6b3a" stroke-width="2"/>
+
+  <!-- bandeau bas -->
+  <rect x="45" y="510" width="1110" height="105" rx="10" fill="#ffffff" stroke="#d5dde8"/>
+  <text x="65" y="538" font-size="14" font-weight="bold" fill="#1b2a41">Preuves mesurées</text>
+  <text x="65" y="562" font-size="13" fill="#51637a">• HTTP → 301, page en 200 avec certificat approuvé, refus (code 60) sans approbation</text>
+  <text x="65" y="582" font-size="13" fill="#51637a">• handshake TLS 1.3 et TLS 1.2, ALPN h2, refus de TLS 1.0 et 1.1</text>
+  <text x="65" y="602" font-size="13" fill="#51637a">• empreinte SHA-256 de la page servie identique au fichier déposé, en local puis après redémarrage</text>
+</svg>

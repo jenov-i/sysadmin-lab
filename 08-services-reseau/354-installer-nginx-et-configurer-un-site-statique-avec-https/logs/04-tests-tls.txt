@@ -1,0 +1,143 @@
+# Transcript — VM srv-web
+
+$ bash /root/projet/scripts/04-tests-tls.sh
+[2026-11-18 07:37:15 · 0.3s · code 0]
+=== 0. Résolution et écoute ===
+10.0.3.10       site.lab.local www.site.lab.local
+LISTEN 0      511          0.0.0.0:443       0.0.0.0:*    users:(("nginx",pid=1196,fd=15),("nginx",pid=1195,fd=15),("nginx",pid=1064,fd=15))
+LISTEN 0      511          0.0.0.0:80        0.0.0.0:*    users:(("nginx",pid=1196,fd=5),("nginx",pid=1195,fd=5),("nginx",pid=1064,fd=5))   
+LISTEN 0      511             [::]:443          [::]:*    users:(("nginx",pid=1196,fd=16),("nginx",pid=1195,fd=16),("nginx",pid=1064,fd=16))
+LISTEN 0      511             [::]:80           [::]:*    users:(("nginx",pid=1196,fd=6),("nginx",pid=1195,fd=6),("nginx",pid=1064,fd=6))   
+
+=== 1. HTTP en clair : redirection 301 ===
+HTTP/1.1 301 Moved Permanently
+Server: nginx
+Date: Wed, 18 Nov 2026 06:37:15 GMT
+Content-Type: text/html
+Content-Length: 162
+Connection: keep-alive
+Location: https://site.lab.local/
+
+-- cible de la redirection --
+Location: https://site.lab.local/
+-- une page précise est conservée --
+Location: https://site.lab.local/style.css
+
+=== 2. HTTPS avec le certificat approuvé ===
+code=200 version=2 tls=0 temps=0.009016s
+code=200 version=2
+
+=== 3. HTTPS sans approuver le certificat (doit échouer) ===
+code de sortie curl : 60
+
+=== 4. En-têtes de la page et d'un fichier statique ===
+HTTP/2 200 
+server: nginx
+date: Wed, 18 Nov 2026 06:37:16 GMT
+content-type: text/html
+content-length: 2009
+last-modified: Wed, 18 Nov 2026 06:36:45 GMT
+etag: "6afd477d-7d9"
+strict-transport-security: max-age=63072000
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: strict-origin-when-cross-origin
+content-security-policy: default-src 'self'
+accept-ranges: bytes
+
+-- style.css --
+HTTP/2 200 
+server: nginx
+date: Wed, 18 Nov 2026 06:37:16 GMT
+content-type: text/css
+content-length: 2652
+last-modified: Wed, 18 Nov 2026 06:36:45 GMT
+etag: "6afd477d-a5c"
+expires: Wed, 25 Nov 2026 06:37:16 GMT
+cache-control: max-age=604800
+strict-transport-security: max-age=63072000
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: strict-origin-when-cross-origin
+content-security-policy: default-src 'self'
+accept-ranges: bytes
+
+
+=== 5. Le contenu servi est bien le fichier déposé ===
+728a50cd790df7ad9a8a008e79fa640d4a09d036acc19c15a2278bd1b330f4e8  /tmp/page-servie.html
+728a50cd790df7ad9a8a008e79fa640d4a09d036acc19c15a2278bd1b330f4e8  /var/www/site.lab.local/html/index.html
+
+=== 6. Handshake TLS 1.3 ===
+Connecting to 10.0.3.10
+CONNECTION ESTABLISHED
+Protocol version: TLSv1.3
+Ciphersuite: TLS_AES_256_GCM_SHA384
+Peer certificate: C=CG, ST=Brazzaville, L=Brazzaville, O=Lab Jenovi, OU=Administration systemes, CN=site.lab.local
+Hash used: SHA256
+Signature type: rsa_pss_rsae_sha256
+Verification: OK
+Negotiated TLS1.3 group: X25519MLKEM768
+DONE
+
+=== 7. Handshake TLS 1.2 ===
+Connecting to 10.0.3.10
+CONNECTION ESTABLISHED
+Protocol version: TLSv1.2
+Ciphersuite: ECDHE-RSA-AES256-GCM-SHA384
+Peer certificate: C=CG, ST=Brazzaville, L=Brazzaville, O=Lab Jenovi, OU=Administration systemes, CN=site.lab.local
+Hash used: SHA256
+Signature type: rsa_pss_rsae_sha256
+Verification: OK
+
+=== 8. Négociation ALPN (HTTP/2) ===
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+Protocol: TLSv1.3
+ALPN protocol: h2
+
+=== 9. Refus des protocoles obsolètes ===
+-- tls1 --
+404767747C7F0000:error:0A0000BF:SSL routines:tls_setup_handshake:no protocols available:../ssl/statem/statem_lib.c:155:
+New, (NONE), Cipher is (NONE)
+Protocol: TLSv1.3
+code : 1
+-- tls1_1 --
+40272620A97F0000:error:0A0000BF:SSL routines:tls_setup_handshake:no protocols available:../ssl/statem/statem_lib.c:155:
+New, (NONE), Cipher is (NONE)
+Protocol: TLSv1.3
+code : 1
+
+=== 9b. Même essai en abaissant le niveau de sécurité du client ===
+(sans cela, OpenSSL refuse lui-même TLS 1.0/1.1 avant tout échange :
+ la mesure porterait sur le client et non sur le serveur)
+-- tls1 --
+40D7635A107F0000:error:0A00042E:SSL routines:ssl3_read_bytes:tlsv1 alert protocol version:../ssl/record/rec_layer_s3.c:918:SSL alert number 70
+no peer certificate available
+New, (NONE), Cipher is (NONE)
+-- tls1_1 --
+4067069C667F0000:error:0A00042E:SSL routines:ssl3_read_bytes:tlsv1 alert protocol version:../ssl/record/rec_layer_s3.c:918:SSL alert number 70
+no peer certificate available
+New, (NONE), Cipher is (NONE)
+
+=== 10. Chemin inexistant ===
+code=404
+
+=== 11. Journal d'accès du site ===
+10.0.3.10 - - [18/Nov/2026:07:37:15 +0100] "GET / HTTP/2.0" 200 2009 "-" "curl/8.14.1"
+10.0.3.10 - - [18/Nov/2026:07:37:16 +0100] "GET / HTTP/2.0" 200 2009 "-" "curl/8.14.1"
+10.0.3.10 - - [18/Nov/2026:07:37:16 +0100] "GET / HTTP/2.0" 200 2009 "-" "curl/8.14.1"
+10.0.3.10 - - [18/Nov/2026:07:37:16 +0100] "GET /style.css HTTP/2.0" 200 2652 "-" "curl/8.14.1"
+10.0.3.10 - - [18/Nov/2026:07:37:16 +0100] "GET / HTTP/2.0" 200 2009 "-" "curl/8.14.1"
+10.0.3.10 - - [18/Nov/2026:07:37:16 +0100] "\x15\x03\x03\x00\x02\x02F" 400 150 "-" "-"
+10.0.3.10 - - [18/Nov/2026:07:37:16 +0100] "\x15\x03\x03\x00\x02\x02F" 400 150 "-" "-"
+10.0.3.10 - - [18/Nov/2026:07:37:16 +0100] "GET /inexistant HTTP/2.0" 404 146 "-" "curl/8.14.1"
+
+=== 12. Journal d'erreurs ===
+(vide)
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+curl: (60) SSL certificate problem: self-signed certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the webpage mentioned above.
+

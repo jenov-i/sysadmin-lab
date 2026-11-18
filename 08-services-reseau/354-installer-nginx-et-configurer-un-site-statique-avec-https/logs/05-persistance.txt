@@ -1,0 +1,37 @@
+# Transcript — VM srv-web
+
+$ bash /root/projet/scripts/05-persistance.sh
+[2026-11-18 07:38:04 · 0.2s · code 0]
+=== Redémarrage précédent / démarrage courant ===
+2026-11-18 07:37:27
+maintenant : 2026-11-18T07:38:04+01:00
+
+=== Services ===
+enabled
+active
+LISTEN 0      511          0.0.0.0:80        0.0.0.0:*    users:(("nginx",pid=750,fd=7),("nginx",pid=749,fd=7),("nginx",pid=748,fd=7))   
+LISTEN 0      511          0.0.0.0:443       0.0.0.0:*    users:(("nginx",pid=750,fd=9),("nginx",pid=749,fd=9),("nginx",pid=748,fd=9))   
+LISTEN 0      511             [::]:80           [::]:*    users:(("nginx",pid=750,fd=8),("nginx",pid=749,fd=8),("nginx",pid=748,fd=8))   
+LISTEN 0      511             [::]:443          [::]:*    users:(("nginx",pid=750,fd=10),("nginx",pid=749,fd=10),("nginx",pid=748,fd=10))
+
+=== Chaîne complète après démarrage ===
+HTTP/1.1 301 Moved Permanently
+Server: nginx
+Date: Wed, 18 Nov 2026 06:38:04 GMT
+Content-Type: text/html
+code=200 version=2
+
+=== Certificat toujours en place ===
+subject=C=CG, ST=Brazzaville, L=Brazzaville, O=Lab Jenovi, OU=Administration systemes, CN=site.lab.local
+notBefore=Nov 18 06:36:40 2026 GMT
+notAfter=Feb 20 06:36:40 2029 GMT
+sha256 Fingerprint=6B:22:51:73:DA:B5:AF:AF:EF:87:A3:34:E8:CC:D4:C8:CA:13:94:C9:E6:6D:12:1E:5B:03:94:C2:F3:E2:AF:E4
+
+=== Adresse fixe ===
+ens4             UP             10.0.3.10/24 fec0::5054:ff:fe12:3457/64 fe80::5054:ff:fe12:3457/64 
+
+=== Journal nginx depuis le démarrage ===
+Nov 18 07:37:30 srv-web systemd[1]: Starting nginx.service - A high performance web server and a reverse proxy server...
+Nov 18 07:37:30 srv-web systemd[1]: Started nginx.service - A high performance web server and a reverse proxy server.
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+

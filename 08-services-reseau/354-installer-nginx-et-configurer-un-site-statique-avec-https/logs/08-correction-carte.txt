@@ -1,0 +1,16 @@
+# Transcript — VM srv-web
+
+$ bash /root/projet/scripts/13-corriger-affichage.sh
+[2026-11-18 07:44:21 · 0.2s · code 0]
+111:  grid-template-columns: max-content minmax(0, 1fr);
+121:  overflow-wrap: anywhere;
+
+--- empreintes ---
+711674ac5992582d972259f6ba0592be017a4d85e033683d15bc3c411d63371b  /root/projet/configs/site/style.css
+711674ac5992582d972259f6ba0592be017a4d85e033683d15bc3c411d63371b  /var/www/site.lab.local/html/style.css
+
+--- ce que sert nginx ---
+711674ac5992582d972259f6ba0592be017a4d85e033683d15bc3c411d63371b  -
+code : 200
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+
