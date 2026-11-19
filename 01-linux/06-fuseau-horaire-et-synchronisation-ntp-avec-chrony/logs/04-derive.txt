@@ -1,0 +1,40 @@
+# Transcript — VM srv-time
+
+$ bash /root/projet/scripts/04-mesure-derive.sh
+[2026-11-19 14:36:33 · 132.1s · code 0]
+=== Ce que chrony avait estimé ===
+Reference ID    : C40A63B6 (196.10.99.182.teraco.co.za)
+Stratum         : 2
+System time     : 0.000000697 seconds slow of NTP time
+Frequency       : 27.446 ppm slow
+Skew            : 66.926 ppm
+
+=== Sans NTP : la dérive se voit ===
+chrony : inactive
+
+--- écart mesuré sur deux minutes ---
+serveur 0.debian.pool.ntp.org (176.97.192.98) — 7 mesures, une toutes les 20 s
+  n°   temps écoulé   écart        aller-retour
+   1   +    0.0 s        +9.945 ms   49.313 ms
+   2   +   20.3 s       -69.503 ms   208.475 ms
+   3   +   40.4 s       -46.309 ms   167.959 ms
+   4   +   60.5 s        +9.770 ms   49.246 ms
+   5   +   80.5 s        +9.858 ms   49.391 ms
+   6   +  100.6 s        +9.872 ms   49.022 ms
+   7   +  120.6 s        +8.894 ms   51.644 ms
+
+pente       : +375.91 ppm  (+0.376 ms/s)
+projection  : +32478.4 ms par jour, soit +11854.63 s par an
+dispersion  : min -69.503 ms · max +9.945 ms · amplitude 79.448 ms
+
+=== Redémarrage de chrony ===
+try: 1, refid: 00000000, correction: 0.000000000, skew: 0.000
+try: 2, refid: C40A3439, correction: 0.000022409, skew: 66.926
+
+Reference ID    : C40A3439 (ntp1.inx.net.za)
+Stratum         : 3
+System time     : 0.000022409 seconds fast of NTP time
+Last offset     : -0.015007782 seconds
+Frequency       : 27.446 ppm slow
+Skew            : 66.926 ppm
+

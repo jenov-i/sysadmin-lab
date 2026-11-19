@@ -1,0 +1,84 @@
+# Transcript — VM srv-time
+
+$ bash /root/projet/scripts/03-chrony.sh
+[2026-11-19 14:28:52 · 13.7s · code 0]
+5:pool 2.debian.pool.ntp.org iburst
+
+--- configuration appliquée ---
+pool 2.debian.pool.ntp.org iburst maxsources 4
+driftfile /var/lib/chrony/chrony.drift
+makestep 1.0 3
+rtcsync
+logdir /var/log/chrony
+log tracking statistics
+port 0
+
+=== Démarrage ===
+● chrony.service - chrony, an NTP client/server
+     Loaded: loaded (/usr/lib/systemd/system/chrony.service; enabled; preset: enabled)
+     Active: active (running) since Thu 2026-11-19 14:28:53 WAT; 3s ago
+ Invocation: 2c360cba7003432ca290c6c60c9df08b
+       Docs: man:chronyd(8)
+             man:chronyc(1)
+
+=== Attente de la synchronisation (30 s au plus) ===
+try: 1, refid: 00000000, correction: 0.000000000, skew: 0.000
+try: 2, refid: 9BE81306, correction: 0.000002045, skew: 1000000.000
+
+--- sources ---
+
+  .-- Source mode  '^' = server, '=' = peer, '#' = local clock.
+ / .- Source state '*' = current best, '+' = combined, '-' = not combined,
+| /             'x' = may be in error, '~' = too variable, '?' = unusable.
+||                                                 .- xxxx [ yyyy ] +/- zzzz
+||      Reachability register (octal) -.           |  xxxx = adjusted offset,
+||      Log2(Polling interval) --.      |          |  yyyy = measured offset,
+||                                \     |          |  zzzz = estimated error.
+||                                 |    |           \
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^+ mail.errolsworld.com          1   6    17     7   +878us[+3001us] +/-   42ms
+^- ntp5.inx.net.za               2   6    17     5  -1703us[-1703us] +/-   58ms
+^+ flapping.cloudhive.net.za     2   6    17     7   -871us[+1252us] +/-   33ms
+^* tick.sanren.ac.za             1   6    17     6   +300us[+2422us] +/-   41ms
+
+--- état du suivi ---
+Reference ID    : 9BE81306 (tick.sanren.ac.za)
+Stratum         : 2
+Ref time (UTC)  : Thu Nov 19 13:28:59 2026
+System time     : 0.000002045 seconds slow of NTP time
+Last offset     : +0.002122923 seconds
+RMS offset      : 0.002122923 seconds
+Frequency       : 0.000 ppm slow
+Residual freq   : -282.878 ppm
+Skew            : 1000000.000 ppm
+Root delay      : 0.079636782 seconds
+Root dispersion : 6.832928658 seconds
+Update interval : 1.6 seconds
+Leap status     : Normal
+
+--- statistiques par source ---
+Name/IP Address            NP  NR  Span  Frequency  Freq Skew  Offset  Std Dev
+==============================================================================
+mail.errolsworld.com        4   3     6   -964.200  11136.415  -5328us  1553us
+ntp5.inx.net.za             4   3     6    -12.057   2351.234  -1812us   423us
+flapping.cloudhive.net.za   4   3     6   +110.191   8310.805   -283us   915us
+tick.sanren.ac.za           4   4     6   -703.333  46168.082  -3679us  6125us
+
+--- activité ---
+200 OK
+4 sources online
+0 sources offline
+0 sources doing burst (return to online)
+0 sources doing burst (return to offline)
+0 sources with unknown address
+
+--- vu par systemd ---
+               Local time: Thu 2026-11-19 14:29:06 WAT
+           Universal time: Thu 2026-11-19 13:29:06 UTC
+                 RTC time: Thu 2026-11-19 13:29:06
+                Time zone: Africa/Brazzaville (WAT, +0100)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
+

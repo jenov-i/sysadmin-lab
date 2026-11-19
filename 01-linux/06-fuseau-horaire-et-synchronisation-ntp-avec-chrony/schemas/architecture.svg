@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" font-family="DejaVu Sans, Arial, sans-serif">
+  <rect width="1200" height="640" fill="#f7f9fc"/>
+  <text x="40" y="52" font-size="28" font-weight="bold" fill="#1b2a41">Fuseau horaire et synchronisation NTP avec chrony</text>
+  <text x="40" y="82" font-size="16" fill="#51637a">Debian 13 · chrony client du pool Debian · RTC en UTC · dérive mesurée et correction vérifiée</text>
+
+  <!-- pool -->
+  <rect x="45" y="200" width="250" height="200" rx="10" fill="#e3edf9" stroke="#4a7dbd" stroke-width="2"/>
+  <text x="170" y="232" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b2a41">Pool NTP public</text>
+  <text x="170" y="254" text-anchor="middle" font-size="12" fill="#51637a">2.debian.pool.ntp.org</text>
+  <line x1="65" y1="268" x2="275" y2="268" stroke="#b9cde6"/>
+  <text x="65" y="292" font-size="12" fill="#1b2a41">stratum 1 et 2</text>
+  <text x="65" y="312" font-size="12" fill="#1b2a41">UDP 123, IPv4</text>
+  <text x="65" y="332" font-size="12" fill="#1b2a41">4 sources retenues</text>
+  <text x="65" y="360" font-size="12" fill="#51637a">référence : temps UTC</text>
+  <text x="65" y="380" font-size="12" fill="#51637a">aucune correction locale</text>
+
+  <!-- flèche pool → serveur -->
+  <line x1="295" y1="300" x2="360" y2="300" stroke="#4a7dbd" stroke-width="2"/>
+  <polygon points="360,294 372,300 360,306" fill="#4a7dbd"/>
+  <text x="326" y="286" text-anchor="middle" font-size="11" fill="#51637a">NTP</text>
+
+  <!-- srv-time -->
+  <rect x="372" y="140" width="360" height="340" rx="10" fill="#ffffff" stroke="#1b2a41" stroke-width="2"/>
+  <text x="552" y="172" text-anchor="middle" font-size="18" font-weight="bold" fill="#1b2a41">srv-time</text>
+  <text x="552" y="194" text-anchor="middle" font-size="12" fill="#51637a">Debian 13 · 2 vCPU · 2 Go · 10.0.2.15</text>
+  <line x1="392" y1="208" x2="712" y2="208" stroke="#d5dde8"/>
+
+  <text x="392" y="234" font-size="13" font-weight="bold" fill="#1b2a41">chronyd (client)</text>
+  <text x="392" y="256" font-size="12" fill="#1b2a41">pool … iburst maxsources 4</text>
+  <text x="392" y="276" font-size="12" fill="#1b2a41">makestep 1.0 3 · rtcsync</text>
+  <text x="392" y="296" font-size="12" fill="#1b2a41">port 0 : ne sert pas le temps</text>
+
+  <text x="392" y="324" font-size="13" font-weight="bold" fill="#1b2a41">horloge système</text>
+  <text x="392" y="346" font-size="12" fill="#1b2a41">asservie en fréquence et en phase</text>
+  <text x="392" y="366" font-size="12" fill="#1b2a41">UTC en interne, fuseau à l'affichage</text>
+
+  <text x="392" y="394" font-size="13" font-weight="bold" fill="#1b2a41">RTC (horloge matérielle)</text>
+  <text x="392" y="416" font-size="12" fill="#51637a">LocalRTC=no · écrite par rtcsync</text>
+  <text x="392" y="436" font-size="12" fill="#51637a">heure correcte avant le réseau</text>
+  <text x="392" y="462" font-size="12" fill="#2f6b3a">fuseau : Africa/Brazzaville (UTC+1)</text>
+
+  <!-- flèche serveur → fichiers -->
+  <line x1="732" y1="300" x2="790" y2="300" stroke="#1b2a41" stroke-width="2"/>
+  <polygon points="790,294 802,300 790,306" fill="#1b2a41"/>
+
+  <!-- fichiers -->
+  <rect x="802" y="170" width="355" height="280" rx="10" fill="#eaf4ec" stroke="#2f6b3a" stroke-width="2"/>
+  <text x="979" y="200" text-anchor="middle" font-size="14" font-weight="bold" fill="#1b2a41">ce qui reste sur le disque</text>
+  <line x1="822" y1="214" x2="1137" y2="214" stroke="#bcd8c3"/>
+  <text x="822" y="238" font-size="12" fill="#1b2a41">/etc/chrony/chrony.conf</text>
+  <text x="822" y="258" font-size="12" fill="#51637a">sources, makestep, rtcsync</text>
+  <text x="822" y="284" font-size="12" fill="#1b2a41">/var/lib/chrony/chrony.drift</text>
+  <text x="822" y="304" font-size="12" fill="#51637a">fréquence estimée, réutilisée au boot</text>
+  <text x="822" y="330" font-size="12" fill="#1b2a41">/var/log/chrony/tracking.log</text>
+  <text x="822" y="350" font-size="12" fill="#51637a">une ligne par mise à jour</text>
+  <text x="822" y="376" font-size="12" fill="#1b2a41">/etc/localtime → zoneinfo</text>
+  <text x="822" y="396" font-size="12" fill="#51637a">lien vers Africa/Brazzaville</text>
+  <text x="822" y="422" font-size="12" fill="#2f6b3a">systemd-timesyncd retiré</text>
+
+  <!-- bandeau bas -->
+  <rect x="45" y="515" width="1110" height="100" rx="10" fill="#ffffff" stroke="#d5dde8"/>
+  <text x="65" y="543" font-size="14" font-weight="bold" fill="#1b2a41">Preuves mesurées</text>
+  <text x="65" y="567" font-size="13" fill="#51637a">• dérive relevée chrony arrêté, pente en ppm et projection par jour</text>
+  <text x="65" y="587" font-size="13" fill="#51637a">• décalage volontaire de 5 s, puis retour sous la milliseconde après makestep</text>
+  <text x="65" y="607" font-size="13" fill="#51637a">• après redémarrage : chrony actif, fuseau conservé, RTC à l'heure avant le réseau</text>
+</svg>

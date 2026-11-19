@@ -7,6 +7,7 @@ Projets d'administration systèmes, réseaux et cybersécurité réalisés en la
 <!-- PROJETS:START -->
 | Projet | Catégorie | Date |
 |---|---|---|
+| [Configurer le fuseau horaire et la synchronisation NTP avec chrony](01-linux/06-fuseau-horaire-et-synchronisation-ntp-avec-chrony) | Linux | 2026-11-19 |
 | [Installer Nginx et configurer un site statique avec HTTPS](08-services-reseau/354-installer-nginx-et-configurer-un-site-statique-avec-https) | Services réseau & applicatifs | 2026-11-18 |
 | [Mettre en place un serveur NAS (OpenMediaVault ou TrueNAS) pour les sauvegardes](07-sauvegarde/18-serveur-nas-openmediavault-avec-comptes-et-quotas) | Sauvegarde & plan de reprise | 2026-11-17 |
 | [Mettre en place une procédure de migration de schéma de base de données sans interruption](16-bases-de-donnees/74-mettre-en-place-une-procedure-de-migration-de-schema-de-base) | Bases de données & données | 2026-11-15 |

@@ -1,0 +1,41 @@
+# Transcript — VM srv-time
+
+$ bash /root/projet/scripts/07-persistance.sh
+[2026-11-19 14:50:55 · 2.1s · code 0]
+=== Après redémarrage ===
+démarrage : 2026-11-19 14:50:14   ·   maintenant : 2026-11-19T14:50:56+01:00
+
+               Local time: Thu 2026-11-19 14:50:56 WAT
+           Universal time: Thu 2026-11-19 13:50:56 UTC
+                 RTC time: Thu 2026-11-19 13:50:56
+                Time zone: Africa/Brazzaville (WAT, +0100)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
+
+-- RTC --
+2026-11-19 14:50:56.654330+01:00
+RTC en heure locale : no
+
+-- chrony --
+service : enabled / active
+Reference ID    : C40A363A (ntp5.inx.net.za)
+Stratum         : 3
+System time     : 0.341423750 seconds fast of NTP time
+Last offset     : -0.004114258 seconds
+Frequency       : 26.885 ppm slow
+Skew            : 62.553 ppm
+
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^- ns2.ipb.na                    2   6    17     0    -11ms[  -11ms] +/-  262ms
+^- ns1.ipb.na                    2   6    17     1  +5954us[+5954us] +/-  296ms
+^* ntp5.inx.net.za               2   6    17     2   -961us[-5075us] +/-   62ms
+^- ntp1.inx.net.za               2   6    17     1    +37ms[  +37ms] +/-  123ms
+
+-- dérive enregistrée au dernier arrêt --
+          -26.884692            62.552913
+
+-- écart mesuré maintenant --
+0.debian.pool.ntp.org (41.175.51.165)  écart -257.713 ms  aller-retour 166.028 ms
+

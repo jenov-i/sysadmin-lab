@@ -1,0 +1,52 @@
+# Transcript — VM srv-time
+
+$ bash /root/projet/scripts/05-derive-longue.sh
+[2026-11-19 14:40:54 · 462.3s · code 0]
+=== Estimation de chrony avant l'arrêt ===
+Reference ID    : 29AF3137 (41.175.49.55)
+Stratum         : 3
+Frequency       : 26.987 ppm slow
+Skew            : 46.120 ppm
+
+=== chrony arrêté pendant huit minutes ===
+chrony : inactive
+départ : 2026-11-19T14:40:55+01:00
+
+serveur 0.debian.pool.ntp.org (196.10.54.57) — 16 mesures, une toutes les 30 s
+  n°   temps écoulé   écart        aller-retour
+   1   +    0.1 s        +2.223 ms   60.282 ms
+   2   +   30.1 s        +2.363 ms   60.484 ms
+   3   +   60.2 s        +2.387 ms   61.569 ms
+   4   +   90.2 s        +2.986 ms   60.437 ms
+   5   +  120.3 s        +2.554 ms   61.351 ms
+   6   +  150.4 s        +2.091 ms   61.404 ms
+   7   +  180.4 s        +2.106 ms   61.526 ms
+   8   +  210.5 s        +2.763 ms   60.255 ms
+   9   +  240.6 s        +2.521 ms   65.561 ms
+  10   +  270.7 s       -37.206 ms   141.490 ms
+  11   +  300.8 s       -23.925 ms   119.878 ms
+  12   +  330.9 s        -8.652 ms   90.570 ms
+  13   +  361.0 s        +1.353 ms   66.049 ms
+  14   +  391.1 s       -12.256 ms   94.759 ms
+  15   +  421.3 s       -59.339 ms   187.355 ms
+  16   +  451.3 s        +3.156 ms   61.134 ms
+
+pente brute : -63.10 ppm  (-0.063 ms/s)
+projection  : -5451.8 ms par jour, soit -1989.92 s par an
+dispersion  : min -59.339 ms · max +3.156 ms · amplitude 62.495 ms
+
+filtre      : 11 mesures sur 16 conservées (aller-retour ≤ 90 ms, puis écart à la droite ≤ 3 MAD)
+pente filtrée : +0.11 ppm ± 1.18 ppm (erreur-type)
+projection    : +9.5 ms par jour, soit +3.46 s par an
+
+=== Redémarrage de chrony ===
+
+Reference ID    : 66CA781B (102.202.120.27)
+Stratum         : 2
+System time     : 0.005698030 seconds fast of NTP time
+Last offset     : +0.007914383 seconds
+Frequency       : 26.987 ppm slow
+Skew            : 46.120 ppm
+
+écart à l'instant : 0.debian.pool.ntp.org (196.49.100.58)  écart -102.157 ms  aller-retour 292.219 ms
+

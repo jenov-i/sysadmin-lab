@@ -1,0 +1,32 @@
+# Transcript — VM srv-time
+
+$ bash /root/projet/scripts/02-fuseau-horaire.sh
+[2026-11-19 14:28:48 · 1.4s · code 0]
+le format : zone | heure locale | heure UTC | epoch
+
+départ                | 2026-11-19 14:28:49 WAT | 13:28:49 | 1795094929
+Africa/Brazzaville     | 2026-11-19 14:28:49 WAT | 13:28:49 | 1795094929
+Asia/Tokyo             | 2026-11-19 22:28:49 JST | 13:28:49 | 1795094929
+retour Brazzaville     | 2026-11-19 14:28:49 WAT | 13:28:49 | 1795094929
+
+-- ce qui a changé sur le disque --
+/usr/share/zoneinfo/Africa/Brazzaville
+
+fuseaux disponibles : 485
+
+-- RTC en UTC (recommandé pour un serveur) --
+Timezone=Africa/Brazzaville
+LocalRTC=no
+NTPSynchronized=yes
+
+2026-11-19 14:28:49.122253+01:00
+
+               Local time: Thu 2026-11-19 14:28:49 WAT
+           Universal time: Thu 2026-11-19 13:28:49 UTC
+                 RTC time: Thu 2026-11-19 13:28:50
+                Time zone: Africa/Brazzaville (WAT, +0100)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
+cat: /etc/timezone: No such file or directory
+

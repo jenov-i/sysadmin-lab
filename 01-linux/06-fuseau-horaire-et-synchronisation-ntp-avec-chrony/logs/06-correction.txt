@@ -1,0 +1,56 @@
+# Transcript — VM srv-time
+
+$ bash /root/projet/scripts/06-correction-offset.sh
+[2026-11-19 14:48:46 · 18.1s · code 0]
+=== Avant ===
+0.debian.pool.ntp.org (196.10.99.182)  écart -8.503 ms  aller-retour 81.841 ms
+System time     : 0.000005957 seconds slow of NTP time
+Last offset     : +0.007914383 seconds
+Frequency       : 26.987 ppm slow
+
+=== Décalage volontaire de +5 s, chrony arrêté ===
+Thu Nov 19 02:48:51 PM WAT 2026
+2026-11-19 14:48:51 WAT
+
+--- écart réellement constaté ---
+0.debian.pool.ntp.org (196.49.100.58)  écart -5065.903 ms  aller-retour 207.241 ms
+
+=== Redémarrage de chrony : makestep doit corriger d'un coup ===
+try: 1, refid: 00000000, correction: 0.000000000, skew: 0.000
+try: 2, refid: 8B54E797, correction: 0.000202363, skew: 46.120
+200 OK
+
+--- écart après correction ---
+  0.debian.pool.ntp.org (196.10.55.57)  écart -4.088 ms  aller-retour 104.557 ms
+
+--- état final ---
+Reference ID    : 8B54E797 (jnb.clearnet.pw)
+Stratum         : 3
+Ref time (UTC)  : Thu Nov 19 13:48:53 2026
+System time     : 0.000000000 seconds fast of NTP time
+Last offset     : +0.014305434 seconds
+RMS offset      : 0.014305434 seconds
+Frequency       : 26.987 ppm slow
+Residual freq   : +696.900 ppm
+Skew            : 46.120 ppm
+Root delay      : 0.101307608 seconds
+Root dispersion : 0.032408789 seconds
+Update interval : 1.0 seconds
+Leap status     : Normal
+
+200 OK
+4 sources online
+0 sources offline
+0 sources doing burst (return to online)
+0 sources doing burst (return to offline)
+0 sources with unknown address
+
+--- ce que dit systemd ---
+               Local time: Thu 2026-11-19 14:49:04 WAT
+           Universal time: Thu 2026-11-19 13:49:04 UTC
+                 RTC time: Thu 2026-11-19 13:49:04
+                Time zone: Africa/Brazzaville (WAT, +0100)
+System clock synchronized: no
+              NTP service: active
+          RTC in local TZ: no
+

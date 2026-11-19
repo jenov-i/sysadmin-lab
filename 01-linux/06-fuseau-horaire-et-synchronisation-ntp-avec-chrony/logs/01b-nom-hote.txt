@@ -1,0 +1,25 @@
+# Transcript — VM srv-time
+
+$ bash /root/projet/scripts/01b-nom-hote.sh
+[2026-11-19 14:28:32 · 0.3s · code 0]
+=== Avant ===
+debian
+1:127.0.0.1	localhost
+2:127.0.1.1	debian
+4:# The following lines are desirable for IPv6 capable hosts
+5:::1     localhost ip6-localhost ip6-loopback
+6:ff02::1 ip6-allnodes
+7:ff02::2 ip6-allrouters
+
+=== Correction ===
+
+=== Après ===
+srv-time
+srv-time.lab.local
+10.0.2.15 fec0::f70d:5726:6999:d61f 
+1:127.0.0.1	localhost
+2:127.0.1.1	srv-time.lab.local srv-time
+4:::1	localhost ip6-localhost ip6-loopback
+5:ff02::1	ip6-allnodes
+6:ff02::2	ip6-allrouters
+
